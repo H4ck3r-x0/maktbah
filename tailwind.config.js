@@ -11,10 +11,8 @@ export default {
     ],
 
     theme: {
-        extend: {
-            fontFamily: {
-                sans: ['Figtree', ...defaultTheme.fontFamily.sans],
-            },
+        fontFamily: {
+            sans: ['AvenirRegular', ...defaultTheme.fontFamily.sans],
         },
     },
 

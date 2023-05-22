@@ -1,3 +1,9 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@font-face {
+    font-family: 'AvenirRegular';
+    src: url("/public/fonts/AvenirRegular.ttf");
+    font-display: 'swap';
+}
