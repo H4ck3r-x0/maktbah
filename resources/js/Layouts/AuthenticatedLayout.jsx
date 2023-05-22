@@ -1,6 +1,7 @@
 import AuthenticatedHeader from '@/Components/AuthenticatedHeader';
 
-export default function Authenticated({ user, header, children }) {
+export default function Authenticated({ auth, user, header, children }) {
+    console.log(auth);
     return (
         <div className="min-h-screen bg-gray-100">
             <AuthenticatedHeader user={user} />
