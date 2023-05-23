@@ -10,7 +10,7 @@ export default function Register() {
     const { data, setData, post, processing, errors, reset } = useForm({
         account_type: '',
         name: '',
-        email: '',
+        username: '',
         password: '',
         password_confirmation: '',
     });
@@ -38,6 +38,8 @@ export default function Register() {
                         onChange={(e) => setData('account_type', e.target.value)}
                         name="account_type"
                         id="account_type"
+                        autoFocus
+                        required
                         className='mt-2 block w-full border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm'>
                         <option value="">أختر نوع الحساب</option>
                         <option value="user">عميل</option>
@@ -57,7 +59,6 @@ export default function Register() {
                         value={data.name}
                         className="mt-2 block w-full"
                         autoComplete="name"
-                        isFocused={true}
                         onChange={(e) => setData('name', e.target.value)}
                         required
                     />
@@ -66,20 +67,20 @@ export default function Register() {
                 </div>
 
                 <div className="mt-4">
-                    <InputLabel htmlFor="email" value="البريد الألكتروني" />
+                    <InputLabel htmlFor="username" value="أسم المستخدم" />
 
                     <TextInput
-                        id="email"
-                        type="email"
-                        name="email"
-                        value={data.email}
+                        id="username"
+                        type="text"
+                        name="username"
+                        value={data.username}
                         className="mt-2 block w-full"
                         autoComplete="username"
-                        onChange={(e) => setData('email', e.target.value)}
+                        onChange={(e) => setData('username', e.target.value)}
                         required
                     />
 
-                    <InputError message={errors.email} className="mt-2" />
+                    <InputError message={errors.username} className="mt-2" />
                 </div>
 
                 <div className="mt-4">
