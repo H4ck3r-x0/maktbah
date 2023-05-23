@@ -29,7 +29,7 @@ export default function Register() {
 
     return (
         <GuestLayout>
-            <Head title="Register" />
+            <Head title="تسجيل جديد" />
 
             <form onSubmit={submit}>
                 <div className='mb-2'>
