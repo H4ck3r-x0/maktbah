@@ -8,6 +8,7 @@ import { Head, Link, useForm } from '@inertiajs/react';
 
 export default function Register() {
     const { data, setData, post, processing, errors, reset } = useForm({
+        account_type: '',
         name: '',
         email: '',
         password: '',
@@ -31,6 +32,22 @@ export default function Register() {
             <Head title="Register" />
 
             <form onSubmit={submit}>
+                <div className='mb-2'>
+                    <InputLabel htmlFor="account_type" value="نوع الحساب" />
+                    <select
+                        onChange={(e) => setData('account_type', e.target.value)}
+                        name="account_type"
+                        id="account_type"
+                        className='mt-2 block w-full border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm'>
+                        <option value="">أختر نوع الحساب</option>
+                        <option value="user">عميل</option>
+                        <option value="library">مكتبة</option>
+                        <option value="teacher">استاذ / استاذة</option>
+                        <option value="stationery">قرطاسية</option>
+                    </select>
+
+                    <InputError message={errors.name} className="mt-2" />
+                </div>
                 <div>
                     <InputLabel htmlFor="name" value="الأسم الكريم" />
 
