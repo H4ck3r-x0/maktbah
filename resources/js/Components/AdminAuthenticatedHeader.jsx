@@ -5,9 +5,8 @@ import NavLink from '@/Components/NavLink';
 import ResponsiveNavLink from '@/Components/ResponsiveNavLink';
 import { Link } from '@inertiajs/react';
 
-export default function AuthenticatedHeader({ user }) {
+export default function AdminAuthenticatedHeader({ user }) {
     const [showingNavigationDropdown, setShowingNavigationDropdown] = useState(false);
-
     return (
         <nav className="bg-white border-b border-gray-100">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -20,8 +19,8 @@ export default function AuthenticatedHeader({ user }) {
                         </div>
 
                         <div className="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
-                            <NavLink href={route('dashboard')} active={route().current('dashboard')}>
-                                Dashboard
+                            <NavLink href={route('admin.dashboard')} active={route().current('admin.dashboard')}>
+                                الرئيسية
                             </NavLink>
                         </div>
                     </div>
@@ -54,7 +53,7 @@ export default function AuthenticatedHeader({ user }) {
                                 </Dropdown.Trigger>
 
                                 <Dropdown.Content>
-                                    <Dropdown.Link href={route('profile.edit')}>الملف الشخصي</Dropdown.Link>
+                                    <Dropdown.Link href={route('admin.profile.edit')}>الملف الشخصي</Dropdown.Link>
                                     <Dropdown.Link href={route('logout')} method="post" as="button">
                                         تسجيل الخروج
                                     </Dropdown.Link>
@@ -91,9 +90,9 @@ export default function AuthenticatedHeader({ user }) {
 
             <div className={(showingNavigationDropdown ? 'block' : 'hidden') + ' sm:hidden'}>
                 <div className="pt-2 pb-3 space-y-1">
-                    <ResponsiveNavLink href={route('dashboard')} active={route().current('dashboard')}>
+                    {/* <ResponsiveNavLink href={route('admin.dashboard')} active={route().current('admin.dashboard')}>
                         الرئيسية
-                    </ResponsiveNavLink>
+                    </ResponsiveNavLink> */}
                 </div>
 
                 <div className="pt-4 pb-1 border-t border-gray-200">
@@ -103,7 +102,7 @@ export default function AuthenticatedHeader({ user }) {
                     </div>
 
                     <div className="mt-3 space-y-1">
-                        <ResponsiveNavLink href={route('profile.edit')}>الملف الشخصي</ResponsiveNavLink>
+                        {/* <ResponsiveNavLink href={route('admin.profile.edit')}>الملف الشخصي</ResponsiveNavLink> */}
                         <ResponsiveNavLink method="post" href={route('logout')} as="button">
                             تسجيل الخروج
                         </ResponsiveNavLink>

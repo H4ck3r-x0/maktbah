@@ -33,7 +33,10 @@ class User extends Authenticatable
     protected $hidden = [
         'password',
         'remember_token',
+        'roles',
     ];
+
+    protected $appends = ['role'];
 
     /**
      * The attributes that should be cast.
@@ -44,6 +47,11 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
     ];
+
+    public function getRoleAttribute()
+    {
+        return $this->roles()->first()->name ?? null;
+    }
 
     public function getRedirectRoute()
     {
