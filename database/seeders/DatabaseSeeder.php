@@ -16,7 +16,7 @@ class DatabaseSeeder extends Seeder
             RoleSeeder::class,
             CountrySeeder::class,
             CitySeeder::class,
-            // AdminSeeder::class
+            AdminSeeder::class
         ]);
         // \App\Models\User::factory(10)->create();
 
