@@ -1,6 +1,7 @@
+import AdminAuthenticatedHeader from '@/Components/AdminAuthenticatedHeader';
 import AuthenticatedHeader from '@/Components/AuthenticatedHeader';
 import GuestHeader from '@/Components/GuestHeader';
-import { Link, Head } from '@inertiajs/react';
+import { Head } from '@inertiajs/react';
 
 export default function Welcome({ auth }) {
     return (
@@ -9,7 +10,9 @@ export default function Welcome({ auth }) {
             <div className=" bg-white">
                 <div className="">
                     {auth.user ? (
-                        <AuthenticatedHeader user={auth.user} />
+                        auth.user.role === 'admin' ?
+                            <AdminAuthenticatedHeader user={auth.user} /> :
+                            <AuthenticatedHeader user={auth.user} />
                     ) : (
                         <GuestHeader />
                     )}
