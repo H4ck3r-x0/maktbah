@@ -4,6 +4,21 @@
 
 @font-face {
     font-family: 'AvenirRegular';
-    src: url("/public/fonts/AvenirRegular.ttf");
+    font-weight: 300;
+    src: url("/public/fonts/AvenirArabic-Regular.woff2");
     font-display: 'swap';
+}
+
+@font-face {
+    font-family: 'AvenirArabic';
+    font-weight: 600;
+    src: url(/public/fonts/AvenirArabic-Heavy.woff2);
+    font-display: swap
+}
+
+@font-face {
+    font-family: 'AvenirArabic';
+    font-weight: 700;
+    src: url(/public/fonts/AvenirArabic-Heavy.woff2);
+    font-display: swap
 }

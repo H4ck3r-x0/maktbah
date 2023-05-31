@@ -53,6 +53,7 @@ export default function AdminAuthenticatedHeader({ user }) {
                                 </Dropdown.Trigger>
 
                                 <Dropdown.Content>
+                                    <Dropdown.Link href={route('admin.dashboard')}>لوحة التحكم</Dropdown.Link>
                                     <Dropdown.Link href={route('admin.profile.edit')}>الملف الشخصي</Dropdown.Link>
                                     <Dropdown.Link href={route('logout')} method="post" as="button">
                                         تسجيل الخروج
