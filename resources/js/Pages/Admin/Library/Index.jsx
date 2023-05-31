@@ -1,14 +1,23 @@
+import PrimaryButton from '@/Components/PrimaryButton';
 import AdminAuthenticatedLayout from '@/Layouts/AdminAuthenticatedLayout';
-import { Head } from '@inertiajs/react';
+import { Head, Link } from '@inertiajs/react';
 
 export default function Index({ auth, libraries }) {
-    console.log(libraries);
     return (
         <AdminAuthenticatedLayout
             user={auth.user}
-            header={<h2 className="font-semibold text-xl text-gray-800 leading-tight">جميع المكتبات</h2>}
+            header={
+                <div className='flex items-center justify-between'>
+                    <h2 className="font-semibold text-xl text-gray-800 leading-tight">جميع المكتبات</h2>
+
+                    <Link href={route('admin.library.create')}>
+                        <PrimaryButton>إضافة مكتبة</PrimaryButton>
+                    </Link>
+                </div>
+            }
         >
             <Head title="جميع المكتبات" />
+
 
             <div className="py-8">
                 <div className="max-w-7xl mx-auto sm:px-6 lg:px-8">
@@ -21,10 +30,10 @@ export default function Index({ auth, libraries }) {
                                             <th scope="col" className="px-6 py-3">
                                                 #
                                             </th>
-                                            <th scope="col" className="px-6 py-3">
+                                            <th scope="col" className="px-6 py-3 tracking-wider">
                                                 أسم المكتبة
                                             </th>
-                                            <th scope="col" className="px-6 py-3">
+                                            <th scope="col" className="px-6 py-3 tracking-wider">
                                                 صاحب المكتبة
                                             </th>
                                         </tr>
@@ -46,7 +55,6 @@ export default function Index({ auth, libraries }) {
                                     </tbody>
                                 </table>
                             </div>
-
                         </div>
                     </div>
                 </div>

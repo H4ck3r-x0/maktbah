@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin\Library;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\StoreLibraryRequest;
 use App\Models\Library;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
@@ -24,15 +25,15 @@ class LibraryController extends Controller
      */
     public function create()
     {
-        //
+        return Inertia::render('Admin/Library/Create');
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(StoreLibraryRequest $request)
     {
-        //
+        dd($request->all());
     }
 
     /**

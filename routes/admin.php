@@ -16,4 +16,6 @@ Route::middleware('auth')->group(function () {
 
     //  Library Routes
     Route::get('libraries', [LibraryController::class, 'index'])->name('library.index');
+    Route::get('libraries/create', [LibraryController::class, 'create'])->name('library.create');
+    Route::post('libraries/store', [LibraryController::class, 'store'])->name('library.store');
 });

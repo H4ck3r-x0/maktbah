@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests;
 
+use App\Models\User;
 use Illuminate\Foundation\Http\FormRequest;
 
 class StoreLibraryRequest extends FormRequest
@@ -11,7 +12,8 @@ class StoreLibraryRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+
+        return auth()->user()->role === 'admin';
     }
 
     /**
