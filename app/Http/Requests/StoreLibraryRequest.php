@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests;
 
+use App\Models\Library;
 use App\Models\User;
 use Illuminate\Foundation\Http\FormRequest;
 
@@ -24,7 +25,7 @@ class StoreLibraryRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'name' => 'required|string|max:255|unique:' . Library::class,
         ];
     }
 }

@@ -1,29 +1,25 @@
-import PrimaryButton from '@/Components/PrimaryButton';
 import AdminAuthenticatedLayout from '@/Layouts/AdminAuthenticatedLayout';
-import { Head, Link, useForm } from '@inertiajs/react';
 import InputError from '@/Components/InputError';
 import InputLabel from '@/Components/InputLabel';
+import PrimaryButton from '@/Components/PrimaryButton';
 import TextInput from '@/Components/TextInput';
+import { Link, useForm, Head } from '@inertiajs/react';
 import { Transition } from '@headlessui/react';
-import Countries from '@/Pages/Components/Countries';
 import Cities from '@/Pages/Components/Cities';
+import Countries from '@/Pages/Components/Countries';
 
-export default function Create({ auth, countries, cities }) {
-
-    const { data, setData, post, errors, processing, recentlySuccessful } = useForm({
-        libraryOwnerName: '',
-        username: '',
-        password: '',
-        name: '',
-        country: '',
-        city: '',
-        google_maps: ''
+export default function Edit({ auth, library, countries, cities }) {
+    const { data, setData, patch, errors, processing, recentlySuccessful } = useForm({
+        name: library.name,
+        country: library.country,
+        city: library.city,
+        google_maps: library.google_maps
     });
 
     const submit = (e) => {
         e.preventDefault();
 
-        post(route('admin.library.store'));
+        patch(route('admin.library.update', library.id));
     };
 
     return (
@@ -31,7 +27,7 @@ export default function Create({ auth, countries, cities }) {
             user={auth.user}
             header={
                 <div className='flex items-center justify-between'>
-                    <h2 className="font-semibold text-xl text-gray-800 leading-tight">إضافة مكتبة جديدة</h2>
+                    <h2 className="font-semibold text-xl text-gray-800 leading-tight">تعديل المكتبة</h2>
 
                     <Link href={route('admin.library.index')}>
                         <PrimaryButton>العودة</PrimaryButton>
@@ -39,7 +35,7 @@ export default function Create({ auth, countries, cities }) {
                 </div>
             }
         >
-            <Head title="جميع المكتبات" />
+            <Head title="تعديل المكتبة" />
 
 
             <div className="py-8">
@@ -53,6 +49,7 @@ export default function Create({ auth, countries, cities }) {
                                     <Countries
                                         id='country'
                                         countries={countries}
+                                        value={data.country}
                                         onChange={(e) => setData('country', e.target.value)}
                                         isFocused
                                         required
@@ -67,6 +64,8 @@ export default function Create({ auth, countries, cities }) {
                                     <Cities
                                         id='city'
                                         cities={cities}
+                                        value={data.city}
+
                                         onChange={(e) => setData('city', e.target.value)}
                                         required
                                     />
@@ -88,7 +87,7 @@ export default function Create({ auth, countries, cities }) {
 
                                     <InputError className="mt-2" message={errors.google_maps} />
                                 </div>
-
+                                {/* 
                                 <div>
                                     <InputLabel htmlFor="libraryOwnerName" value="أسم صاحب المكتبة" />
 
@@ -98,13 +97,14 @@ export default function Create({ auth, countries, cities }) {
                                         value={data.libraryOwnerName}
                                         onChange={(e) => setData('libraryOwnerName', e.target.value)}
                                         required
+                                        isFocused
                                         autoComplete="libraryOwnerName"
                                     />
 
                                     <InputError className="mt-2" message={errors.libraryOwnerName} />
-                                </div>
+                                </div> */}
 
-                                <div>
+                                {/* <div>
                                     <InputLabel htmlFor="username" value="أسم المستخدم" />
 
                                     <TextInput
@@ -117,8 +117,8 @@ export default function Create({ auth, countries, cities }) {
                                     />
 
                                     <InputError className="mt-2" message={errors.username} />
-                                </div>
-
+                                </div> */}
+                                {/* 
                                 <div>
                                     <InputLabel htmlFor="password" value="كلمة المرور" />
 
@@ -132,7 +132,7 @@ export default function Create({ auth, countries, cities }) {
                                     />
 
                                     <InputError className="mt-2" message={errors.password} />
-                                </div>
+                                </div> */}
 
                                 <div>
                                     <InputLabel htmlFor="name" value="اسم المكتبة" />
@@ -149,10 +149,8 @@ export default function Create({ auth, countries, cities }) {
                                     <InputError className="mt-2" message={errors.name} />
                                 </div>
 
-
-
                                 <div className="flex items-center gap-4">
-                                    <PrimaryButton disabled={processing}>حفظ</PrimaryButton>
+                                    <PrimaryButton disabled={processing}>تحديث</PrimaryButton>
 
                                     <Transition
                                         show={recentlySuccessful}

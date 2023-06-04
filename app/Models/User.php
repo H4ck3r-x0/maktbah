@@ -46,6 +46,11 @@ class User extends Authenticatable
         'password' => 'hashed',
     ];
 
+    public function library()
+    {
+        return $this->hasOne(Library::class);
+    }
+
     public function getRoleAttribute()
     {
         return $this->roles()->first()->name ?? null;

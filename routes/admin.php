@@ -18,4 +18,7 @@ Route::middleware('auth')->group(function () {
     Route::get('libraries', [LibraryController::class, 'index'])->name('library.index');
     Route::get('libraries/create', [LibraryController::class, 'create'])->name('library.create');
     Route::post('libraries/store', [LibraryController::class, 'store'])->name('library.store');
+    Route::delete('libraries/destroy/{id}', [LibraryController::class, 'destroy'])->name('library.destroy');
+    Route::get('/libraries/edit/{id}', [LibraryController::class, 'edit'])->name('library.edit');
+    Route::patch('/libraries/update/{id}', [LibraryController::class, 'update'])->name('library.update');
 });
