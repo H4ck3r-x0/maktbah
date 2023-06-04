@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\Admin\AdminDashboardController;
 use App\Http\Controllers\Admin\Library\LibraryController;
+use App\Http\Controllers\Admin\User\UserController;
 
 Route::middleware('auth')->group(function () {
     // Admin Setting and Profile routes
@@ -21,4 +22,12 @@ Route::middleware('auth')->group(function () {
     Route::delete('libraries/destroy/{id}', [LibraryController::class, 'destroy'])->name('library.destroy');
     Route::get('/libraries/edit/{id}', [LibraryController::class, 'edit'])->name('library.edit');
     Route::patch('/libraries/update/{id}', [LibraryController::class, 'update'])->name('library.update');
+
+    //  User Routes
+    Route::get('users', [UserController::class, 'index'])->name('user.index');
+    Route::get('users/create', [UserController::class, 'create'])->name('user.create');
+    Route::post('users/store', [UserController::class, 'store'])->name('user.store');
+    Route::delete('users/destroy/{id}', [UserController::class, 'destroy'])->name('user.destroy');
+    Route::get('/users/edit/{id}', [UserController::class, 'edit'])->name('user.edit');
+    Route::patch('/users/update/{id}', [UserController::class, 'update'])->name('user.update');
 });

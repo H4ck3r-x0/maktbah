@@ -20,7 +20,7 @@ class LibraryFactory extends Factory
     public function definition(): array
     {
         return [
-            'name' => fake()->name(),
+            'name' => 'مكتبة' . ' ' . fake()->name(),
             'country' => Country::first()->name,
             'city' => City::inRandomOrder()->first()->name,
             'user_id' => User::factory()->create()->assignRole('library'),
