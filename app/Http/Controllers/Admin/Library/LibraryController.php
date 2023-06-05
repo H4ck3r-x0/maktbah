@@ -27,6 +27,7 @@ class LibraryController extends Controller
                         $query->where('name', 'like', "%{$search}%");
                     });
             })
+            ->orderBy('id', 'DESC')
             ->paginate(30)
             ->withQueryString();
 

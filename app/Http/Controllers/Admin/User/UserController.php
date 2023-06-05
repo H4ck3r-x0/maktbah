@@ -25,6 +25,7 @@ class UserController extends Controller
                     return $query->where('name', $account_type);
                 });
             })
+            ->orderBy('id', 'DESC')
             ->paginate(30)
             ->withQueryString();
 

@@ -52,7 +52,7 @@ export default function Index({ auth, libraries }) {
             <Head title="جميع المكتبات" />
 
 
-            <div className="py-8">
+            <div className="">
                 <div className="max-w-7xl mx-auto sm:px-6 lg:px-8">
                     <div className='py-3'>
                         <div className='flex items-center gap-4'>
