@@ -19,8 +19,19 @@ class LibraryController extends Controller
      */
     public function index()
     {
+        $query = Library::query()
+            ->with('user')
+            ->when(request()->search ?? false, function ($query, $search) {
+                $query->where('name', 'like', "%{$search}%")
+                    ->orWhereHas('user', function ($query) use ($search) {
+                        $query->where('name', 'like', "%{$search}%");
+                    });
+            })
+            ->paginate(30)
+            ->withQueryString();
+
         return Inertia::render('Admin/Library/Index', [
-            'libraries' => Library::with('user')->get()
+            'libraries' => $query
         ]);
     }
 
