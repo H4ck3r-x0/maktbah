@@ -1,9 +1,38 @@
-import DangerButton from '@/Components/DangerButton';
 import PrimaryButton from '@/Components/PrimaryButton';
+import TextInput from '@/Components/TextInput';
 import AdminAuthenticatedLayout from '@/Layouts/AdminAuthenticatedLayout';
-import { Head, Link } from '@inertiajs/react';
+import { Head, Link, useForm } from '@inertiajs/react';
+import { useEffect } from 'react';
+import debounce from "lodash/debounce";
 
 export default function Index({ auth, users }) {
+    const { data, setData, get, processing, reset } = useForm({
+        search: '',
+        account_type: '',
+    });
+
+
+    const search = (e) => {
+        setData('search', e.target.value);
+    }
+
+    const accountType = (e) => {
+        setData('account_type', e.target.value);
+    }
+
+    useEffect(() => {
+        const debouncedSearch = debounce(() => {
+            get(route('admin.user.index', { search: data.search, account_type: data.account_type }), {
+                preserveScroll: true,
+                preserveState: true,
+                replace: true
+            });
+        }, 500);
+
+        debouncedSearch();
+
+    }, [data.search, data.account_type])
+
     return (
         <AdminAuthenticatedLayout
             user={auth.user}
@@ -19,13 +48,47 @@ export default function Index({ auth, users }) {
         >
             <Head title="جميع اعضاء الموقع" />
 
-
-            <div className="py-8">
+            <div className="">
                 <div className="max-w-7xl mx-auto sm:px-6 lg:px-8">
+                    <div className='py-3'>
+                        <div className='flex items-center gap-4'>
+                            <TextInput
+                                type="text"
+                                id="search"
+                                name="search"
+                                value={data.search}
+                                autoComplete="search"
+                                onChange={search}
+                                placeholder="أبحث بالاسم .."
+                            />
+
+                            <div className='mb-2'>
+                                <select
+                                    onChange={accountType}
+                                    value={data.account_type}
+                                    name="account_type"
+                                    id="account_type"
+                                    className='mt-2 block w-full border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm'>
+                                    <option value="">أختر نوع الحساب</option>
+                                    <option value="user">عميل</option>
+                                    <option value="library">مكتبة</option>
+                                    <option value="teacher">استاذ / استاذة</option>
+                                    <option value="stationery">قرطاسية</option>
+                                </select>
+                            </div>
+
+                            {data.search !== '' || data.account_type !== '' ?
+                                <PrimaryButton onClick={() => reset()}>
+                                    إعادة تعيين
+                                </PrimaryButton> : null
+                            }
+
+                        </div>
+                    </div>
                     <div className="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                         <div className="p-6 text-gray-900">
                             <div className="relative overflow-x-auto">
-                                <table className="w-full text-sm text-right text-gray-500 border">
+                                <table className={`w-full text-sm text-right text-gray-500 border ${processing ? 'opacity-25 transition-opacity' : ''}`}>
                                     <thead className="text-sm text-gray-700 uppercase bg-gray-100 rounded-md border">
                                         <tr>
                                             <th scope="col" className="px-6 py-3">
@@ -43,7 +106,7 @@ export default function Index({ auth, users }) {
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        {users.map(user => (
+                                        {users.data.map(user => (
                                             <tr className="bg-white border-b hover:bg-gray-100 hover:transition-all" key={user.id}>
                                                 <th scope="row" className="px-6 py-4 font-medium text-gray-900 ">
                                                     {user.id}

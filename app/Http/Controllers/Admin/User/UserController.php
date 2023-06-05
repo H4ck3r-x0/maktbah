@@ -16,8 +16,20 @@ class UserController extends Controller
      */
     public function index()
     {
+        $query = User::query()
+            ->when(request()->search ?? false, function ($query, $search) {
+                $query->where('name', 'like', "%{$search}%");
+            })
+            ->when(request()->account_type ?? false, function ($query, $account_type) {
+                $query->whereHas('roles', function ($query) use ($account_type) {
+                    return $query->where('name', $account_type);
+                });
+            })
+            ->paginate(30)
+            ->withQueryString();
+
         return Inertia::render('Admin/User/Index', [
-            'users' => User::all()
+            'users' => $query
         ]);
     }
 

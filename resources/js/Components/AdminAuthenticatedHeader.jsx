@@ -51,6 +51,7 @@ export default function AdminAuthenticatedHeader({ user }) {
 
                                     <Dropdown.Content>
                                         <Dropdown.Link href={route('admin.user.index')}>جميع الاعضاء</Dropdown.Link>
+                                        <Dropdown.Link href={route('admin.user.create')}>إضافة عضو جديد</Dropdown.Link>
                                     </Dropdown.Content>
 
                                 </Dropdown>

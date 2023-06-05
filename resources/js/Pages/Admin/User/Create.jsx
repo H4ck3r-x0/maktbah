@@ -70,7 +70,6 @@ export default function Edit({ auth }) {
                                         value={data.name}
                                         onChange={(e) => setData('name', e.target.value)}
                                         required
-                                        isFocused
                                         autoComplete="name"
                                     />
 
