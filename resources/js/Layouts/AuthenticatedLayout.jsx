@@ -2,7 +2,6 @@ import AdminAuthenticatedHeader from '@/Components/AdminAuthenticatedHeader';
 import AuthenticatedHeader from '@/Components/AuthenticatedHeader';
 
 export default function Authenticated({ user, header, children }) {
-    console.log(user)
     return (
         <div className="min-h-screen bg-gray-100">
             {user.role == 'admin' ? <AdminAuthenticatedHeader user={user} /> :
