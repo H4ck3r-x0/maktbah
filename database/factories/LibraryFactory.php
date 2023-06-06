@@ -21,6 +21,8 @@ class LibraryFactory extends Factory
     {
         return [
             'name' => 'مكتبة' . ' ' . fake()->name(),
+            'phone' => fake()->phoneNumber(),
+            'CR' => fake()->randomNumber(5, true),
             'country' => Country::first()->name,
             'city' => City::inRandomOrder()->first()->name,
             'user_id' => User::factory()->create()->assignRole('library'),

@@ -15,6 +15,8 @@ return new class extends Migration
         Schema::create('libraries', function (Blueprint $table) {
             $table->id();
             $table->string('name')->unique()->nullable();
+            $table->string('phone')->unique()->nullable();
+            $table->string('CR')->nullable();
             $table->string('country')->nullable();
             $table->string('city')->nullable();
             $table->string('google_maps')->nullable();

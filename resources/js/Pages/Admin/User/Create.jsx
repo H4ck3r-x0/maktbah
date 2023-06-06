@@ -10,6 +10,7 @@ import { Transition } from '@headlessui/react';
 export default function Edit({ auth }) {
     const { data, setData, post, errors, processing, recentlySuccessful } = useForm({
         name: '',
+        phone: '',
         username: '',
         account_type: '',
         password: ''
@@ -74,6 +75,21 @@ export default function Edit({ auth }) {
                                     />
 
                                     <InputError className="mt-2" message={errors.name} />
+                                </div>
+
+                                <div>
+                                    <InputLabel htmlFor="phone" value="رقم الجوال" />
+
+                                    <TextInput
+                                        id="phone"
+                                        className="mt-2 block w-full"
+                                        value={data.phone}
+                                        onChange={(e) => setData('phone', e.target.value)}
+                                        required
+                                        autoComplete="name"
+                                    />
+
+                                    <InputError className="mt-2" message={errors.phone} />
                                 </div>
 
                                 <div>

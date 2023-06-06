@@ -16,6 +16,8 @@ class Library extends Model
      */
     protected $fillable = [
         'name',
+        'phone',
+        'CR',
         'google_maps',
         'country',
         'city',

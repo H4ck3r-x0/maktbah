@@ -90,6 +90,9 @@ export default function Index({ auth, libraries }) {
                                                 صاحب المكتبة
                                             </th>
                                             <th scope="col" className="px-6 py-3 tracking-wider">
+                                                رقم التواصل
+                                            </th>
+                                            <th scope="col" className="px-6 py-3 tracking-wider">
                                                 العمليات
                                             </th>
                                         </tr>
@@ -105,6 +108,9 @@ export default function Index({ auth, libraries }) {
                                                 </td>
                                                 <td className="px-6 py-4">
                                                     {library.user.name}
+                                                </td>
+                                                <td className="px-6 py-4">
+                                                    {library.phone}
                                                 </td>
                                                 <td className="px-0 py-4">
                                                     <div className='flex items-center gap-2'>

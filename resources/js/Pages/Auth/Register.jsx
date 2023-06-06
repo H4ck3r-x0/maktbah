@@ -42,7 +42,7 @@ export default function Register() {
                         required
                         className='mt-2 block w-full border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm'>
                         <option value="">أختر نوع الحساب</option>
-                        <option value="user">عميل</option>
+                        <option value="user">طالب / طالبة</option>
                         <option value="library">مكتبة</option>
                         <option value="teacher">استاذ / استاذة</option>
                         <option value="stationery">قرطاسية</option>

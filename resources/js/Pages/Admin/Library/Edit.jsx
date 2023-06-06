@@ -11,6 +11,8 @@ import Countries from '@/Pages/Components/Countries';
 export default function Edit({ auth, library, countries, cities }) {
     const { data, setData, patch, errors, processing, recentlySuccessful } = useForm({
         name: library.name,
+        phone: library.phone,
+        CR: library.CR,
         country: library.country,
         city: library.city,
         google_maps: library.google_maps
@@ -147,6 +149,36 @@ export default function Edit({ auth, library, countries, cities }) {
                                     />
 
                                     <InputError className="mt-2" message={errors.name} />
+                                </div>
+
+                                <div>
+                                    <InputLabel htmlFor="phone" value=" رقم التواصل" />
+
+                                    <TextInput
+                                        id="phone"
+                                        className="mt-2 block w-full"
+                                        value={data.phone}
+                                        onChange={(e) => setData('phone', e.target.value)}
+                                        required
+                                        autoComplete="phone"
+                                    />
+
+                                    <InputError className="mt-2" message={errors.phone} />
+                                </div>
+
+                                <div>
+                                    <InputLabel htmlFor="CR" value="السجل التجاري" />
+
+                                    <TextInput
+                                        id="CR"
+                                        className="mt-2 block w-full"
+                                        value={data.CR}
+                                        onChange={(e) => setData('CR', e.target.value)}
+                                        required
+                                        autoComplete="CR"
+                                    />
+
+                                    <InputError className="mt-2" message={errors.CR} />
                                 </div>
 
                                 <div className="flex items-center gap-4">

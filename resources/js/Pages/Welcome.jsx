@@ -17,6 +17,15 @@ export default function Welcome({ auth }) {
                         <GuestHeader />
                     )}
                 </div>
+
+                <div className='mt-10 px-6'>
+                    <h1 className='text-4xl text-indigo-600 font-semibold'>مرحبا بكم في موقع راحة</h1>
+                    <p className='mt-4 text-xl tracking-wide'>
+                        <strong className='ml-2 text-xl'>تنبية!</strong>
+                        هذا الموقع مخصص فقط للطلاب والطالبات
+                    </p>
+                </div>
+
             </div>
         </>
     );

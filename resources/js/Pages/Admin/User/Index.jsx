@@ -98,6 +98,9 @@ export default function Index({ auth, users }) {
                                                 الاسم
                                             </th>
                                             <th scope="col" className="px-6 py-3 tracking-wider">
+                                                الجوال
+                                            </th>
+                                            <th scope="col" className="px-6 py-3 tracking-wider">
                                                 الفئة
                                             </th>
                                             <th scope="col" className="px-6 py-3 tracking-wider">
@@ -113,6 +116,9 @@ export default function Index({ auth, users }) {
                                                 </th>
                                                 <td className="px-6 py-4">
                                                     {user.name}
+                                                </td>
+                                                <td className="px-6 py-4">
+                                                    {user.phone}
                                                 </td>
                                                 <td className="px-6 py-4">
                                                     {user.role}
