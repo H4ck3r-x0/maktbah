@@ -20,6 +20,7 @@ class DatabaseSeeder extends Seeder
             DistrictSeeder::class,
             LibrarySeeder::class,
             BookSeeder::class,
+            MajorSeeder::class,
         ]);
 
         // \App\Models\User::factory(10)->create();

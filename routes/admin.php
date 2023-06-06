@@ -6,6 +6,7 @@ use App\Http\Controllers\Admin\AdminDashboardController;
 use App\Http\Controllers\Admin\Common\BookController;
 use App\Http\Controllers\Admin\Common\CityController;
 use App\Http\Controllers\Admin\Common\DistrictController;
+use App\Http\Controllers\Admin\Common\MajorController;
 use App\Http\Controllers\Admin\Library\LibraryController;
 use App\Http\Controllers\Admin\User\UserController;
 
@@ -47,6 +48,12 @@ Route::middleware('auth')->group(function () {
     Route::post('district/store', [DistrictController::class, 'store'])->name('district.store');
     Route::get('district/edit/{id}', [DistrictController::class, 'edit'])->name('district.edit');
     Route::patch('district/update/{id}', [DistrictController::class, 'update'])->name('district.update');
+
+    // Settings - Majors
+    Route::get('majors/create', [MajorController::class, 'create'])->name('major.create');
+    Route::post('majors/store', [MajorController::class, 'store'])->name('major.store');
+    Route::get('majors/edit/{id}', [MajorController::class, 'edit'])->name('major.edit');
+    Route::patch('majors/update/{id}', [MajorController::class, 'update'])->name('major.update');
 
     // Books
     Route::get('books', [BookController::class, 'index'])->name('book.index');

@@ -7,16 +7,16 @@ import { useForm, Head } from '@inertiajs/react';
 import { Transition } from '@headlessui/react';
 
 
-export default function Edit({ auth, city }) {
+export default function Edit({ auth, major }) {
     const { data, setData, patch, errors, processing, recentlySuccessful } = useForm({
-        name: city.name,
+        name: major.name,
     });
 
 
     const submit = (e) => {
         e.preventDefault();
 
-        patch(route('admin.city.update', city.id));
+        patch(route('admin.major.update', major.id));
     };
 
     return (
@@ -24,11 +24,11 @@ export default function Edit({ auth, city }) {
             user={auth.user}
             header={
                 <div className='flex items-center justify-between'>
-                    <h2 className="font-semibold text-xl text-gray-800 leading-tight">تعديل مدن</h2>
+                    <h2 className="font-semibold text-xl text-gray-800 leading-tight">تعديل تخصص</h2>
                 </div>
             }
         >
-            <Head title="تعديل مدن" />
+            <Head title="تعديل تخصص" />
 
             <div className="py-8">
                 <div className="max-w-7xl mx-auto sm:px-6 lg:px-8">
