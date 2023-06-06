@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\Admin\AdminDashboardController;
+use App\Http\Controllers\Admin\Common\BookController;
 use App\Http\Controllers\Admin\Common\CityController;
 use App\Http\Controllers\Admin\Common\DistrictController;
 use App\Http\Controllers\Admin\Library\LibraryController;
@@ -46,4 +47,11 @@ Route::middleware('auth')->group(function () {
     Route::post('district/store', [DistrictController::class, 'store'])->name('district.store');
     Route::get('district/edit/{id}', [DistrictController::class, 'edit'])->name('district.edit');
     Route::patch('district/update/{id}', [DistrictController::class, 'update'])->name('district.update');
+
+    // Books
+    Route::get('books', [BookController::class, 'index'])->name('book.index');
+    Route::get('books/create', [BookController::class, 'create'])->name('book.create');
+    Route::post('books/store', [BookController::class, 'store'])->name('book.store');
+    Route::get('books/edit/{id}', [BookController::class, 'edit'])->name('book.edit');
+    Route::patch('books/update/{id}', [BookController::class, 'update'])->name('book.update');
 });
