@@ -36,6 +36,7 @@ class DistrictController extends Controller
     {
         $request->validate([
             'name' => 'required|string|max:255',
+            'city_id' => 'required|string'
         ]);
 
         District::create([
@@ -72,6 +73,7 @@ class DistrictController extends Controller
     {
         $request->validate([
             'name' => 'required|string|max:255',
+            'city_id' => 'required|string'
         ]);
 
         $district = District::findOrFail($id);

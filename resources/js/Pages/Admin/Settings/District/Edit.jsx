@@ -48,6 +48,7 @@ export default function Edit({ auth, district, cities }) {
                                             )
                                         }
                                     </select>
+                                    <InputError className="mt-2" message={errors.city_id} />
 
                                 </div>
                                 <div>

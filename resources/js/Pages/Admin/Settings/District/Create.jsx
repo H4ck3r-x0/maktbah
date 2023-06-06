@@ -47,6 +47,7 @@ export default function Create({ auth, cities, districts }) {
                                             )
                                         }
                                     </select>
+                                    <InputError className="mt-2" message={errors.city_id} />
 
                                 </div>
                                 <div>
