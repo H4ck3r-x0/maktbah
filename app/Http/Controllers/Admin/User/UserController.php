@@ -27,11 +27,13 @@ class UserController extends Controller
                 });
             })
             ->orderBy('id', 'DESC')
-            ->paginate(30)
+            ->paginate(5)
             ->withQueryString();
 
         return Inertia::render('Admin/User/Index', [
-            'users' => $query
+            'users' => $query,
+            'filters' => request()->only(['search', 'account_type']),
+            'currentPage' => request()->page,
         ]);
     }
 

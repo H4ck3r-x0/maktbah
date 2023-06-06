@@ -1,14 +1,18 @@
 import PrimaryButton from '@/Components/PrimaryButton';
 import TextInput from '@/Components/TextInput';
 import AdminAuthenticatedLayout from '@/Layouts/AdminAuthenticatedLayout';
-import { Head, Link, useForm } from '@inertiajs/react';
-import { useEffect } from 'react';
+import { Head, Link, useForm, usePage } from '@inertiajs/react';
+import { useCallback, useEffect } from 'react';
 import debounce from "lodash/debounce";
+import Pagination from '@/Pages/Components/Pagination';
 
 export default function Index({ auth, users }) {
+    const filters = usePage().props.filters;
+    const currentPage = usePage().props.currentPage;
+
     const { data, setData, get, processing, reset } = useForm({
-        search: '',
-        account_type: '',
+        search: filters.search,
+        account_type: filters.account_type,
     });
 
 
@@ -19,19 +23,28 @@ export default function Index({ auth, users }) {
     const accountType = (e) => {
         setData('account_type', e.target.value);
     }
+    const searchUsers = () => {
+        get(route('admin.user.index', { search: data.search, account_type: data.account_type, page: currentPage }), {
+            preserveScroll: true,
+            preserveState: true,
+            replace: true
+        });
+    };
+    const delayedSearch = useCallback(
+        debounce(searchUsers, 500),
+
+        [data.search, data.account_type, currentPage]
+    );
 
     useEffect(() => {
-        const debouncedSearch = debounce(() => {
-            get(route('admin.user.index', { search: data.search, account_type: data.account_type }), {
-                preserveScroll: true,
-                preserveState: true,
-                replace: true
-            });
-        }, 500);
+        delayedSearch();
+        return delayedSearch.cancel;
+    }, [data.search, data.account_type, delayedSearch])
 
-        debouncedSearch();
-
-    }, [data.search, data.account_type])
+    // const reset = () => {
+    //     setData('account_type', '');
+    //     setData('search', '');
+    // }
 
     return (
         <AdminAuthenticatedLayout
@@ -56,7 +69,7 @@ export default function Index({ auth, users }) {
                                 type="text"
                                 id="search"
                                 name="search"
-                                value={data.search}
+                                value={data.search ? data.search : ''}
                                 autoComplete="search"
                                 onChange={search}
                                 placeholder="أبحث بالاسم .."
@@ -138,6 +151,8 @@ export default function Index({ auth, users }) {
                                         ))}
                                     </tbody>
                                 </table>
+
+                                <Pagination class="mt-6" links={users.links} />
                             </div>
                         </div>
                     </div>

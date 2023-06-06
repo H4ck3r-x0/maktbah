@@ -8,7 +8,7 @@ import Pagination from '@/Pages/Components/Pagination';
 export default function Index({ auth, books }) {
     const filters = usePage().props.filters;
     const currentPage = usePage().props.currentPage;
-    const { data, setData, get, processing, reset } = useForm({
+    const { data, setData, get, processing } = useForm({
         search: filters.search,
     });
 
@@ -17,7 +17,6 @@ export default function Index({ auth, books }) {
     }
 
     const searchBooks = () => {
-
         get(route('admin.book.index', { search: data.search, page: currentPage }), {
             preserveScroll: true,
             preserveState: true,
