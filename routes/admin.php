@@ -3,6 +3,8 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\Admin\AdminDashboardController;
+use App\Http\Controllers\Admin\Common\CityController;
+use App\Http\Controllers\Admin\Common\DistrictController;
 use App\Http\Controllers\Admin\Library\LibraryController;
 use App\Http\Controllers\Admin\User\UserController;
 
@@ -30,4 +32,18 @@ Route::middleware('auth')->group(function () {
     Route::delete('users/destroy/{id}', [UserController::class, 'destroy'])->name('user.destroy');
     Route::get('/users/edit/{id}', [UserController::class, 'edit'])->name('user.edit');
     Route::patch('/users/update/{id}', [UserController::class, 'update'])->name('user.update');
+
+
+    // Settings - City
+    Route::get('cities/create', [CityController::class, 'create'])->name('city.create');
+    Route::post('cities/store', [CityController::class, 'store'])->name('city.store');
+    Route::get('cities/edit/{id}', [CityController::class, 'edit'])->name('city.edit');
+    Route::patch('cities/update/{id}', [CityController::class, 'update'])->name('city.update');
+
+    // Settings - District
+    Route::get('district/create', [DistrictController::class, 'create'])->name('district.create');
+    Route::post('district/store', [DistrictController::class, 'store'])->name('district.store');
+    Route::post('district/store', [DistrictController::class, 'store'])->name('district.store');
+    Route::get('district/edit/{id}', [DistrictController::class, 'edit'])->name('district.edit');
+    Route::patch('district/update/{id}', [DistrictController::class, 'update'])->name('district.update');
 });

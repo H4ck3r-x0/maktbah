@@ -7,7 +7,7 @@ import { Link, useForm, Head } from '@inertiajs/react';
 import { Transition } from '@headlessui/react';
 
 
-export default function Edit({ auth }) {
+export default function Create({ auth }) {
     const { data, setData, post, errors, processing, recentlySuccessful } = useForm({
         name: '',
         phone: '',

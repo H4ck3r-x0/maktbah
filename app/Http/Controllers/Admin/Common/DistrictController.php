@@ -2,8 +2,11 @@
 
 namespace App\Http\Controllers\Admin\Common;
 
-use App\Http\Controllers\Controller;
+use Inertia\Inertia;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
+use App\Models\City;
+use App\Models\District;
 
 class DistrictController extends Controller
 {
@@ -20,7 +23,10 @@ class DistrictController extends Controller
      */
     public function create()
     {
-        //
+        return Inertia::render('Admin/Settings/District/Create', [
+            'cities' => City::all(),
+            'districts' => District::all()
+        ]);
     }
 
     /**
@@ -28,7 +34,16 @@ class DistrictController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'name' => 'required|string|max:255',
+        ]);
+
+        District::create([
+            'name' => $request->name,
+            'city_id' => $request->city_id
+        ]);
+
+        return redirect()->back();
     }
 
     /**
@@ -44,7 +59,10 @@ class DistrictController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        return Inertia::render('Admin/Settings/District/Edit', [
+            'district' => District::findOrFail($id),
+            'cities' => City::all()
+        ]);
     }
 
     /**
@@ -52,7 +70,16 @@ class DistrictController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $request->validate([
+            'name' => 'required|string|max:255',
+        ]);
+
+        $district = District::findOrFail($id);
+        $district->name = $request->name;
+        $district->city_id = $request->city_id;
+        $district->save();
+
+        return redirect()->back();
     }
 
     /**

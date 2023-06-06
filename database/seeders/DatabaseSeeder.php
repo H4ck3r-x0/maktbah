@@ -4,8 +4,8 @@ namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 
-use App\Models\Library;
 use Illuminate\Database\Seeder;
+use Database\Seeders\DistrictSeeder;
 
 class DatabaseSeeder extends Seeder
 {
@@ -17,8 +17,8 @@ class DatabaseSeeder extends Seeder
         $this->call([
             RoleSeeder::class,
             AdminSeeder::class,
-            CountrySeeder::class,
             CitySeeder::class,
+            DistrictSeeder::class,
             LibrarySeeder::class,
         ]);
 
