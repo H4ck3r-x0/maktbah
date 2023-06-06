@@ -12,6 +12,7 @@ export default function Edit({ auth }) {
         name: '',
         phone: '',
         username: '',
+        gender: '',
         account_type: '',
         password: ''
     });
@@ -60,6 +61,24 @@ export default function Edit({ auth }) {
                                     </select>
 
                                     <InputError message={errors.name} className="mt-2" />
+                                </div>
+
+                                <div className='mb-2'>
+                                    <InputLabel htmlFor="gender" value="الجنس" />
+                                    <select
+                                        onChange={(e) => setData('gender', e.target.value)}
+                                        name="gender"
+                                        id="gender"
+                                        autoFocus
+                                        required
+                                        className='mt-2 block w-full border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm'>
+                                        <option value="">أختر نوع الجنس</option>
+                                        <option value="male">ذكر</option>
+                                        <option value="female">أنثى</option>
+
+                                    </select>
+
+                                    <InputError message={errors.gender} className="mt-2" />
                                 </div>
 
                                 <div>

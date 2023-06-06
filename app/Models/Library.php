@@ -19,7 +19,7 @@ class Library extends Model
         'phone',
         'CR',
         'google_maps',
-        'country',
+        'district',
         'city',
         'user_id',
     ];

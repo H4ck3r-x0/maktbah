@@ -15,43 +15,33 @@ class CitySeeder extends Seeder
     {
         City::create([
             'name' => 'مكة المكرمة',
-            'country_id' => 1,
         ]);
         City::create([
             'name' => 'المدينة المنورة',
-            'country_id' => 1,
         ]);
         City::create([
             'name' => 'جدة',
-            'country_id' => 1,
         ]);
         City::create([
             'name' => 'الرياض',
-            'country_id' => 1,
         ]);
         City::create([
             'name' => 'الدمام',
-            'country_id' => 1,
         ]);
         City::create([
             'name' => 'الطائف',
-            'country_id' => 1,
         ]);
         City::create([
             'name' => 'تبوك',
-            'country_id' => 1,
         ]);
         City::create([
             'name' => 'بريدة',
-            'country_id' => 1,
         ]);
         City::create([
             'name' => 'حائل',
-            'country_id' => 1,
         ]);
         City::create([
             'name' => 'ابهاء',
-            'country_id' => 1,
         ]);
     }
 }

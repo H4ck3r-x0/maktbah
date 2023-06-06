@@ -5,10 +5,9 @@ import InputError from '@/Components/InputError';
 import InputLabel from '@/Components/InputLabel';
 import TextInput from '@/Components/TextInput';
 import { Transition } from '@headlessui/react';
-import Countries from '@/Pages/Components/Countries';
 import Cities from '@/Pages/Components/Cities';
 
-export default function Create({ auth, countries, cities }) {
+export default function Create({ auth, cities }) {
 
     const { data, setData, post, errors, processing, recentlySuccessful } = useForm({
         libraryOwnerName: '',
@@ -17,7 +16,6 @@ export default function Create({ auth, countries, cities }) {
         name: '',
         phone: '',
         CR: '',
-        country: '',
         city: '',
         google_maps: ''
     });
@@ -49,19 +47,7 @@ export default function Create({ auth, countries, cities }) {
                     <div className="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                         <div className="p-6 text-gray-900">
                             <form onSubmit={submit} className="mt-6 space-y-6">
-                                <div>
-                                    <InputLabel htmlFor="country" value="الدولة" />
 
-                                    <Countries
-                                        id='country'
-                                        countries={countries}
-                                        onChange={(e) => setData('country', e.target.value)}
-                                        isFocused
-                                        required
-                                    />
-
-                                    <InputError className="mt-2" message={errors.country} />
-                                </div>
 
                                 <div>
                                     <InputLabel htmlFor="city" value="المدينة" />

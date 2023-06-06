@@ -17,7 +17,7 @@ return new class extends Migration
             $table->string('name')->unique()->nullable();
             $table->string('phone')->unique()->nullable();
             $table->string('CR')->nullable();
-            $table->string('country')->nullable();
+            $table->string('district')->nullable();
             $table->string('city')->nullable();
             $table->string('google_maps')->nullable();
 

@@ -5,7 +5,6 @@ namespace App\Http\Controllers\Admin\Library;
 use App\Models\City;
 use App\Models\User;
 use Inertia\Inertia;
-use App\Models\Country;
 use App\Models\Library;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
@@ -43,7 +42,6 @@ class LibraryController extends Controller
     public function create()
     {
         return Inertia::render('Admin/Library/Create', [
-            'countries' => Country::all(),
             'cities' => City::all()
         ]);
     }
@@ -70,7 +68,6 @@ class LibraryController extends Controller
             'name' => request()->name,
             'phone' => request()->phone,
             'CR' => request()->CR,
-            'country' => request()->country,
             'city' => request()->city,
             'google_maps' => request()->google_maps,
         ]);
@@ -97,7 +94,6 @@ class LibraryController extends Controller
 
         return Inertia::render('Admin/Library/Edit', [
             'library' => $library,
-            'countries' => Country::all(),
             'cities' => City::all()
         ]);
     }
@@ -116,7 +112,6 @@ class LibraryController extends Controller
         $library->name = $request->name;
         $library->phone = $request->phone;
         $library->CR = $request->CR;
-        $library->country = $request->country;
         $library->city = $request->city;
         $library->google_maps = $request->google_maps;
 

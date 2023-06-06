@@ -6,14 +6,12 @@ import TextInput from '@/Components/TextInput';
 import { Link, useForm, Head } from '@inertiajs/react';
 import { Transition } from '@headlessui/react';
 import Cities from '@/Pages/Components/Cities';
-import Countries from '@/Pages/Components/Countries';
 
-export default function Edit({ auth, library, countries, cities }) {
+export default function Edit({ auth, library, cities }) {
     const { data, setData, patch, errors, processing, recentlySuccessful } = useForm({
         name: library.name,
         phone: library.phone,
         CR: library.CR,
-        country: library.country,
         city: library.city,
         google_maps: library.google_maps
     });
@@ -45,20 +43,7 @@ export default function Edit({ auth, library, countries, cities }) {
                     <div className="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                         <div className="p-6 text-gray-900">
                             <form onSubmit={submit} className="mt-6 space-y-6">
-                                <div>
-                                    <InputLabel htmlFor="country" value="الدولة" />
 
-                                    <Countries
-                                        id='country'
-                                        countries={countries}
-                                        value={data.country}
-                                        onChange={(e) => setData('country', e.target.value)}
-                                        isFocused
-                                        required
-                                    />
-
-                                    <InputError className="mt-2" message={errors.country} />
-                                </div>
 
                                 <div>
                                     <InputLabel htmlFor="city" value="المدينة" />

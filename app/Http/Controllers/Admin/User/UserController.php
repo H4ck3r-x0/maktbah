@@ -50,6 +50,7 @@ class UserController extends Controller
     {
         $request->validate([
             'account_type' => 'required|string|max:255',
+            'gender' => 'required|string|max:255',
             'name' => 'required|string|max:255',
             'phone' => 'required|string|unique:' . User::class,
             'username' => 'required|string|alpha_dash|max:255|unique:' . User::class,
@@ -60,6 +61,7 @@ class UserController extends Controller
             'name' => $request->name,
             'phone' => $request->phone,
             'username' => $request->username,
+            'gender' => $request->gender,
             'password' => Hash::make($request->password),
         ]);
 
