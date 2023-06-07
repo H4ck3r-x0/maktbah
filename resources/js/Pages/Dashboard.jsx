@@ -5,7 +5,7 @@ export default function Dashboard({ auth }) {
     return (
         <AuthenticatedLayout
             user={auth.user}
-            header={<h2 className="font-semibold text-xl text-gray-800 leading-tight">لوحة التحكم المكتبة</h2>}
+            header={<h2 className="font-semibold text-xl text-gray-800 leading-tight">لوحة التحكم </h2>}
         >
             <Head title="لوحة التحكم المكتبة" />
 
