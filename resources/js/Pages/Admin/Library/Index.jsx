@@ -97,6 +97,12 @@ export default function Index({ auth, libraries }) {
                                                 أسم المكتبة
                                             </th>
                                             <th scope="col" className="px-6 py-3 tracking-wider">
+                                                المدينة
+                                            </th>
+                                            <th scope="col" className="px-6 py-3 tracking-wider">
+                                                الحي
+                                            </th>
+                                            <th scope="col" className="px-6 py-3 tracking-wider">
                                                 صاحب المكتبة
                                             </th>
                                             <th scope="col" className="px-6 py-3 tracking-wider">
@@ -115,6 +121,12 @@ export default function Index({ auth, libraries }) {
                                                 </th>
                                                 <td className="px-6 py-4">
                                                     {library.name}
+                                                </td>
+                                                <td className="px-6 py-4">
+                                                    {library.city}
+                                                </td>
+                                                <td className="px-6 py-4">
+                                                    {library.district}
                                                 </td>
                                                 <td className="px-6 py-4">
                                                     {library.user.name}

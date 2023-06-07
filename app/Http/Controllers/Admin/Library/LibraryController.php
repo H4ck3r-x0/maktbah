@@ -6,6 +6,7 @@ use App\Models\City;
 use App\Models\User;
 use Inertia\Inertia;
 use App\Models\Library;
+use App\Models\District;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 use Illuminate\Validation\Rules;
@@ -44,7 +45,8 @@ class LibraryController extends Controller
     public function create()
     {
         return Inertia::render('Admin/Library/Create', [
-            'cities' => City::all()
+            'cities' => City::all(),
+            'districts' => District::all()
         ]);
     }
 
@@ -71,6 +73,7 @@ class LibraryController extends Controller
             'phone' => request()->phone,
             'CR' => request()->CR,
             'city' => request()->city,
+            'district' => request()->district,
             'google_maps' => request()->google_maps,
         ]);
 
@@ -96,7 +99,8 @@ class LibraryController extends Controller
 
         return Inertia::render('Admin/Library/Edit', [
             'library' => $library,
-            'cities' => City::all()
+            'cities' => City::all(),
+            'districts' => District::all()
         ]);
     }
 
@@ -115,6 +119,7 @@ class LibraryController extends Controller
         $library->phone = $request->phone;
         $library->CR = $request->CR;
         $library->city = $request->city;
+        $library->district = $request->district;
         $library->google_maps = $request->google_maps;
 
         $library->save();

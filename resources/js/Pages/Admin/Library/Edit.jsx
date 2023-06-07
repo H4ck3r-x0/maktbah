@@ -5,14 +5,16 @@ import PrimaryButton from '@/Components/PrimaryButton';
 import TextInput from '@/Components/TextInput';
 import { Link, useForm, Head } from '@inertiajs/react';
 import { Transition } from '@headlessui/react';
-import Cities from '@/Pages/Components/Cities';
+import { useState } from 'react';
 
-export default function Edit({ auth, library, cities }) {
+export default function Edit({ auth, library, cities, districts }) {
+    const [selectedCityId, setSelectedCityId] = useState('');
     const { data, setData, patch, errors, processing, recentlySuccessful } = useForm({
         name: library.name,
         phone: library.phone,
         CR: library.CR,
         city: library.city,
+        district: library.district,
         google_maps: library.google_maps
     });
 
@@ -21,6 +23,11 @@ export default function Edit({ auth, library, cities }) {
 
         patch(route('admin.library.update', library.id));
     };
+    const cityChanged = (e) => {
+        const filterdCities = cities.filter(value => e.target.value == value.id);
+        setSelectedCityId(filterdCities[0].id);
+        setData('city', filterdCities[0].name)
+    }
 
     return (
         <AdminAuthenticatedLayout
@@ -43,21 +50,40 @@ export default function Edit({ auth, library, cities }) {
                     <div className="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                         <div className="p-6 text-gray-900">
                             <form onSubmit={submit} className="mt-6 space-y-6">
-
-
                                 <div>
                                     <InputLabel htmlFor="city" value="المدينة" />
-
-                                    <Cities
-                                        id='city'
-                                        cities={cities}
-                                        value={data.city}
-
-                                        onChange={(e) => setData('city', e.target.value)}
-                                        required
-                                    />
+                                    <select
+                                        onChange={cityChanged}
+                                        className={`w-full mt-2 border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm `}>
+                                        <option value="">أختر المدينة</option>
+                                        {
+                                            cities.map(city =>
+                                                <option value={city.id} key={city.id}>{city.name}</option>
+                                            )
+                                        }
+                                    </select>
 
                                     <InputError className="mt-2" message={errors.city} />
+                                </div>
+
+                                <div>
+                                    <InputLabel htmlFor="city" value="الحي" />
+
+                                    <select
+                                        onChange={(e) => setData('district', e.target.value)}
+                                        className={`w-full mt-2 border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm `}>
+                                        <option value="">أختر الحي</option>
+                                        {
+                                            districts.filter((district) => {
+                                                return district.city_id === selectedCityId
+                                            })
+                                                .map(district =>
+                                                    <option value={district.name} key={district.id}>{district.name}</option>
+                                                )
+                                        }
+                                    </select>
+                                    <InputError className="mt-2" message={errors.district_id} />
+
                                 </div>
 
                                 <div>

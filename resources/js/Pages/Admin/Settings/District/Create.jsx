@@ -50,6 +50,7 @@ export default function Create({ auth, cities, districts }) {
                                     <InputError className="mt-2" message={errors.city_id} />
 
                                 </div>
+
                                 <div>
                                     <InputLabel htmlFor="name" value="الاسم" />
 
