@@ -3,13 +3,17 @@ import PrimaryButton from '@/Components/PrimaryButton';
 import SecondaryButton from '@/Components/SecondaryButton';
 import TextInput from '@/Components/TextInput';
 import AdminAuthenticatedLayout from '@/Layouts/AdminAuthenticatedLayout';
-import { Head, Link, useForm } from '@inertiajs/react';
-import { useEffect } from 'react';
+import { Head, Link, useForm, usePage } from '@inertiajs/react';
+import { useCallback, useEffect } from 'react';
 import debounce from "lodash/debounce";
+import Pagination from '@/Pages/Components/Pagination';
 
 export default function Index({ auth, libraries }) {
+    const filters = usePage().props.filters;
+    const currentPage = usePage().props.currentPage;
+
     const { data, setData, delete: destroy, get, processing, reset } = useForm({
-        search: '',
+        search: filters.search,
     });
 
     const search = (e) => {
@@ -23,18 +27,25 @@ export default function Index({ auth, libraries }) {
         }
     }
 
+    const searchLibraries = () => {
+        get(route('admin.library.index', { search: data.search, page: currentPage }), {
+            preserveScroll: true,
+            preserveState: true,
+            replace: true
+        });
+    };
+
+    const delayedSearch = useCallback(
+        debounce(searchLibraries, 500),
+
+        [data.search, currentPage]
+    );
+
     useEffect(() => {
-        const debouncedSearch = debounce(() => {
-            get(route('admin.library.index', { search: data.search }), {
-                preserveScroll: true,
-                preserveState: true,
-                replace: true
-            });
-        }, 500);
+        delayedSearch();
+        return delayedSearch.cancel;
+    }, [data.search, delayedSearch])
 
-        debouncedSearch();
-
-    }, [data.search])
 
     return (
         <AdminAuthenticatedLayout
@@ -60,18 +71,17 @@ export default function Index({ auth, libraries }) {
                                 type="text"
                                 id="search"
                                 name="search"
-                                value={data.search}
+                                value={data.search ? data.search : ''}
                                 autoComplete="search"
                                 onChange={search}
                                 placeholder="أبحث بإسم المكتبة او صاحبها"
                             />
 
-                            {data.search !== '' ?
+                            {data.search !== '' || data.account_type !== '' ?
                                 <PrimaryButton onClick={() => reset()}>
                                     إعادة تعيين
                                 </PrimaryButton> : null
                             }
-
                         </div>
                     </div>
                     <div className="bg-white overflow-hidden shadow-sm sm:rounded-lg">
@@ -141,6 +151,8 @@ export default function Index({ auth, libraries }) {
                                         ))}
                                     </tbody>
                                 </table>
+
+                                <Pagination class="mt-6" links={libraries.links} />
                             </div>
                         </div>
                     </div>

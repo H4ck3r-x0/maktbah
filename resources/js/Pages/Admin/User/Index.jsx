@@ -23,6 +23,7 @@ export default function Index({ auth, users }) {
     const accountType = (e) => {
         setData('account_type', e.target.value);
     }
+
     const searchUsers = () => {
         get(route('admin.user.index', { search: data.search, account_type: data.account_type, page: currentPage }), {
             preserveScroll: true,
@@ -30,6 +31,7 @@ export default function Index({ auth, users }) {
             replace: true
         });
     };
+
     const delayedSearch = useCallback(
         debounce(searchUsers, 500),
 
@@ -41,10 +43,7 @@ export default function Index({ auth, users }) {
         return delayedSearch.cancel;
     }, [data.search, data.account_type, delayedSearch])
 
-    // const reset = () => {
-    //     setData('account_type', '');
-    //     setData('search', '');
-    // }
+
 
     return (
         <AdminAuthenticatedLayout

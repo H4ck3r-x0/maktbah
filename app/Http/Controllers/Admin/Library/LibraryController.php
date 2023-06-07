@@ -28,11 +28,13 @@ class LibraryController extends Controller
                     });
             })
             ->orderBy('id', 'DESC')
-            ->paginate(30)
+            ->paginate(5)
             ->withQueryString();
 
         return Inertia::render('Admin/Library/Index', [
-            'libraries' => $query
+            'libraries' => $query,
+            'filters' => request()->only(['search', 'account_type']),
+            'currentPage' => request()->page,
         ]);
     }
 
