@@ -16,8 +16,15 @@ class MajorFactory extends Factory
      */
     public function definition(): array
     {
+        $levels = [];
+
+        for ($i = 1; $i <= 5; $i++) {
+            array_push($levels, $i);
+        }
+
         return [
-            'name' => fake()->sentence()
+            'name' => fake()->sentence(),
+            'levels' => $levels
         ];
     }
 }

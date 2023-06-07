@@ -54,6 +54,7 @@ Route::middleware('auth')->group(function () {
     Route::post('majors/store', [MajorController::class, 'store'])->name('major.store');
     Route::get('majors/edit/{id}', [MajorController::class, 'edit'])->name('major.edit');
     Route::patch('majors/update/{id}', [MajorController::class, 'update'])->name('major.update');
+    Route::delete('majors/destroy/{id}', [MajorController::class, 'destroy'])->name('major.destroy');
 
     // Books
     Route::get('books', [BookController::class, 'index'])->name('book.index');

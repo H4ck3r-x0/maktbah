@@ -2,10 +2,11 @@
 
 namespace App\Http\Controllers\Admin\Common;
 
-use App\Http\Controllers\Controller;
+use Inertia\Inertia;
 use App\Models\Major;
 use Illuminate\Http\Request;
-use Inertia\Inertia;
+use Illuminate\Validation\Rule;
+use App\Http\Controllers\Controller;
 
 class MajorController extends Controller
 {
@@ -34,10 +35,19 @@ class MajorController extends Controller
     {
         $request->validate([
             'name' => 'required|string|max:255|unique:' . Major::class,
+            'levels' => 'required|numeric'
         ]);
 
+        $requestedLevels = (int) $request->levels;
+        $levels = [];
+
+        for ($i = 1; $i <= $requestedLevels; $i++) {
+            array_push($levels, $i);
+        }
+
         Major::create([
-            'name' => $request->name
+            'name' => $request->name,
+            'levels' => $levels,
         ]);
 
         return redirect()->back();
@@ -67,10 +77,20 @@ class MajorController extends Controller
     public function update(Request $request, string $id)
     {
         $request->validate([
-            'name' => 'required|string|max:255|unique:' . major::class,
+            'name' => ['required', 'string', Rule::unique(Major::class)->ignore($id)],
+            'levels' => 'required|numeric'
         ]);
+
+        $requestedLevels = (int) $request->levels;
+        $levels = [];
+
+        for ($i = 1; $i <= $requestedLevels; $i++) {
+            array_push($levels, $i);
+        }
+
         $major = Major::findOrFail($id);
         $major->name = $request->name;
+        $major->levels = $levels;
         $major->save();
 
         return redirect()->back();
@@ -81,6 +101,8 @@ class MajorController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        Major::destroy($id);
+
+        return redirect()->back();
     }
 }

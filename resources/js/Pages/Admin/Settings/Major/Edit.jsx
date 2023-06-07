@@ -10,6 +10,7 @@ import { Transition } from '@headlessui/react';
 export default function Edit({ auth, major }) {
     const { data, setData, patch, errors, processing, recentlySuccessful } = useForm({
         name: major.name,
+        levels: ''
     });
 
 
@@ -48,6 +49,27 @@ export default function Edit({ auth, major }) {
                                     />
 
                                     <InputError className="mt-2" message={errors.name} />
+                                </div>
+
+
+                                <div>
+                                    <div className='flex items-center gap-2'>
+                                        <InputLabel htmlFor="levels" value="عدد المستويات" />
+                                        <p className='text-sm text-blue-700'>{major.levels.length}</p>
+                                    </div>
+
+                                    <TextInput
+                                        type="number"
+                                        max="20"
+                                        min="1"
+                                        id="levels"
+                                        className="mt-2 block w-full"
+                                        value={data.levels}
+                                        onChange={(e) => setData('levels', e.target.value)}
+                                        required
+                                    />
+
+                                    <InputError className="mt-2" message={errors.levels} />
                                 </div>
 
                                 <div className="flex items-center gap-4">

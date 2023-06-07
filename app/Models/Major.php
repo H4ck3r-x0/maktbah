@@ -16,5 +16,10 @@ class Major extends Model
      */
     protected $fillable = [
         'name',
+        'levels'
+    ];
+
+    protected $casts = [
+        'levels' => 'array',
     ];
 }
