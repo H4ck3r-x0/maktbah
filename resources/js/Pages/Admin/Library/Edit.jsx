@@ -23,8 +23,10 @@ export default function Edit({ auth, library, cities, districts }) {
 
         patch(route('admin.library.update', library.id));
     };
+
     const cityChanged = (e) => {
-        const filterdCities = cities.filter(value => e.target.value == value.id);
+        const cityId = e.target.value;
+        const filterdCities = cities.filter(value => cityId == value.id);
         setSelectedCityId(filterdCities[0].id);
         setData('city', filterdCities[0].name)
     }

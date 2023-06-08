@@ -100,7 +100,7 @@ export default function Index({ auth, users }) {
                     <div className="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                         <div className="p-6 text-gray-900">
                             <div className="relative overflow-x-auto">
-                                <table className={`w-full text-sm text-right text-gray-500 border ${processing ? 'opacity-25 transition-opacity' : ''}`}>
+                                <table className={`w-full text-sm text-right text-gray-500 border `}>
                                     <thead className="text-sm text-gray-700 uppercase bg-gray-100 rounded-md border">
                                         <tr>
                                             <th scope="col" className="px-6 py-3">

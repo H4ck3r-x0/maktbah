@@ -28,13 +28,21 @@ class LibraryController extends Controller
                         $query->where('name', 'like', "%{$search}%");
                     });
             })
+            ->when(request()->city ?? false, function ($query, $city) {
+                $query->where('city', $city);
+            })
+            ->when(request()->district ?? false, function ($query, $district) {
+                $query->where('district', $district);
+            })
             ->orderBy('id', 'DESC')
             ->paginate(5)
             ->withQueryString();
 
         return Inertia::render('Admin/Library/Index', [
             'libraries' => $query,
-            'filters' => request()->only(['search', 'account_type']),
+            'cities' => City::all(),
+            'districts' => District::all(),
+            'filters' => request()->only(['search', 'city', 'district', 'account_type']),
             'currentPage' => request()->page,
         ]);
     }

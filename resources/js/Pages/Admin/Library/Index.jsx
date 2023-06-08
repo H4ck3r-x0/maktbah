@@ -4,16 +4,19 @@ import SecondaryButton from '@/Components/SecondaryButton';
 import TextInput from '@/Components/TextInput';
 import AdminAuthenticatedLayout from '@/Layouts/AdminAuthenticatedLayout';
 import { Head, Link, useForm, usePage } from '@inertiajs/react';
-import { useCallback, useEffect } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import debounce from "lodash/debounce";
 import Pagination from '@/Pages/Components/Pagination';
 
-export default function Index({ auth, libraries }) {
+export default function Index({ auth, libraries, cities, districts }) {
     const filters = usePage().props.filters;
     const currentPage = usePage().props.currentPage;
+    const [selectedCityId, setSelectedCityId] = useState('');
 
     const { data, setData, delete: destroy, get, processing, reset } = useForm({
         search: filters.search,
+        city: filters.city,
+        district: filters.district
     });
 
     const search = (e) => {
@@ -28,7 +31,7 @@ export default function Index({ auth, libraries }) {
     }
 
     const searchLibraries = () => {
-        get(route('admin.library.index', { search: data.search, page: currentPage }), {
+        get(route('admin.library.index', { search: data.search, city: data.city, page: currentPage }), {
             preserveScroll: true,
             preserveState: true,
             replace: true
@@ -38,14 +41,24 @@ export default function Index({ auth, libraries }) {
     const delayedSearch = useCallback(
         debounce(searchLibraries, 500),
 
-        [data.search, currentPage]
+        [data.search, data.city, data.district, currentPage]
     );
 
     useEffect(() => {
         delayedSearch();
         return delayedSearch.cancel;
-    }, [data.search, delayedSearch])
+    }, [data.search, data.city, data.district, delayedSearch])
 
+    const cityChanged = (e) => {
+        const cityId = e.target.value;
+        const filterdCities = cities.filter(value => cityId == value.name);
+        setSelectedCityId(filterdCities[0].id);
+        setData('city', filterdCities[0].name)
+    }
+
+    const districtChanged = (e) => {
+        setData('district', e.target.value);
+    }
 
     return (
         <AdminAuthenticatedLayout
@@ -77,6 +90,43 @@ export default function Index({ auth, libraries }) {
                                 placeholder="أبحث بإسم المكتبة او صاحبها"
                             />
 
+
+                            <div className='mb-2'>
+                                <select
+                                    onChange={cityChanged}
+                                    value={data.city}
+                                    name="city"
+                                    id="city"
+                                    className='mt-2 block w-full border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm'>
+                                    <option value="">أختر المدينة</option>
+                                    {
+                                        cities.map(city =>
+                                            <option value={city.name} key={city.id}>{city.name}</option>
+                                        )
+                                    }
+                                </select>
+                            </div>
+
+
+                            <div className='mb-2'>
+                                <select
+                                    onChange={districtChanged}
+                                    value={data.district}
+                                    name="district"
+                                    id="district"
+                                    className='mt-2 block w-full border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm'>
+                                    <option value="">أختر الحي</option>
+                                    {
+                                        districts.filter((district) => {
+                                            return district.city_id === selectedCityId
+                                        })
+                                            .map(district =>
+                                                <option value={district.name} key={district.id}>{district.name}</option>
+                                            )
+                                    }
+                                </select>
+                            </div>
+
                             {data.search !== '' || data.account_type !== '' ?
                                 <PrimaryButton onClick={() => reset()}>
                                     إعادة تعيين
@@ -87,7 +137,7 @@ export default function Index({ auth, libraries }) {
                     <div className="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                         <div className="p-6 text-gray-900">
                             <div className="relative overflow-x-auto">
-                                <table className={`w-full text-sm text-right text-gray-500 border ${processing ? 'opacity-25 transition-opacity' : ''}`}>
+                                <table className={`w-full text-sm text-right text-gray-500 border `}>
                                     <thead className="text-sm text-gray-700 uppercase bg-gray-100 rounded-md border">
                                         <tr>
                                             <th scope="col" className="px-6 py-3">
