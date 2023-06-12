@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
 use Inertia\Inertia;
+use App\Models\Major;
 use Inertia\Response;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -17,8 +19,15 @@ class ProfileController extends Controller
      */
     public function edit(Request $request): Response
     {
+        $majors  = Auth::user()->hasRole('user') ? Major::all() : null;
+
+        if (Auth::user()->hasRole('user')) {
+            Auth::user()->load('user_profile');
+        }
+
         return Inertia::render('Profile/Edit', [
             'status' => session('status'),
+            'majors' => $majors,
         ]);
     }
 
@@ -28,7 +37,6 @@ class ProfileController extends Controller
     public function update(ProfileUpdateRequest $request): RedirectResponse
     {
         $request->user()->fill($request->validated());
-
 
         $request->user()->save();
 

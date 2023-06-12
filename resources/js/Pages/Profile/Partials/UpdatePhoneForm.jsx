@@ -37,7 +37,7 @@ export default function UpdatePhoneForm({ className = '' }) {
                         className="mt-2 block w-full"
                         value={data.phone ? data.phone : ''}
                         onChange={(e) => setData('phone', e.target.value)}
-                        // required
+                        required
                         autoComplete="phone"
                     />
 

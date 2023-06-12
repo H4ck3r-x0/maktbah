@@ -4,8 +4,10 @@ import UpdatePasswordForm from './Partials/UpdatePasswordForm';
 import UpdateProfileInformationForm from './Partials/UpdateProfileInformationForm';
 import { Head } from '@inertiajs/react';
 import UpdatePhoneForm from './Partials/UpdatePhoneForm';
+import UpdateMajorForm from './Partials/UpdateMajorForm';
 
-export default function Edit({ auth, status }) {
+export default function Edit({ auth, majors }) {
+
     return (
         <AuthenticatedLayout
             user={auth.user}
@@ -28,6 +30,16 @@ export default function Edit({ auth, status }) {
                             className="max-w-xl"
                         />
                     </div>
+
+                    {auth.user.role == 'user' &&
+                        <div className="p-4 sm:p-8 bg-white shadow sm:rounded-lg">
+                            <UpdateMajorForm
+                                majors={majors}
+                                className="max-w-xl"
+                            />
+                        </div>
+                    }
+
 
                     <div className="p-4 sm:p-8 bg-white shadow sm:rounded-lg">
                         <UpdatePasswordForm className="max-w-xl" />

@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Models\User\UserProfile;
 use Laravel\Sanctum\HasApiTokens;
 use Spatie\Permission\Traits\HasRoles;
 use Illuminate\Notifications\Notifiable;
@@ -37,7 +38,7 @@ class User extends Authenticatable
     ];
 
     protected $appends = ['role'];
-
+    // protected $with = ['user_profile'];
     /**
      * The attributes that should be cast.
      *
@@ -53,13 +54,9 @@ class User extends Authenticatable
         return $this->hasOne(Library::class);
     }
 
-    public function major()
+    public function user_profile()
     {
-        if ($this->hasRole('user')) {
-            return $this->hasOne(Major::class);
-        }
-
-        return null;
+        return $this->hasOne(UserProfile::class);
     }
 
     public function getRoleAttribute()
