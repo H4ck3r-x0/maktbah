@@ -2,15 +2,15 @@ import InputError from '@/Components/InputError';
 import InputLabel from '@/Components/InputLabel';
 import PrimaryButton from '@/Components/PrimaryButton';
 import TextInput from '@/Components/TextInput';
-import { Link, useForm, usePage } from '@inertiajs/react';
+import { useForm, usePage } from '@inertiajs/react';
 import { Transition } from '@headlessui/react';
 
-export default function UpdateProfileInformation({ status, className = '' }) {
+export default function UpdateProfileInformation({ className = '' }) {
     const user = usePage().props.auth.user;
 
     const { data, setData, patch, errors, processing, recentlySuccessful } = useForm({
         name: user.name,
-        username: user.username,
+        gender: user.gender ? user.gender : '',
     });
 
     const submit = (e) => {
@@ -46,19 +46,22 @@ export default function UpdateProfileInformation({ status, className = '' }) {
                     <InputError className="mt-2" message={errors.name} />
                 </div>
 
-                <div>
-                    <InputLabel htmlFor="username" value="أسم المستخدم" />
-
-                    <TextInput
-                        id="username"
-                        type="text"
-                        className="mt-2 block w-full"
-                        value={data.username}
-                        onChange={(e) => setData('username', e.target.value)}
+                <div className='mb-2'>
+                    <InputLabel htmlFor="gender" value="الجنس" />
+                    <select
+                        value={data.gender}
+                        onChange={(e) => setData('gender', e.target.value)}
+                        name="gender"
+                        id="gender"
                         required
-                    />
+                        className='mt-2 block w-full border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm'>
+                        <option value="">أختر نوع الجنس</option>
+                        <option value="male">ذكر</option>
+                        <option value="female">أنثى</option>
 
-                    <InputError className="mt-2" message={errors.username} />
+                    </select>
+
+                    <InputError message={errors.gender} className="mt-2" />
                 </div>
 
                 <div className="flex items-center gap-4">

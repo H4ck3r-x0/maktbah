@@ -53,6 +53,15 @@ class User extends Authenticatable
         return $this->hasOne(Library::class);
     }
 
+    public function major()
+    {
+        if ($this->hasRole('user')) {
+            return $this->hasOne(Major::class);
+        }
+
+        return null;
+    }
+
     public function getRoleAttribute()
     {
         return $this->roles()->first()->name ?? null;
