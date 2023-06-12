@@ -20,7 +20,7 @@ export default function AuthenticatedHeader({ user }) {
                         </div>
 
                         <div className="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
-                            <NavLink href={route('dashboard')} active={route().current('dashboard')}>
+                            <NavLink href={'/'} >
                                 الرئيسية
                             </NavLink>
                         </div>
@@ -54,7 +54,8 @@ export default function AuthenticatedHeader({ user }) {
                                 </Dropdown.Trigger>
 
                                 <Dropdown.Content>
-                                    <Dropdown.Link href={route('profile.edit')}>الملف الشخصي</Dropdown.Link>
+                                    <Dropdown.Link href={route('dashboard')}>لوحة التحكم</Dropdown.Link>
+                                    <Dropdown.Link href={route('profile.edit')}>تحديث الملف الشخصي</Dropdown.Link>
                                     <Dropdown.Link href={route('logout')} method="post" as="button">
                                         تسجيل الخروج
                                     </Dropdown.Link>
