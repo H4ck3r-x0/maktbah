@@ -15,7 +15,9 @@ export default function UpdatePhoneForm({ className = '' }) {
     const submit = (e) => {
         e.preventDefault();
 
-        patch(route('profile.update'));
+        patch(route('profile.update'), {
+            preserveScroll: true
+        });
     };
 
     return (

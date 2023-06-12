@@ -1,12 +1,15 @@
 import AdminAuthenticatedHeader from '@/Components/AdminAuthenticatedHeader';
 import AuthenticatedHeader from '@/Components/AuthenticatedHeader';
+import AuthenticatedLibraryHeader from '@/Components/AuthenticatedLibraryHeader';
 
 export default function Authenticated({ user, header, children }) {
     return (
         <div className="min-h-screen bg-gray-100">
-            {user.role == 'admin' ? <AdminAuthenticatedHeader user={user} /> :
-                <AuthenticatedHeader user={user} />
-            }
+            {user.role == 'admin' && <AdminAuthenticatedHeader user={user} />}
+
+            {user.role == 'user' && <AuthenticatedHeader user={user} />}
+
+            {user.role == 'library' && <AuthenticatedLibraryHeader user={user} />}
 
             {header && (
                 <header className="bg-white shadow">

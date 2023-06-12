@@ -70,6 +70,10 @@ class User extends Authenticatable
             return '/admin/dashboard';
         }
 
+        if ($this->role === 'library') {
+            return '/library/dashboard';
+        }
+
         return '/dashboard';
     }
 }

@@ -16,7 +16,9 @@ export default function UpdateProfileInformation({ className = '' }) {
     const submit = (e) => {
         e.preventDefault();
 
-        patch(route('profile.update'));
+        patch(route('profile.update'), {
+            preserveScroll: true
+        });
     };
 
     return (
