@@ -38,7 +38,7 @@ class User extends Authenticatable
     ];
 
     protected $appends = ['role'];
-    // protected $with = ['user_profile'];
+
     /**
      * The attributes that should be cast.
      *
