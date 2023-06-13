@@ -1,11 +1,11 @@
 import PrimaryButton from '@/Components/PrimaryButton';
-import AdminAuthenticatedLayout from '@/Layouts/AdminAuthenticatedLayout';
 import { Head, Link, useForm } from '@inertiajs/react';
 import InputError from '@/Components/InputError';
 import InputLabel from '@/Components/InputLabel';
 import TextInput from '@/Components/TextInput';
 import { Transition } from '@headlessui/react';
 import { useState } from 'react';
+import Authenticated from '@/Layouts/AuthenticatedLayout';
 
 export default function Create({ auth, cities, districts }) {
     const [selectedCityId, setSelectedCityId] = useState('');
@@ -32,23 +32,23 @@ export default function Create({ auth, cities, districts }) {
     const submit = (e) => {
         e.preventDefault();
 
-        post(route('admin.library.store'));
+        post(route('branch.store'));
     };
 
     return (
-        <AdminAuthenticatedLayout
+        <Authenticated
             user={auth.user}
             header={
                 <div className='flex items-center justify-between'>
-                    <h2 className="font-semibold text-xl text-gray-800 leading-tight">إضافة مكتبة جديدة</h2>
+                    <h2 className="font-semibold text-xl text-gray-800 leading-tight">إضافة فرع جديد</h2>
 
-                    <Link href={route('admin.library.index')}>
+                    <Link href={route('library.dashboard')}>
                         <PrimaryButton>العودة</PrimaryButton>
                     </Link>
                 </div>
             }
         >
-            <Head title="إضافة مكتبة جديدة" />
+            <Head title="إضافة فرع جديد" />
 
 
             <div className="py-8">
@@ -214,6 +214,6 @@ export default function Create({ auth, cities, districts }) {
                     </div>
                 </div>
             </div>
-        </AdminAuthenticatedLayout>
+        </Authenticated>
     );
 }

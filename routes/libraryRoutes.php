@@ -1,11 +1,13 @@
 <?php
 
+use App\Http\Controllers\LibraryBranch\LibraryBranchController;
 use App\Http\Controllers\UserLibrary\LibraryController;
 use Illuminate\Support\Facades\Route;
 
 Route::middleware('auth')->group(function () {
     Route::get('dashboard', [LibraryController::class, 'index'])->name('library.dashboard');
 
+    // Main Library
     Route::get('edit/{id}', [LibraryController::class, 'edit'])
         ->name('library.edit');
 
@@ -17,4 +19,18 @@ Route::middleware('auth')->group(function () {
 
     Route::post('store', [LibraryController::class, 'store'])
         ->name('library.store');
+    // Main Library
+
+    // Library Branch
+    Route::get('branch/edit/{id}', [LibraryBranchController::class, 'edit'])
+        ->name('branch.edit');
+
+    Route::patch('branch/update/{id}', [LibraryBranchController::class, 'update'])
+        ->name('branch.update');
+
+    Route::get('branch/create', [LibraryBranchController::class, 'create'])
+        ->name('branch.create');
+
+    Route::post('branch/store', [LibraryBranchController::class, 'store'])
+        ->name('branch.store');
 });

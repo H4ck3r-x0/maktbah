@@ -1,54 +1,55 @@
-import PrimaryButton from '@/Components/PrimaryButton';
 import AdminAuthenticatedLayout from '@/Layouts/AdminAuthenticatedLayout';
-import { Head, Link, useForm } from '@inertiajs/react';
 import InputError from '@/Components/InputError';
 import InputLabel from '@/Components/InputLabel';
+import PrimaryButton from '@/Components/PrimaryButton';
 import TextInput from '@/Components/TextInput';
+import { Link, useForm, Head } from '@inertiajs/react';
 import { Transition } from '@headlessui/react';
 import { useState } from 'react';
+import Authenticated from '@/Layouts/AuthenticatedLayout';
 
-export default function Create({ auth, cities, districts }) {
+export default function Edit({ auth, branch, cities, districts }) {
     const [selectedCityId, setSelectedCityId] = useState('');
 
-    const { data, setData, post, errors, processing, recentlySuccessful } = useForm({
-        libraryOwnerName: '',
-        username: '',
+    const { data, setData, patch, errors, processing, recentlySuccessful } = useForm({
+        libraryOwnerName: branch.user.name,
+        username: branch.user.username,
         password: '',
-        name: '',
-        phone: '',
-        CR: '',
-        city: '',
-        selectedCityId: selectedCityId ? selectedCityId : '',
-        district: '',
-        google_maps: ''
+        name: branch.name,
+        phone: branch.phone,
+        CR: branch.CR,
+        city: branch.city,
+        district: branch.district,
+        google_maps: branch.google_maps
     });
-
-    const cityChanged = (e) => {
-        const filterdCities = cities.filter(value => e.target.value == value.id);
-        setSelectedCityId(filterdCities[0].id);
-        setData('city', filterdCities[0].name)
-    }
 
     const submit = (e) => {
         e.preventDefault();
 
-        post(route('admin.library.store'));
+        patch(route('branch.update', branch.id));
     };
 
+    const cityChanged = (e) => {
+        const cityId = e.target.value;
+        const filterdCities = cities.filter(value => cityId == value.id);
+        setSelectedCityId(filterdCities[0].id);
+        setData('city', filterdCities[0].name)
+    }
+
     return (
-        <AdminAuthenticatedLayout
+        <Authenticated
             user={auth.user}
             header={
                 <div className='flex items-center justify-between'>
-                    <h2 className="font-semibold text-xl text-gray-800 leading-tight">إضافة مكتبة جديدة</h2>
+                    <h2 className="font-semibold text-xl text-gray-800 leading-tight">تعديل الفرع</h2>
 
-                    <Link href={route('admin.library.index')}>
+                    <Link href={route('library.dashboard')}>
                         <PrimaryButton>العودة</PrimaryButton>
                     </Link>
                 </div>
             }
         >
-            <Head title="إضافة مكتبة جديدة" />
+            <Head title="تعديل الفرع" />
 
 
             <div className="py-8">
@@ -116,6 +117,7 @@ export default function Create({ auth, cities, districts }) {
                                         value={data.libraryOwnerName}
                                         onChange={(e) => setData('libraryOwnerName', e.target.value)}
                                         required
+                                        isFocused
                                         autoComplete="libraryOwnerName"
                                     />
 
@@ -168,7 +170,7 @@ export default function Create({ auth, cities, districts }) {
                                 </div>
 
                                 <div>
-                                    <InputLabel htmlFor="phone" value="رقم التواصل" />
+                                    <InputLabel htmlFor="phone" value=" رقم التواصل" />
 
                                     <TextInput
                                         id="phone"
@@ -198,7 +200,7 @@ export default function Create({ auth, cities, districts }) {
                                 </div>
 
                                 <div className="flex items-center gap-4">
-                                    <PrimaryButton disabled={processing}>حفظ</PrimaryButton>
+                                    <PrimaryButton disabled={processing}>تحديث</PrimaryButton>
 
                                     <Transition
                                         show={recentlySuccessful}
@@ -214,6 +216,6 @@ export default function Create({ auth, cities, districts }) {
                     </div>
                 </div>
             </div>
-        </AdminAuthenticatedLayout>
+        </Authenticated>
     );
 }

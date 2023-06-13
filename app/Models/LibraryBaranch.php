@@ -5,9 +5,10 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Library extends Model
+class LibraryBaranch extends Model
 {
     use HasFactory;
+
 
     /**
      * The attributes that are mass assignable.
@@ -22,16 +23,16 @@ class Library extends Model
         'district',
         'city',
         'user_id',
+        'library_id',
     ];
-
 
     public function user()
     {
         return $this->belongsTo(User::class);
     }
 
-    public function branches()
+    public function library()
     {
-        return $this->hasMany(LibraryBaranch::class);
+        return $this->belongsTo(Library::class);
     }
 }

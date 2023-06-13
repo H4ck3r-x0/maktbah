@@ -46,7 +46,7 @@ export default function AuthenticatedLibraryHeader({ user }) {
                                     </Dropdown.Trigger>
 
                                     <Dropdown.Content>
-                                        {/* <Dropdown.Link href={route('library.edit')}>تحديث المكتبة</Dropdown.Link> */}
+                                        <Dropdown.Link href={route('branch.create')}>إضافة فرع</Dropdown.Link>
                                     </Dropdown.Content>
                                 </Dropdown>
                             </div>
