@@ -38,7 +38,7 @@ class LibraryController extends Controller
     {
         $user = User::with('library')->findOrFail(request()->user()->id);
 
-        if ($user->library !== null) {
+        if ($user->cannot('create', Library::class)) {
             return redirect()
                 ->route('library.edit', $user->library->id)
                 ->with('createNewLibrary', 'الرجاء إنشاء مكتبتك الأساسية');
@@ -85,6 +85,7 @@ class LibraryController extends Controller
     public function edit(string $id)
     {
         $library = Library::with('user')->findOrFail($id);
+        $this->authorize('view', $library);
 
         return  Inertia::render('Library/Edit', [
             'library' => $library,
