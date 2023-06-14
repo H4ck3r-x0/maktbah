@@ -20,4 +20,9 @@ class Book extends Model
         'edition_number',
         'volume_number',
     ];
+
+    public function libraries()
+    {
+        return $this->belongsToMany(Library::class);
+    }
 }

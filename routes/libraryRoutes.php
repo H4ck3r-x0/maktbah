@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\LibraryBook\LibraryBookController;
 use App\Http\Controllers\LibraryBranch\LibraryBranchController;
 use App\Http\Controllers\UserLibrary\LibraryController;
 use Illuminate\Support\Facades\Route;
@@ -33,4 +34,13 @@ Route::middleware('auth')->group(function () {
 
     Route::post('branch/store', [LibraryBranchController::class, 'store'])
         ->name('branch.store');
+    // Library Branch
+
+    // Library Books
+
+    Route::get('books/create', [LibraryBookController::class, 'create'])
+        ->name('book.create');
+
+    Route::post('books/store', [LibraryBookController::class, 'store'])
+        ->name('book.store');
 });
