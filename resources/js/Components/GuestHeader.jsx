@@ -22,10 +22,6 @@ export default function GuestHeader() {
                             <NavLink href={route('welcome')} active={route().current('welcome')}>
                                 الرئيسية
                             </NavLink>
-
-                            <NavLink href={route('dashboard')} active={route().current('dashboard')}>
-                                المكتبات
-                            </NavLink>
                         </div>
                     </div>
 

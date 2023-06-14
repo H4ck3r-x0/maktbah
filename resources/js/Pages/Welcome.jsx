@@ -1,21 +1,32 @@
 import AdminAuthenticatedHeader from '@/Components/AdminAuthenticatedHeader';
 import AuthenticatedHeader from '@/Components/AuthenticatedHeader';
+import AuthenticatedLibraryHeader from '@/Components/AuthenticatedLibraryHeader';
 import GuestHeader from '@/Components/GuestHeader';
 import { Head } from '@inertiajs/react';
 
+
+
 export default function Welcome({ auth }) {
+    const authHeader = () => {
+        if (auth.user && auth.user.role === 'admin') {
+            return <AdminAuthenticatedHeader user={auth.user} />;
+        }
+        if (auth.user && auth.user.role === 'user') {
+            return <AuthenticatedHeader user={auth.user} />;
+        }
+
+        if (auth.user && auth.user.role === 'library') {
+            return <AuthenticatedLibraryHeader user={auth.user} />;
+        }
+
+        return <GuestHeader />
+    }
     return (
         <>
             <Head title="الصفحة الرئيسية" />
             <div className=" bg-white">
                 <div className="">
-                    {auth.user ? (
-                        auth.user.role === 'admin' ?
-                            <AdminAuthenticatedHeader user={auth.user} /> :
-                            <AuthenticatedHeader user={auth.user} />
-                    ) : (
-                        <GuestHeader />
-                    )}
+                    {authHeader()}
                 </div>
 
                 <div className='mt-10 px-6'>
