@@ -72,7 +72,7 @@ class LibraryBranchController extends Controller
             'library_id' => $mainLibrary->library->id
         ]);
 
-        $user->assignRole(['library', 'branch']);
+        $user->assignRole('branch');
 
         return redirect()->route('library.dashboard');
     }
@@ -105,19 +105,30 @@ class LibraryBranchController extends Controller
      */
     public function update(Request $request, string $id)
     {
+        // dd($request->all());
         request()->validate([
+            'libraryOwnerName' => ['required', 'string', 'max:255'],
             'name' => ['required', 'string', 'max:255', Rule::unique(LibraryBaranch::class)->ignore($id)],
             'phone' => ['required', 'string', 'max:255', Rule::unique(LibraryBaranch::class)->ignore($id)],
+            'username' => ['required', 'string', 'alpha_dash', 'max:255', Rule::unique(User::class)->ignore($request->user_id)],
+            'password' => ['nullable', Rules\Password::defaults()],
         ]);
 
         $branch = LibraryBaranch::with('user')->findOrFail($id);
+        $branch->user->name = $request->libraryOwnerName;
         $branch->name = $request->name;
         $branch->phone = $request->phone;
         $branch->CR = $request->CR;
         $branch->city = $request->city;
         $branch->district = $request->district;
         $branch->google_maps = $request->google_maps;
+        $branch->user->username = $request->username;
 
+        if ($request->password) {
+            $branch->user->password = Hash::make(request()->password);
+        }
+
+        $branch->user->save();
         $branch->save();
 
         return redirect()->back();

@@ -1,4 +1,3 @@
-import AdminAuthenticatedLayout from '@/Layouts/AdminAuthenticatedLayout';
 import InputError from '@/Components/InputError';
 import InputLabel from '@/Components/InputLabel';
 import PrimaryButton from '@/Components/PrimaryButton';
@@ -20,7 +19,8 @@ export default function Edit({ auth, branch, cities, districts }) {
         CR: branch.CR,
         city: branch.city,
         district: branch.district,
-        google_maps: branch.google_maps
+        google_maps: branch.google_maps,
+        user_id: branch.user.id
     });
 
     const submit = (e) => {
@@ -148,7 +148,6 @@ export default function Edit({ auth, branch, cities, districts }) {
                                         className="mt-2 block w-full"
                                         value={data.password}
                                         onChange={(e) => setData('password', e.target.value)}
-                                        required
                                     />
 
                                     <InputError className="mt-2" message={errors.password} />
