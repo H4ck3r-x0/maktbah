@@ -41,10 +41,19 @@ class LibraryBookController extends Controller
      */
     public function store(Request $request)
     {
-
+        // dd($request->all());
         $user = $request->user()->load('library');
-        $books = Book::find($request->booksIds);
-        $user->library->books()->sync($books);
+
+        $user->library->books()->syncWithPivotValues(
+            $request->booksIDs,
+            ['qty' => $request->qty, 'price' => $request->price]
+        );
+        // foreach ($request->books as $book) {
+        //     $user->library->books()->syncWithPivotValues(
+        //         $book['id'],
+        //         ['qty' => $book['qty'], 'price' => $book['price']]
+        //     );
+        // }
 
         return redirect()->back();
     }

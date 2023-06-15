@@ -10,7 +10,8 @@ export default function Create({ auth, books, addedBooksIds }) {
     const { data, setData, post, errors, processing } = useForm({
         'booksIds': addedBooksIds,
         'qty': '',
-        'price': ''
+        'price': '',
+        'id': ''
     });
 
     const submit = (e) => {
@@ -20,15 +21,27 @@ export default function Create({ auth, books, addedBooksIds }) {
     };
 
     const addBooks = (bookID) => {
+        // setData(
+        //     'books',
+        //     [...data.books, { id: bookID, qty: data.qty, price: data.price }]
+        // )
+
         setData('booksIds', [...data.booksIds, bookID])
     }
-
+    console.log(data)
     const removeBook = (bookID) => {
         setData('booksIds', data.booksIds.filter(item => {
             return item != bookID
         }))
     }
 
+    const qtyChanged = (e) => {
+        setData('qty', e.target.value)
+    }
+
+    const priceChanged = (e) => {
+        setData('price', e.target.value)
+    }
 
     return (
         <Authenticated
@@ -60,7 +73,7 @@ export default function Create({ auth, books, addedBooksIds }) {
                         <div className="p-6 text-gray-900">
 
                             <div className='grid grid-cols-1 md:grid-cols-3  gap-3'>
-                                {books.map(book => {
+                                {books.map((book, index) => {
                                     return (
                                         <div key={book.id} className=" max-w-sm bg-white border border-gray-200 rounded-lg shadow h-full">
                                             <div className="flex flex-col p-5 h-full">
@@ -83,12 +96,14 @@ export default function Create({ auth, books, addedBooksIds }) {
                                                 </div>
                                                 <div className="flex items-center justify-center flex-wrap gap-2">
                                                     <input
+                                                        onChange={qtyChanged}
                                                         type='number'
                                                         className=' w-full border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm'
                                                         min={1}
                                                         placeholder='الكمية'
                                                     />
                                                     <input
+                                                        onChange={priceChanged}
                                                         type='number'
                                                         className=' w-full border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm'
                                                         min={1}
