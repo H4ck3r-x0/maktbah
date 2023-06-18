@@ -25,10 +25,13 @@ class LibraryBookController extends Controller
     {
         $books = Book::all();
         $library = Library::where('user_id', request()->user()->id)
-            ->with('books:id')
-            ->first('id');
+            ->with('books')
+            ->first();
 
-        $addedBooksIds = $library->books->pluck('id');
+        $addedBooksIds = [];
+        foreach ($library->books as $book) {
+            array_push($addedBooksIds, ['book_id' => $book->pivot->book_id, 'qty' => $book->pivot->qty, 'price' => $book->pivot->price]);
+        }
 
         return Inertia::render('LibraryBook/Create', [
             'books' => $books,
@@ -41,19 +44,15 @@ class LibraryBookController extends Controller
      */
     public function store(Request $request)
     {
-        // dd($request->all());
+        // dd($request->books);
         $user = $request->user()->load('library');
-
-        $user->library->books()->syncWithPivotValues(
-            $request->booksIDs,
-            ['qty' => $request->qty, 'price' => $request->price]
-        );
-        // foreach ($request->books as $book) {
-        //     $user->library->books()->syncWithPivotValues(
-        //         $book['id'],
-        //         ['qty' => $book['qty'], 'price' => $book['price']]
-        //     );
-        // }
+        $data = $request->books;
+        $syncData = [];
+        // dd($data);
+        foreach ($data as $key => $book) {
+            $syncData[$key] = ['book_id' => $book['book_id'], 'qty' => $book['qty'], 'price' => $book['price']];
+        }
+        $user->library->books()->syncWithoutDetaching($syncData);
 
         return redirect()->back();
     }
@@ -79,7 +78,16 @@ class LibraryBookController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        // dd($request->book['book_id']);
+        $library = Library::where('user_id', request()->user()->id)
+            ->with('books')
+            ->first();
+        $library->books()->updateExistingPivot($request->book['book_id'], [
+            'book_id' => $request->book['book_id'],
+            'qty' => $request->book['qty'],
+            'price' => $request->book['price'],
+        ]);
+        // $library->save();
     }
 
     /**

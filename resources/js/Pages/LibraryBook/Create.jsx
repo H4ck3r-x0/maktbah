@@ -1,41 +1,55 @@
 import PrimaryButton from '@/Components/PrimaryButton';
 import { Head, Link, useForm } from '@inertiajs/react';
-
 import Authenticated from '@/Layouts/AuthenticatedLayout';
 import DangerButton from '@/Components/DangerButton';
 import InputError from '@/Components/InputError';
-
+import SecondaryButton from '@/Components/SecondaryButton';
+import { router } from '@inertiajs/react';
 
 export default function Create({ auth, books, addedBooksIds }) {
     const { data, setData, post, errors, processing } = useForm({
-        'booksIds': addedBooksIds,
+        'books': addedBooksIds,
         'qty': '',
         'price': '',
-        'id': ''
     });
 
     const submit = (e) => {
         e.preventDefault();
-
         post(route('book.store'));
     };
 
+    const updateBook = (e, bookId) => {
+        e.preventDefault();
+        const book = data.books.filter(book => book.book_id === bookId);
+        book[0].qty = data.qty ? data.qty : book[0].qty;
+        book[0].price = data.price ? data.price : book[0].price;
+        router.patch(route('book.update', bookId), { book: book[0] }, {
+            preserveScroll: true,
+        });
+    }
     const addBooks = (bookID) => {
-        // setData(
-        //     'books',
-        //     [...data.books, { id: bookID, qty: data.qty, price: data.price }]
-        // )
-
-        setData('booksIds', [...data.booksIds, bookID])
+        const newBook = {
+            book_id: bookID,
+            qty: data.qty,
+            price: data.price,
+        };
+        setData(data => ({ ...data, books: [...data.books, newBook] }));
     }
-    console.log(data)
     const removeBook = (bookID) => {
-        setData('booksIds', data.booksIds.filter(item => {
-            return item != bookID
-        }))
+        setData(data => ({
+            ...data,
+            books: data.books.filter(book => book.book_id !== bookID),
+        }));
     }
+    console.log(data.books)
 
-    const qtyChanged = (e) => {
+    const qtyChanged = (e, bookId) => {
+        const book = data.books.find((value) => value.book_id === bookId);
+        if (book && book !== undefined) {
+            const newData = data.books.map(item => item.book_id === book.book_id ? { ...item, qty: e.target.value } : item);
+            setData(data => ({ ...data, books: [...data.books, newData] }));
+
+        }
         setData('qty', e.target.value)
     }
 
@@ -96,10 +110,11 @@ export default function Create({ auth, books, addedBooksIds }) {
                                                 </div>
                                                 <div className="flex items-center justify-center flex-wrap gap-2">
                                                     <input
-                                                        onChange={qtyChanged}
+                                                        onChange={(e) => qtyChanged(e, book.id)}
                                                         type='number'
                                                         className=' w-full border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm'
                                                         min={1}
+                                                        defaultValue={data.books.find((value) => value.book_id === book.id)?.qty || ''}
                                                         placeholder='الكمية'
                                                     />
                                                     <input
@@ -107,14 +122,22 @@ export default function Create({ auth, books, addedBooksIds }) {
                                                         type='number'
                                                         className=' w-full border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm'
                                                         min={1}
+                                                        defaultValue={data.books.find((value) => value.book_id === book.id)?.price || ''}
                                                         placeholder='السعر'
                                                     />
                                                 </div>
                                                 <div className='flex pt-2'>
-                                                    {data.booksIds.includes(book.id) ?
-                                                        <DangerButton disabled={processing} onClick={() => removeBook(book.id)}>حذف</DangerButton>
-                                                        :
-                                                        <PrimaryButton disabled={processing} onClick={() => addBooks(book.id)}>أضف</PrimaryButton>
+                                                    <div className='flex-1'>
+                                                        {data.books.some(value => value.book_id == book.id) ?
+                                                            <SecondaryButton disabled={processing} onClick={(e) => updateBook(e, book.id)}>تحديث</SecondaryButton>
+                                                            :
+                                                            <PrimaryButton disabled={processing} onClick={() => addBooks(book.id)}>أضف</PrimaryButton>
+                                                        }
+                                                    </div>
+                                                    {data.books.some(value => value.book_id == book.id) &&
+                                                        <div>
+                                                            <DangerButton onClick={() => removeBook(book.id)}>X</DangerButton>
+                                                        </div>
                                                     }
                                                 </div>
                                             </div>

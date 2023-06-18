@@ -37,10 +37,12 @@ Route::middleware('auth')->group(function () {
     // Library Branch
 
     // Library Books
-
     Route::get('books/create', [LibraryBookController::class, 'create'])
         ->name('book.create');
 
     Route::post('books/store', [LibraryBookController::class, 'store'])
         ->name('book.store');
+
+    Route::patch('books/update/{id}', [LibraryBookController::class, 'update'])
+        ->name('book.update');
 });
