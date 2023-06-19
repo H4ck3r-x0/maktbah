@@ -31,7 +31,7 @@ class LibraryBookController extends Controller
         if ($library === null) {
             return redirect()
                 ->route('library.create')
-                ->with('createNewLibrary', 'الرجاء إنشاء مكتبتك الأساسية');
+                ->with('createNewLibrary', 'الرجاء إنشاء مكتبتك الأساسية قبل إضافة كتب!');
         }
 
         $addedBooks = [];
