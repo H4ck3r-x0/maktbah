@@ -65,7 +65,9 @@ export default function Create({ auth, books, addedBooks }) {
         setQty(value)
         if (value !== '') {
             setLibBooks((currentLibBooks) => {
-                return currentLibBooks.map((book) => book.book_id == bookId ? { ...book, qty: value } : book)
+                return currentLibBooks.map(
+                    (book) => book.book_id == bookId ? { ...book, qty: value } : book
+                )
             })
         }
     }
@@ -75,7 +77,9 @@ export default function Create({ auth, books, addedBooks }) {
         setPrice(value)
         if (value !== '') {
             setLibBooks((currentLibBooks) => {
-                return currentLibBooks.map((book) => book.book_id == bookId ? { ...book, price: value } : book)
+                return currentLibBooks.map(
+                    (book) => book.book_id == bookId ? { ...book, price: value } : book
+                )
             })
         }
     }

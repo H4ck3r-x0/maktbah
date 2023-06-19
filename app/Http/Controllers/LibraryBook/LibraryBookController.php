@@ -28,6 +28,12 @@ class LibraryBookController extends Controller
             ->with('books')
             ->first();
 
+        if ($library === null) {
+            return redirect()
+                ->route('library.create')
+                ->with('createNewLibrary', 'الرجاء إنشاء مكتبتك الأساسية');
+        }
+
         $addedBooks = [];
         foreach ($library->books as $book) {
             array_push($addedBooks, ['book_id' => $book->pivot->book_id, 'qty' => $book->pivot->qty, 'price' => $book->pivot->price]);
