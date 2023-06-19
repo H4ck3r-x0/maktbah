@@ -23,7 +23,15 @@ class LibraryBookController extends Controller
      */
     public function create()
     {
-        $books = Book::all();
+        $books = Book::query()
+            ->when(request()->search ?? false, function ($query, $search) {
+                $query->where('book_name', 'like', "%{$search}%")
+                    ->orWhere('author_name', 'like', "%{$search}%");
+            })->orderBy('id', 'DESC')
+            ->paginate(15)
+            ->withQueryString();
+
+
         $library = Library::where('user_id', request()->user()->id)
             ->with('books')
             ->first();
@@ -42,6 +50,8 @@ class LibraryBookController extends Controller
         return Inertia::render('LibraryBook/Create', [
             'books' => $books,
             'addedBooks' => $addedBooks,
+            'filters' => request()->only(['search']),
+            'currentPage' => request()->page,
         ]);
     }
 

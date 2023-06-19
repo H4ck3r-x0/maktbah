@@ -35,7 +35,7 @@ class LibraryController extends Controller
                 $query->where('district', $district);
             })
             ->orderBy('id', 'DESC')
-            ->paginate(5)
+            ->paginate(15)
             ->withQueryString();
 
         return Inertia::render('Admin/Library/Index', [

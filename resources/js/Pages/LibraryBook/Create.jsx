@@ -1,16 +1,50 @@
 import PrimaryButton from '@/Components/PrimaryButton';
-import { Head, Link } from '@inertiajs/react';
+import { Head, Link, useForm, usePage } from '@inertiajs/react';
 import Authenticated from '@/Layouts/AuthenticatedLayout';
 import DangerButton from '@/Components/DangerButton';
 import SecondaryButton from '@/Components/SecondaryButton';
 import { router } from '@inertiajs/react';
 import { useEffect } from 'react';
 import { useState } from 'react';
+import { useCallback } from 'react';
+import debounce from "lodash/debounce";
+import Pagination from '@/Pages/Components/Pagination';
 
 export default function Create({ auth, books, addedBooks }) {
+    const filters = usePage().props.filters;
+    const currentPage = usePage().props.currentPage;
+
+    const { data, setData, get, processing, reset } = useForm({
+        search: filters.search,
+    });
+
     const [libBooks, setLibBooks] = useState([]);
     const [qty, setQty] = useState("");
     const [price, setPrice] = useState("");
+
+
+    const search = (e) => {
+        setData('search', e.target.value);
+    }
+
+    const searchBooks = () => {
+        get(route('book.create', { search: data.search, page: currentPage }), {
+            preserveScroll: true,
+            preserveState: true,
+            replace: true
+        });
+    };
+
+    const delayedSearch = useCallback(
+        debounce(searchBooks, 500),
+
+        [data.search, currentPage]
+    );
+
+    useEffect(() => {
+        delayedSearch();
+        return delayedSearch.cancel;
+    }, [data.search, delayedSearch])
 
     const submit = (e) => {
         e.preventDefault();
@@ -101,7 +135,19 @@ export default function Create({ auth, books, addedBooks }) {
 
             <div className="py-4">
                 <div className="max-w-7xl mx-auto sm:px-6 lg:px-8">
-                    <div className='px-6'>
+                    <div className='px-6 flex items-center gap-3'>
+                        <div>
+                            <input
+                                className='border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm'
+                                type="text"
+                                id="search"
+                                name="search"
+                                value={data.search ? data.search : ''}
+                                autoComplete="search"
+                                onChange={search}
+                                placeholder='ابحث بإسم الكتاب او الكاتب ...'
+                            />
+                        </div>
                         <form onSubmit={submit}>
                             <PrimaryButton >
                                 إضافة الكتب
@@ -112,7 +158,7 @@ export default function Create({ auth, books, addedBooks }) {
                     <div className=" overflow-hidden sm:rounded-lg">
                         <div className="p-6 text-gray-900">
                             <div className='grid grid-cols-1 md:grid-cols-3  gap-3'>
-                                {books.map((book, index) => {
+                                {books.data.map((book) => {
                                     return (
                                         <div key={book.id} className=" max-w-sm bg-white border border-gray-200 rounded-lg shadow h-full">
                                             <div className="flex flex-col p-5 h-full">
@@ -172,7 +218,7 @@ export default function Create({ auth, books, addedBooks }) {
                                     )
                                 })}
                             </div>
-
+                            <Pagination links={books.links} />
                         </div>
                     </div>
                 </div>
