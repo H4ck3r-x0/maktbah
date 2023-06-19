@@ -44,6 +44,10 @@ class RouteServiceProvider extends ServiceProvider
             Route::prefix('library')
                 ->middleware('auth', 'web', 'isLibrary')
                 ->group(base_path('routes/libraryRoutes.php'));
+
+            Route::prefix('branch')
+                ->middleware('auth', 'web', 'isBranch')
+                ->group(base_path('routes/branchRoutes.php'));
         });
     }
 }

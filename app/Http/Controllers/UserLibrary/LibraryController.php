@@ -19,6 +19,7 @@ class LibraryController extends Controller
     public function index()
     {
         $user = User::with('library.branches')->findOrFail(request()->user()->id);
+
         if ($user->library === null) {
             return redirect()
                 ->route('library.create')
