@@ -1,60 +1,83 @@
 import PrimaryButton from '@/Components/PrimaryButton';
-import { Head, Link, useForm } from '@inertiajs/react';
+import { Head, Link } from '@inertiajs/react';
 import Authenticated from '@/Layouts/AuthenticatedLayout';
 import DangerButton from '@/Components/DangerButton';
-import InputError from '@/Components/InputError';
 import SecondaryButton from '@/Components/SecondaryButton';
 import { router } from '@inertiajs/react';
+import { useEffect } from 'react';
+import { useState } from 'react';
 
-export default function Create({ auth, books, addedBooksIds }) {
-    const { data, setData, post, errors, processing } = useForm({
-        'books': addedBooksIds,
-        'qty': '',
-        'price': '',
-    });
+export default function Create({ auth, books, addedBooks }) {
+    const [libBooks, setLibBooks] = useState([]);
+    const [qty, setQty] = useState("");
+    const [price, setPrice] = useState("");
 
     const submit = (e) => {
         e.preventDefault();
-        post(route('book.store'));
+        router.post(route('book.store'), { libBooks });
     };
+
+    useEffect(() => {
+        if (addedBooks.length > 0) {
+            setLibBooks(addedBooks);
+        }
+    }, [addedBooks])
 
     const updateBook = (e, bookId) => {
         e.preventDefault();
-        const book = data.books.filter(book => book.book_id === bookId);
-        book[0].qty = data.qty ? data.qty : book[0].qty;
-        book[0].price = data.price ? data.price : book[0].price;
-        router.patch(route('book.update', bookId), { book: book[0] }, {
+        let book = libBooks.filter(book => book.book_id === bookId);
+
+        router.patch(route('book.update', bookId), { book }, {
             preserveScroll: true,
         });
     }
+
+
     const addBooks = (bookID) => {
-        const newBook = {
-            book_id: bookID,
-            qty: data.qty,
-            price: data.price,
-        };
-        setData(data => ({ ...data, books: [...data.books, newBook] }));
+        if (price === '' || qty === "") {
+            alert('الرجاء اضافه اكمال جميع بيانات الكتاب');
+            return;
+        }
+        setLibBooks(currentLibBooks => {
+            return [
+                ...currentLibBooks,
+                { book_id: bookID, qty: qty, price: price }
+            ]
+        })
+        setQty('');
+        setPrice('');
     }
-    const removeBook = (bookID) => {
-        setData(data => ({
-            ...data,
-            books: data.books.filter(book => book.book_id !== bookID),
-        }));
+    const removeBook = (e, bookID) => {
+        e.preventDefault();
+        router.delete(route('book.destroy', bookID), {
+            preserveScroll: true,
+            onSuccess: () => {
+                setLibBooks(currentLibBooks => {
+                    return currentLibBooks.filter(book => book.book_id !== bookID);
+                })
+            }
+        });
+
     }
-    console.log(data.books)
 
     const qtyChanged = (e, bookId) => {
-        const book = data.books.find((value) => value.book_id === bookId);
-        if (book && book !== undefined) {
-            const newData = data.books.map(item => item.book_id === book.book_id ? { ...item, qty: e.target.value } : item);
-            setData(data => ({ ...data, books: [...data.books, newData] }));
-
+        const { value } = e.target;
+        setQty(value)
+        if (value !== '') {
+            setLibBooks((currentLibBooks) => {
+                return currentLibBooks.map((book) => book.book_id == bookId ? { ...book, qty: value } : book)
+            })
         }
-        setData('qty', e.target.value)
     }
 
-    const priceChanged = (e) => {
-        setData('price', e.target.value)
+    const priceChanged = (e, bookId) => {
+        const { value } = e.target;
+        setPrice(value)
+        if (value !== '') {
+            setLibBooks((currentLibBooks) => {
+                return currentLibBooks.map((book) => book.book_id == bookId ? { ...book, price: value } : book)
+            })
+        }
     }
 
     return (
@@ -83,9 +106,7 @@ export default function Create({ auth, books, addedBooksIds }) {
                     </div>
 
                     <div className=" overflow-hidden sm:rounded-lg">
-
                         <div className="p-6 text-gray-900">
-
                             <div className='grid grid-cols-1 md:grid-cols-3  gap-3'>
                                 {books.map((book, index) => {
                                     return (
@@ -112,31 +133,33 @@ export default function Create({ auth, books, addedBooksIds }) {
                                                     <input
                                                         onChange={(e) => qtyChanged(e, book.id)}
                                                         type='number'
-                                                        className=' w-full border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm'
+                                                        className='w-full border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm'
                                                         min={1}
-                                                        defaultValue={data.books.find((value) => value.book_id === book.id)?.qty || ''}
+                                                        defaultValue={libBooks.find((value) => value.book_id === book.id)?.qty || ''}
                                                         placeholder='الكمية'
                                                     />
                                                     <input
-                                                        onChange={priceChanged}
+                                                        onChange={(e) => priceChanged(e, book.id)}
                                                         type='number'
-                                                        className=' w-full border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm'
+                                                        className='w-full border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm'
                                                         min={1}
-                                                        defaultValue={data.books.find((value) => value.book_id === book.id)?.price || ''}
+                                                        defaultValue={libBooks.find((value) => value.book_id === book.id)?.price || ''}
                                                         placeholder='السعر'
                                                     />
                                                 </div>
                                                 <div className='flex pt-2'>
                                                     <div className='flex-1'>
-                                                        {data.books.some(value => value.book_id == book.id) ?
-                                                            <SecondaryButton disabled={processing} onClick={(e) => updateBook(e, book.id)}>تحديث</SecondaryButton>
-                                                            :
-                                                            <PrimaryButton disabled={processing} onClick={() => addBooks(book.id)}>أضف</PrimaryButton>
+                                                        {!addedBooks.some(value => value.book_id == book.id) &&
+                                                            <PrimaryButton onClick={() => addBooks(book.id)}>أضف</PrimaryButton>
+                                                        }
+
+                                                        {addedBooks.some(value => value.book_id == book.id) &&
+                                                            <SecondaryButton onClick={(e) => updateBook(e, book.id)}>تحديث</SecondaryButton>
                                                         }
                                                     </div>
-                                                    {data.books.some(value => value.book_id == book.id) &&
+                                                    {libBooks.some(value => value.book_id == book.id) &&
                                                         <div>
-                                                            <DangerButton onClick={() => removeBook(book.id)}>X</DangerButton>
+                                                            <DangerButton onClick={(e) => removeBook(e, book.id)}>X</DangerButton>
                                                         </div>
                                                     }
                                                 </div>
