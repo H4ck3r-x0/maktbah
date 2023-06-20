@@ -18,6 +18,8 @@ class ProfileUpdateRequest extends FormRequest
         return [
             'name' => ['sometimes', 'required', 'string', 'max:255'],
             'gender' => ['sometimes', 'required', 'string', 'max:255'],
+            'city' => ['sometimes', 'required', 'string', 'max:255'],
+            'district' => ['sometimes', 'required', 'string', 'max:255'],
             'phone' => ['sometimes', 'required', 'string', 'max:255', Rule::unique(User::class)->ignore($this->user()->id)],
         ];
     }

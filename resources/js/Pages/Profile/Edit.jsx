@@ -6,7 +6,7 @@ import { Head } from '@inertiajs/react';
 import UpdatePhoneForm from './Partials/UpdatePhoneForm';
 import UpdateMajorForm from './Partials/UpdateMajorForm';
 
-export default function Edit({ auth, majors }) {
+export default function Edit({ auth, majors, cities, districts }) {
 
     return (
         <AuthenticatedLayout
@@ -20,6 +20,8 @@ export default function Edit({ auth, majors }) {
                     <div className="p-4 sm:p-8 bg-white shadow sm:rounded-lg">
                         <UpdateProfileInformationForm
                             className="max-w-xl"
+                            cities={cities}
+                            districts={districts}
                         />
                     </div>
 

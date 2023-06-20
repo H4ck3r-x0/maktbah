@@ -4,22 +4,32 @@ import PrimaryButton from '@/Components/PrimaryButton';
 import TextInput from '@/Components/TextInput';
 import { useForm, usePage } from '@inertiajs/react';
 import { Transition } from '@headlessui/react';
+import { useState } from 'react';
 
-export default function UpdateProfileInformation({ className = '' }) {
+export default function UpdateProfileInformation({ className = '', cities, districts }) {
     const user = usePage().props.auth.user;
-
+    const [selectedCityId, setSelectedCityId] = useState('');
     const { data, setData, patch, errors, processing, recentlySuccessful } = useForm({
         name: user.name,
         gender: user.gender ? user.gender : '',
+        city: user.city,
+        district: user.district,
     });
 
     const submit = (e) => {
         e.preventDefault();
 
-        patch(route('library.update'), {
+        patch(route('profile.update'), {
             preserveScroll: true
         });
     };
+
+    const cityChanged = (e) => {
+        const cityId = e.target.value;
+        const filterdCities = cities.filter(value => cityId == value.id);
+        setSelectedCityId(filterdCities[0].id);
+        setData('city', filterdCities[0].name)
+    }
 
     return (
         <section className={className}>
@@ -65,7 +75,41 @@ export default function UpdateProfileInformation({ className = '' }) {
 
                     <InputError message={errors.gender} className="mt-2" />
                 </div>
+                <div>
+                    <InputLabel htmlFor="city" value="المدينة" />
+                    <select
+                        onChange={cityChanged}
+                        className={`w-full mt-2 border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm `}>
+                        <option value="">أختر المدينة</option>
+                        {
+                            cities.map(city =>
+                                <option value={city.id} key={city.id}>{city.name}</option>
+                            )
+                        }
+                    </select>
 
+                    <InputError className="mt-2" message={errors.city} />
+                </div>
+
+                <div>
+                    <InputLabel htmlFor="city" value="الحي" />
+
+                    <select
+                        onChange={(e) => setData('district', e.target.value)}
+                        className={`w-full mt-2 border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm `}>
+                        <option value="">أختر الحي</option>
+                        {
+                            districts.filter((district) => {
+                                return district.city_id === selectedCityId
+                            })
+                                .map(district =>
+                                    <option value={district.name} key={district.id}>{district.name}</option>
+                                )
+                        }
+                    </select>
+                    <InputError className="mt-2" message={errors.district_id} />
+
+                </div>
                 <div className="flex items-center gap-4">
                     <PrimaryButton disabled={processing}>حفظ</PrimaryButton>
 

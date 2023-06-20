@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\City;
 use Inertia\Inertia;
 use App\Models\Major;
 use Inertia\Response;
+use App\Models\District;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\RedirectResponse;
@@ -27,6 +29,8 @@ class ProfileController extends Controller
         return Inertia::render('Profile/Edit', [
             'status' => session('status'),
             'majors' => $majors,
+            'cities' => City::all(),
+            'districts' => District::all()
         ]);
     }
 
@@ -35,6 +39,7 @@ class ProfileController extends Controller
      */
     public function update(ProfileUpdateRequest $request): RedirectResponse
     {
+        // dd($request->all());
         $request->user()->fill($request->validated());
 
         $request->user()->save();
