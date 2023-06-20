@@ -13,7 +13,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('library_baranches', function (Blueprint $table) {
+        Schema::create('library_branches', function (Blueprint $table) {
             $table->id();
             $table->string('name')->unique()->nullable();
             $table->string('phone')->unique()->nullable();

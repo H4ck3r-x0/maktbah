@@ -1,13 +1,13 @@
 <?php
 
-namespace App\Http\Controllers\LibraryBranch;
+namespace App\Http\Controllers\UserLibrary;
 
 use App\Models\City;
 use App\Models\User;
 use Inertia\Inertia;
 use App\Models\District;
 use Illuminate\Http\Request;
-use App\Models\LibraryBaranch;
+use App\Models\LibraryBranch;
 use Illuminate\Validation\Rule;
 use Illuminate\Validation\Rules;
 use App\Http\Controllers\Controller;
@@ -50,7 +50,7 @@ class LibraryBranchController extends Controller
         request()->validate([
             'libraryOwnerName' => 'required|string|max:255|unique:users,name,' . User::class,
             'username' => 'required|string|alpha_dash|max:255|unique:' . User::class,
-            'phone' => 'required|string|max:255|unique:' . LibraryBaranch::class,
+            'phone' => 'required|string|max:255|unique:' . LibraryBranch::class,
             'password' => ['required', Rules\Password::defaults()],
         ]);
 
@@ -62,7 +62,7 @@ class LibraryBranchController extends Controller
 
         $mainLibrary = request()->user()->load('library');
 
-        $user->libraryBaranch()->create([
+        $user->LibraryBranch()->create([
             'name' => request()->name,
             'phone' => request()->phone,
             'CR' => request()->CR,
@@ -90,8 +90,7 @@ class LibraryBranchController extends Controller
      */
     public function edit(string $id)
     {
-        $branch = LibraryBaranch::with('user')->findOrFail($id);
-        // $this->authorize('view', $branch);
+        $branch = LibraryBranch::with('user')->findOrFail($id);
 
         return  Inertia::render('LibraryBranch/Edit', [
             'branch' => $branch,
@@ -105,16 +104,15 @@ class LibraryBranchController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        // dd($request->all());
         request()->validate([
             'libraryOwnerName' => ['required', 'string', 'max:255'],
-            'name' => ['required', 'string', 'max:255', Rule::unique(LibraryBaranch::class)->ignore($id)],
-            'phone' => ['required', 'string', 'max:255', Rule::unique(LibraryBaranch::class)->ignore($id)],
+            'name' => ['required', 'string', 'max:255', Rule::unique(LibraryBranch::class)->ignore($id)],
+            'phone' => ['required', 'string', 'max:255', Rule::unique(LibraryBranch::class)->ignore($id)],
             'username' => ['required', 'string', 'alpha_dash', 'max:255', Rule::unique(User::class)->ignore($request->user_id)],
             'password' => ['nullable', Rules\Password::defaults()],
         ]);
 
-        $branch = LibraryBaranch::with('user')->findOrFail($id);
+        $branch = LibraryBranch::with('user')->findOrFail($id);
         $branch->user->name = $request->libraryOwnerName;
         $branch->name = $request->name;
         $branch->phone = $request->phone;

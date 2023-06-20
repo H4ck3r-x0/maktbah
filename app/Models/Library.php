@@ -32,7 +32,7 @@ class Library extends Model
 
     public function branches()
     {
-        return $this->hasMany(LibraryBaranch::class);
+        return $this->hasMany(LibraryBranch::class);
     }
 
     public function books()

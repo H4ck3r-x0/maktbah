@@ -1,12 +1,13 @@
 <?php
 
-use App\Http\Controllers\LibraryBook\LibraryBookController;
-use App\Http\Controllers\LibraryBranch\LibraryBranchController;
-use App\Http\Controllers\UserLibrary\LibraryController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\UserLibrary\LibraryController;
+use App\Http\Controllers\LibraryBook\LibraryBookController;
+use App\Http\Controllers\UserLibrary\LibraryBranchController;
 
 Route::middleware('auth')->group(function () {
-    Route::get('dashboard', [LibraryController::class, 'index'])->name('library.dashboard');
+    Route::get('dashboard', [LibraryController::class, 'index'])
+        ->name('library.dashboard');
 
     // Main Library
     Route::get('edit/{id}', [LibraryController::class, 'edit'])

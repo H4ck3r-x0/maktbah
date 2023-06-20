@@ -2,7 +2,7 @@
 
 namespace App\Models;
 
-use App\Models\LibraryBaranch;
+use App\Models\LibraryBranch;
 use App\Models\User\UserProfile;
 use Laravel\Sanctum\HasApiTokens;
 use Spatie\Permission\Traits\HasRoles;
@@ -55,9 +55,9 @@ class User extends Authenticatable
         return $this->hasOne(Library::class);
     }
 
-    public function libraryBaranch()
+    public function libraryBranch()
     {
-        return $this->hasMany(LibraryBaranch::class);
+        return $this->hasMany(LibraryBranch::class);
     }
 
     public function user_profile()
@@ -78,6 +78,10 @@ class User extends Authenticatable
 
         if ($this->role === 'library') {
             return '/library/dashboard';
+        }
+
+        if ($this->role === 'branch') {
+            return '/branch/dashboard';
         }
 
         return '/dashboard';
