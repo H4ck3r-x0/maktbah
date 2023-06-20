@@ -4,6 +4,7 @@ import Dropdown from '@/Components/Dropdown';
 import NavLink from '@/Components/NavLink';
 import ResponsiveNavLink from '@/Components/ResponsiveNavLink';
 import { Link } from '@inertiajs/react';
+import PrimaryButton from './PrimaryButton';
 
 export default function AuthenticatedHeader({ user }) {
     const [showingNavigationDropdown, setShowingNavigationDropdown] = useState(false);
@@ -23,6 +24,16 @@ export default function AuthenticatedHeader({ user }) {
                             <NavLink href={'/'} >
                                 الرئيسية
                             </NavLink>
+                            <div className='inline-flex ml-4 items-center gap-2'>
+                                <input
+                                    type="text"
+                                    className='w-80 border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm'
+                                    placeholder='إبحث بإسم الكتاب او المؤلف ...'
+                                />
+                                <PrimaryButton>
+                                    بحث
+                                </PrimaryButton>
+                            </div>
                         </div>
                     </div>
 
