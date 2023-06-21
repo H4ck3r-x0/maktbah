@@ -14,7 +14,7 @@ export default function Create({ auth, books, addedBooks }) {
     const filters = usePage().props.filters;
     const currentPage = usePage().props.currentPage;
 
-    const { data, setData, get, processing, reset } = useForm({
+    const { data, setData, get } = useForm({
         search: filters.search,
     });
 
@@ -160,9 +160,9 @@ export default function Create({ auth, books, addedBooks }) {
                             <div className='grid grid-cols-1 md:grid-cols-3  gap-3'>
                                 {books.data.map((book) => {
                                     return (
-                                        <div key={book.id} className=" max-w-sm bg-white border border-gray-200 rounded-lg shadow h-full">
+                                        <div key={book.id} className="max-w-sm bg-white border border-gray-200 rounded-lg shadow h-full">
                                             <div className="flex flex-col p-5 h-full">
-                                                <h5 className="mb-1 text-xl font-semibold text-gray-900 ">
+                                                <h5 className="mb-1 text-xl font-semibold text-gray-900">
                                                     {book.book_name}
                                                 </h5>
                                                 <div className='py-2 flex-1'>

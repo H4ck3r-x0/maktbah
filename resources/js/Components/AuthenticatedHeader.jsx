@@ -24,7 +24,10 @@ export default function AuthenticatedHeader({ user }) {
                             <NavLink href={'/'} >
                                 الرئيسية
                             </NavLink>
-                            <div className='inline-flex ml-4 items-center gap-2'>
+                            <NavLink href={route('search.books.index')} >
+                                الكتب
+                            </NavLink>
+                            {/* <div className='inline-flex ml-4 items-center gap-2'>
                                 <input
                                     type="text"
                                     className='w-80 border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm'
@@ -33,7 +36,7 @@ export default function AuthenticatedHeader({ user }) {
                                 <PrimaryButton>
                                     بحث
                                 </PrimaryButton>
-                            </div>
+                            </div> */}
                         </div>
                     </div>
 

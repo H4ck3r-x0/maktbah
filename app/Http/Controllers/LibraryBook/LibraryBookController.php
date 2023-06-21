@@ -44,7 +44,14 @@ class LibraryBookController extends Controller
 
         $addedBooks = [];
         foreach ($library->books as $book) {
-            array_push($addedBooks, ['book_id' => $book->pivot->book_id, 'qty' => $book->pivot->qty, 'price' => $book->pivot->price]);
+            array_push(
+                $addedBooks,
+                [
+                    'book_id' => $book->pivot->book_id,
+                    'qty' => $book->pivot->qty,
+                    'price' => $book->pivot->price
+                ]
+            );
         }
 
         return Inertia::render('LibraryBook/Create', [

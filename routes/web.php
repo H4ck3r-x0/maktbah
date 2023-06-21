@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Book\SearchBooksController;
 use App\Http\Controllers\Dashboard\DashboardController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\User\UserProfileController;
@@ -23,6 +24,10 @@ Route::middleware('auth')->group(function () {
 
     // User
     Route::patch('/profile/major', [UserProfileController::class, 'update'])->name('profile.major.update');
+    // User
+
+
+    Route::get('/books', [SearchBooksController::class, 'index'])->name('search.books.index');
 });
 
 require __DIR__ . '/auth.php';

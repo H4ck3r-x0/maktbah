@@ -52,8 +52,8 @@ export default function Index({ auth, libraries, cities, districts }) {
     const cityChanged = (e) => {
         const cityId = e.target.value;
         const filterdCities = cities.filter(value => cityId == value.name);
-        setSelectedCityId(filterdCities[0].id);
-        setData('city', filterdCities[0].name)
+        setSelectedCityId(filterdCities[0]?.id);
+        setData('city', filterdCities[0]?.name)
     }
 
     const districtChanged = (e) => {
