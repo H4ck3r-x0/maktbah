@@ -3,6 +3,7 @@ import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
 import { Head, useForm, usePage } from '@inertiajs/react';
 import { useCallback, useEffect, useState } from 'react';
 import debounce from "lodash/debounce";
+import Pagination from '@/Pages/Components/Pagination';
 
 export default function Search({ auth, books, cities, districts }) {
     const filters = usePage().props.filters;
@@ -12,7 +13,8 @@ export default function Search({ auth, books, cities, districts }) {
     const { data, setData, get, processing, reset } = useForm({
         search: filters.search,
         city: filters.city,
-        district: filters.district
+        district: filters.district,
+        minMaxPrice: filters.minMaxPrice,
     });
 
     const searchBooks = () => {
@@ -26,13 +28,13 @@ export default function Search({ auth, books, cities, districts }) {
     const delayedSearch = useCallback(
         debounce(searchBooks, 500),
 
-        [data.search, data.city, data.district, currentPage]
+        [data.search, data.city, data.district, data.minMaxPrice, currentPage]
     );
 
     useEffect(() => {
         delayedSearch();
         return delayedSearch.cancel;
-    }, [data.search, data.city, data.district, delayedSearch])
+    }, [data.search, data.city, data.district, data.minMaxPrice, delayedSearch])
 
     const filterdBooks = books.data.filter(item => {
         return item.book.book_name.includes(data.search);
@@ -49,6 +51,10 @@ export default function Search({ auth, books, cities, districts }) {
         setData('district', e.target.value);
     }
 
+    const minMaxPriceChanged = (e) => {
+        setData('minMaxPrice', e.target.value);
+    }
+
     return (
         <AuthenticatedLayout
             user={auth.user}
@@ -58,12 +64,13 @@ export default function Search({ auth, books, cities, districts }) {
 
             <div className="py-2">
                 <div className="max-w-7xl mx-auto sm:px-6 lg:px-8">
-                    <div className='inline-flex ml-4 items-center gap-3  px-6'>
+                    <div className='w-full sm:inline-flex ml-4 items-center gap-3 px-6 '>
+
                         <input
                             value={data.search ? data.search : ''}
                             onChange={(e) => setData('search', e.target.value)}
                             type="text"
-                            className='w-80 border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm'
+                            className='w-full sm:max-w-lg  border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm'
                             placeholder='إبحث بإسم الكتاب او المؤلف ...'
                         />
 
@@ -83,7 +90,6 @@ export default function Search({ auth, books, cities, districts }) {
                             </select>
                         </div>
 
-
                         <div className='mb-2'>
                             <select
                                 onChange={districtChanged}
@@ -102,7 +108,21 @@ export default function Search({ auth, books, cities, districts }) {
                                 }
                             </select>
                         </div>
+
+                        <div className='mb-2'>
+                            <select
+                                onChange={minMaxPriceChanged}
+                                value={data.minMaxPrice}
+                                className='mt-2 block w-full border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm'
+                            >
+                                <option value="">أختر السعر</option>
+                                <option value="min">الأقل</option>
+                                <option value="max">الأعلى</option>
+                            </select>
+                        </div>
                     </div>
+
+
                     <div className="overflow-hidden sm:rounded-lg">
                         <div className="p-6 text-gray-900">
                             <div className='container mx-auto grid grid-cols-1 sm:grid-cols-2  gap-4'>
@@ -147,6 +167,7 @@ export default function Search({ auth, books, cities, districts }) {
                                     )
                                 })}
                             </div>
+                            <Pagination class="mt-6" links={books.links} />
                         </div>
                     </div>
                 </div>

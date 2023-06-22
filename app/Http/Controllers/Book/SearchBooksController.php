@@ -34,6 +34,11 @@ class SearchBooksController extends Controller
                     $query->where('district', 'like', "%{$district}%");
                 });
             })
+            ->when(request()->minMaxPrice ?? false, function ($query, $minMaxPrice) {
+                return $minMaxPrice == 'min'
+                    ? $query->orderBy('price', 'DESC')
+                    : $query->orderBy('price', 'ASC');
+            })
             ->orderBy('id', 'DESC')
             ->paginate(5)
             ->withQueryString();

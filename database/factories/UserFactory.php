@@ -24,7 +24,7 @@ class UserFactory extends Factory
 
         return [
             'name' => fake()->name($gender),
-            'username' => fake()->userName(),
+            'username' => fake()->unique()->userName(),
             'phone' => fake()->phoneNumber(),
             'gender' => $gender,
             'city' => City::inRandomOrder()->first()->name,

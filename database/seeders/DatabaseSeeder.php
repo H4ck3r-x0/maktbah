@@ -22,7 +22,5 @@ class DatabaseSeeder extends Seeder
             BookSeeder::class,
             MajorSeeder::class,
         ]);
-
-        // \App\Models\User::factory(10)->create();
     }
 }

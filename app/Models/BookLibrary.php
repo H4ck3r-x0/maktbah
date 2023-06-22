@@ -9,6 +9,8 @@ class BookLibrary extends Pivot
 {
     use HasFactory;
 
+    public $timestamps = false;
+
     public function library()
     {
         return $this->belongsTo(Library::class);
