@@ -10,35 +10,35 @@ export default function Search({ auth, books, cities, districts }) {
     const currentPage = usePage().props.currentPage;
     const [selectedCityId, setSelectedCityId] = useState('');
 
-    const { data, setData, get, processing, reset } = useForm({
+    const { data, setData, get } = useForm({
         search: filters.search,
         city: filters.city,
         district: filters.district,
-        minMaxPrice: filters.minMaxPrice,
+        price: filters.price,
     });
 
     const searchBooks = () => {
-        get(route('search.books.index', { search: data.search, page: currentPage }), {
-            preserveScroll: true,
-            preserveState: true,
-            replace: true
-        });
+        get(route('search.books.index',
+            { search: data.search, city: data.city, district: data.district, price: data.price, page: currentPage }),
+            {
+                preserveScroll: true,
+                preserveState: true,
+                replace: true
+            });
     };
 
     const delayedSearch = useCallback(
         debounce(searchBooks, 500),
 
-        [data.search, data.city, data.district, data.minMaxPrice, currentPage]
+        [data.search, data.city, data.district, data.price, currentPage]
     );
 
     useEffect(() => {
         delayedSearch();
-        return delayedSearch.cancel;
-    }, [data.search, data.city, data.district, data.minMaxPrice, delayedSearch])
 
-    const filterdBooks = books.data.filter(item => {
-        return item.book.book_name.includes(data.search);
-    })
+        return delayedSearch.cancel;
+    }, [data.search, data.city, data.district, data.price, delayedSearch])
+
 
     const cityChanged = (e) => {
         const cityId = e.target.value;
@@ -52,7 +52,7 @@ export default function Search({ auth, books, cities, districts }) {
     }
 
     const minMaxPriceChanged = (e) => {
-        setData('minMaxPrice', e.target.value);
+        setData('price', e.target.value);
     }
 
     return (
@@ -112,7 +112,9 @@ export default function Search({ auth, books, cities, districts }) {
                         <div className='mb-2'>
                             <select
                                 onChange={minMaxPriceChanged}
-                                value={data.minMaxPrice}
+                                name="price"
+                                id="price"
+                                value={data.price}
                                 className='mt-2 block w-full border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm'
                             >
                                 <option value="">أختر السعر</option>

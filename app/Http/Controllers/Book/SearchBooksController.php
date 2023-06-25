@@ -34,21 +34,20 @@ class SearchBooksController extends Controller
                     $query->where('district', 'like', "%{$district}%");
                 });
             })
-            ->when(request()->minMaxPrice ?? false, function ($query, $minMaxPrice) {
-                return $minMaxPrice == 'min'
-                    ? $query->orderBy('price', 'DESC')
-                    : $query->orderBy('price', 'ASC');
+            ->when(request()->price ?? false, function ($query, $price) {
+                return $price === 'min'
+                    ? $query->orderBy('price', 'ASC')
+                    : $query->orderBy('price', 'DESC');
             })
-            ->orderBy('id', 'DESC')
             ->paginate(5)
             ->withQueryString();
 
         return Inertia::render('Book/Search', [
             'books' => $books,
-            'filters' => request()->only(['search']),
             'currentPage' => request()->page,
             'cities' => City::all(),
             'districts' => District::all(),
+            'filters' => request()->only(['search', 'price', 'city', 'district', 'page']),
         ]);
     }
 
