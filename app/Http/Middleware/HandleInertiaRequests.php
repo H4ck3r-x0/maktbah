@@ -37,6 +37,9 @@ class HandleInertiaRequests extends Middleware
             'flash' => [
                 'createNewLibrary' => fn () => $request->session()->get('createNewLibrary')
             ],
+            'user_cart' => [
+                'cart' => fn () => $request->session()->get('user_cart')
+            ],
             'ziggy' => function () use ($request) {
                 return array_merge((new Ziggy)->toArray(), [
                     'location' => $request->url(),

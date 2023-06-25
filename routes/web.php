@@ -28,6 +28,7 @@ Route::middleware('auth')->group(function () {
 
 
     Route::get('/books', [SearchBooksController::class, 'index'])->name('search.books.index');
+    Route::post('/books/store', [SearchBooksController::class, 'store'])->name('search.books.store');
 });
 
 require __DIR__ . '/auth.php';

@@ -64,7 +64,12 @@ class SearchBooksController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        // dd($request->all());
+        // $request->session()->forget('user_cart');
+        // dd($request->session()->get('user_cart'));
+        $request->session()->push('user_cart', $request->all());
+
+        return redirect()->back();
     }
 
     /**

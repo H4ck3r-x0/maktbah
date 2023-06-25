@@ -5,6 +5,7 @@ import NavLink from '@/Components/NavLink';
 import ResponsiveNavLink from '@/Components/ResponsiveNavLink';
 import { Link } from '@inertiajs/react';
 import PrimaryButton from './PrimaryButton';
+import ShoppingBadge from './ShoppingBadge';
 
 export default function AuthenticatedHeader({ user }) {
     const [showingNavigationDropdown, setShowingNavigationDropdown] = useState(false);
@@ -41,7 +42,10 @@ export default function AuthenticatedHeader({ user }) {
                     </div>
 
                     <div className="hidden sm:flex sm:items-center sm:ml-6">
-                        <div className="ml-3 relative">
+                        <div className="flex items-center ml-3 relative">
+                            <div>
+                                <ShoppingBadge />
+                            </div>
                             <Dropdown>
                                 <Dropdown.Trigger>
                                     <span className="inline-flex rounded-md">
