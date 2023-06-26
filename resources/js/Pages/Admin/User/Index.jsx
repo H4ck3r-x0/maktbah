@@ -10,7 +10,7 @@ export default function Index({ auth, users }) {
     const filters = usePage().props.filters;
     const currentPage = usePage().props.currentPage;
 
-    const { data, setData, get, processing, reset } = useForm({
+    const { data, setData, get, reset } = useForm({
         search: filters.search,
         account_type: filters.account_type,
     });
@@ -113,6 +113,9 @@ export default function Index({ auth, users }) {
                                                 الجوال
                                             </th>
                                             <th scope="col" className="px-6 py-3 tracking-wider">
+                                                المدينة
+                                            </th>
+                                            <th scope="col" className="px-6 py-3 tracking-wider">
                                                 الفئة
                                             </th>
                                             <th scope="col" className="px-6 py-3 tracking-wider">
@@ -131,6 +134,9 @@ export default function Index({ auth, users }) {
                                                 </td>
                                                 <td className="px-6 py-4">
                                                     {user.phone}
+                                                </td>
+                                                <td className="px-6 py-4">
+                                                    {user.city}
                                                 </td>
                                                 <td className="px-6 py-4">
                                                     {user.role}

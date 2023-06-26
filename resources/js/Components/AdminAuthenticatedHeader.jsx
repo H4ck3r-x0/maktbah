@@ -30,7 +30,7 @@ export default function AdminAuthenticatedHeader({ user }) {
                                                 type="button"
                                                 className="inline-flex items-center  py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-gray-500 bg-white hover:text-gray-700 focus:outline-none transition ease-in-out duration-150"
                                             >
-                                                الاعضاء
+                                                العملاء
 
                                                 <svg
                                                     className="mr-2 h-4 w-4"
@@ -49,8 +49,8 @@ export default function AdminAuthenticatedHeader({ user }) {
                                     </Dropdown.Trigger>
 
                                     <Dropdown.Content>
-                                        <Dropdown.Link href={route('admin.user.index')}>جميع الاعضاء</Dropdown.Link>
-                                        <Dropdown.Link href={route('admin.user.create')}>إضافة عضو جديد</Dropdown.Link>
+                                        <Dropdown.Link href={route('admin.user.index')}>جميع العملاء</Dropdown.Link>
+                                        <Dropdown.Link href={route('admin.user.create')}>إضافة عميل جديد</Dropdown.Link>
                                     </Dropdown.Content>
                                 </Dropdown>
                             </div>
