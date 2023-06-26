@@ -8,6 +8,7 @@ use App\Models\District;
 use App\Models\BookLibrary;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Models\UserCart;
 
 class SearchBooksController extends Controller
 {
@@ -18,6 +19,7 @@ class SearchBooksController extends Controller
     {
         $books = BookLibrary::query()
             ->with(['library:id,name,city,district,user_id', 'book:id,book_name,author_name,edition_number,volume_number'])
+            ->where('qty', '>', 0)
             ->when(request()->search ?? false, function ($query, $search) {
                 $query->whereHas('book', function ($query) use ($search) {
                     $query->where('book_name', 'like', "%{$search}%")
@@ -64,10 +66,15 @@ class SearchBooksController extends Controller
      */
     public function store(Request $request)
     {
-        // dd($request->all());
-        // $request->session()->forget('user_cart');
-        // dd($request->session()->get('user_cart'));
-        $request->session()->push('user_cart', $request->all());
+        $request->user()->carts()->create([
+            'total_price' => $request->price,
+            'book_id' => $request->book_id,
+        ]);
+        // UserCart::create([
+        //     'total_price' => $request->price,
+        //     'book_id' => $request->book_id,
+        //     'user_id' => $request->user()->id,
+        // ]);
 
         return redirect()->back();
     }
@@ -99,8 +106,8 @@ class SearchBooksController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(Request $request)
     {
-        //
+        UserCart::where('book_id', $request->book_id)->delete();
     }
 }

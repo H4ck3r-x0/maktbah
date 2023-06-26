@@ -4,7 +4,6 @@ import Dropdown from '@/Components/Dropdown';
 import NavLink from '@/Components/NavLink';
 import ResponsiveNavLink from '@/Components/ResponsiveNavLink';
 import { Link } from '@inertiajs/react';
-import PrimaryButton from './PrimaryButton';
 import ShoppingBadge from './ShoppingBadge';
 
 export default function AuthenticatedHeader({ user }) {
@@ -25,7 +24,7 @@ export default function AuthenticatedHeader({ user }) {
                             <NavLink href={'/'} >
                                 الرئيسية
                             </NavLink>
-                            <NavLink href={route('search.books.index')} >
+                            <NavLink href={route('search.books.index')} active={route().current('search.books.index')}>
                                 الكتب
                             </NavLink>
                             {/* <div className='inline-flex ml-4 items-center gap-2'>

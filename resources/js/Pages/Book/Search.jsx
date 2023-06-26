@@ -114,7 +114,7 @@ export default function Search({ auth, books, cities, districts }) {
                                 onChange={minMaxPriceChanged}
                                 name="price"
                                 id="price"
-                                value={data.price}
+                                value={data.price ? data.price : ''}
                                 className='mt-2 block w-full border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm'
                             >
                                 <option value="">أختر السعر</option>

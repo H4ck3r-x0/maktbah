@@ -38,7 +38,7 @@ class HandleInertiaRequests extends Middleware
                 'createNewLibrary' => fn () => $request->session()->get('createNewLibrary')
             ],
             'user_cart' => [
-                'cart' => fn () => $request->session()->get('user_cart')
+                'cart' => fn () => $request->user()?->carts()->get()
             ],
             'ziggy' => function () use ($request) {
                 return array_merge((new Ziggy)->toArray(), [

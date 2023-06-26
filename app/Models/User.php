@@ -67,6 +67,11 @@ class User extends Authenticatable
         return $this->hasOne(UserProfile::class);
     }
 
+    public function carts()
+    {
+        return $this->hasMany(UserCart::class);
+    }
+
     public function getRoleAttribute()
     {
         return $this->roles()->first()->name ?? null;
