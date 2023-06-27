@@ -37,11 +37,7 @@ class SearchBooksController extends Controller
                     $query->where('district', 'like', "%{$district}%");
                 });
             })
-            ->when(request()->price ?? false, function ($query, $price) {
-                return $price === 'min'
-                    ? $query->orderBy('price', 'ASC')
-                    : $query->orderBy('price', 'DESC');
-            })
+
             ->paginate(5)
             ->withQueryString();
 
@@ -50,7 +46,7 @@ class SearchBooksController extends Controller
             'currentPage' => request()->page,
             'cities' => City::all(),
             'districts' => District::all(),
-            'filters' => request()->only(['search', 'price', 'city', 'district', 'page']),
+            'filters' => request()->only(['search', 'city', 'district', 'page']),
         ]);
     }
 

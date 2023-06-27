@@ -14,12 +14,11 @@ export default function Search({ auth, books, cities, districts }) {
         search: filters.search,
         city: filters.city,
         district: filters.district,
-        price: filters.price,
     });
 
     const searchBooks = () => {
         get(route('search.books.index',
-            { search: data.search, city: data.city, district: data.district, price: data.price, page: currentPage }),
+            { search: data.search, city: data.city, district: data.district, page: currentPage }),
             {
                 preserveScroll: true,
                 preserveState: true,
@@ -30,14 +29,14 @@ export default function Search({ auth, books, cities, districts }) {
     const delayedSearch = useCallback(
         debounce(searchBooks, 500),
 
-        [data.search, data.city, data.district, data.price, currentPage]
+        [data.search, data.city, data.district, currentPage]
     );
 
     useEffect(() => {
         delayedSearch();
 
         return delayedSearch.cancel;
-    }, [data.search, data.city, data.district, data.price, delayedSearch])
+    }, [data.search, data.city, data.district, delayedSearch])
 
 
     const cityChanged = (e) => {
@@ -51,9 +50,6 @@ export default function Search({ auth, books, cities, districts }) {
         setData('district', e.target.value);
     }
 
-    const minMaxPriceChanged = (e) => {
-        setData('price', e.target.value);
-    }
 
     return (
         <AuthenticatedLayout
@@ -109,25 +105,12 @@ export default function Search({ auth, books, cities, districts }) {
                             </select>
                         </div>
 
-                        <div className='mb-2'>
-                            <select
-                                onChange={minMaxPriceChanged}
-                                name="price"
-                                id="price"
-                                value={data.price ? data.price : ''}
-                                className='mt-2 block w-full border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm'
-                            >
-                                <option value="">أختر السعر</option>
-                                <option value="min">الأقل</option>
-                                <option value="max">الأعلى</option>
-                            </select>
-                        </div>
                     </div>
 
 
                     <div className="overflow-hidden sm:rounded-lg">
                         <div className="p-6 text-gray-900">
-                            <div className='container mx-auto grid grid-cols-1 sm:grid-cols-2  gap-4'>
+                            <div className='container mx-auto grid grid-cols-1 sm:grid-cols-1  gap-4'>
                                 {!books.data.length &&
                                     <div>
                                         <h1 className='text-center sm:text-right text-lg sm:text-xl text-gray-900'>
