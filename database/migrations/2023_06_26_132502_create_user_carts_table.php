@@ -17,10 +17,12 @@ return new class extends Migration
         Schema::create('user_carts', function (Blueprint $table) {
             $table->id();
             $table->integer('total_price')->nullable();
+            $table->unsignedBigInteger('book_library_id');
 
-            $table->foreignIdFor(Book::class, 'book_id')
-                ->constrained('books', 'id')
-                ->cascadeOnDelete();
+            $table->foreign('book_library_id')
+                ->references('id')
+                ->on('book_library')
+                ->onDelete('cascade');
 
             $table->foreignIdFor(User::class, 'user_id')
                 ->constrained('users', 'id')

@@ -16,6 +16,7 @@ class UserCart extends Model
      */
     protected $fillable = [
         'total_price',
+        'book_library_id',
         'book_id',
         'user_id',
     ];
@@ -25,8 +26,8 @@ class UserCart extends Model
         return $this->belongsTo(User::class);
     }
 
-    public function book()
+    public function books()
     {
-        return $this->belongsTo(Book::class);
+        return $this->hasMany(BookLibrary::class, 'id', 'book_library_id');
     }
 }

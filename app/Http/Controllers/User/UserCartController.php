@@ -15,10 +15,15 @@ class UserCartController extends Controller
      */
     public function index(Request $request)
     {
-        // how to get the library with the book!!!
-        $cart = UserCart::with('book')->where('user_id', $request->user()->id)->get();
+        $cart = UserCart::query()
+            ->with(['books.library:id,name,city,district,google_maps', 'books.book'])
+            ->where('user_id', $request->user()->id)
+
+            ->get();
+        $total = $cart->where('user_id', $request->user()->id)->sum('total_price');
         return Inertia::render('User/Cart/Index', [
-            'carts' => $cart
+            'carts' => $cart,
+            'total' => $total
         ]);
     }
 

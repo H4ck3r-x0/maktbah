@@ -9,6 +9,7 @@ use App\Models\BookLibrary;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\UserCart;
+use Illuminate\Support\Facades\Redis;
 
 class SearchBooksController extends Controller
 {
@@ -68,13 +69,9 @@ class SearchBooksController extends Controller
     {
         $request->user()->carts()->create([
             'total_price' => $request->price,
-            'book_id' => $request->book_id,
+            'book_library_id' => $request->id,
         ]);
-        // UserCart::create([
-        //     'total_price' => $request->price,
-        //     'book_id' => $request->book_id,
-        //     'user_id' => $request->user()->id,
-        // ]);
+
 
         return redirect()->back();
     }
@@ -108,6 +105,6 @@ class SearchBooksController extends Controller
      */
     public function destroy(Request $request)
     {
-        UserCart::where('book_id', $request->book_id)->delete();
+        UserCart::where('book_library_id', $request->id)->delete();
     }
 }
