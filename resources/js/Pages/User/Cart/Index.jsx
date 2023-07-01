@@ -18,6 +18,17 @@ export default function Index({ auth, carts, total }) {
             }
         });
     }
+    const createInvoice = () => {
+        router.post(route('user.cart.store'), {
+            preserveScroll: true,
+            onBefore: () => {
+                setLoading(true);
+            },
+            onSuccess: () => {
+                setLoading(false);
+            }
+        });
+    }
 
     return (
         <AuthenticatedLayout
@@ -77,7 +88,7 @@ export default function Index({ auth, carts, total }) {
                                     <span className='text-lg text-gray-500'> {total} SAR</span>
                                 </h1>
                                 <div className=''>
-                                    <PrimaryButton>
+                                    <PrimaryButton disabled={loading} onClick={createInvoice}>
                                         إكمال الشراء
                                     </PrimaryButton>
                                 </div>

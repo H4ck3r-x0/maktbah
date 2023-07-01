@@ -4,9 +4,9 @@ namespace App\Http\Controllers\User;
 
 use App\Models\User;
 use Inertia\Inertia;
+use App\Models\UserCart;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Models\UserCart;
 
 class UserCartController extends Controller
 {
@@ -40,7 +40,6 @@ class UserCartController extends Controller
      */
     public function store(Request $request)
     {
-        //
     }
 
     /**

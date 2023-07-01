@@ -36,6 +36,9 @@ Route::middleware('auth')->group(function () {
     // User Cart
     Route::get('/cart', [UserCartController::class, 'index'])
         ->name('user.cart.index');
+
+    Route::post('/cart', [UserCartController::class, 'store'])
+        ->name('user.cart.store');
 });
 
 require __DIR__ . '/auth.php';
