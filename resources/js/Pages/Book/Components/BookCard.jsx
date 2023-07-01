@@ -6,7 +6,7 @@ import { useState } from "react";
 export default function BookCard({ book }) {
     const user_cart = usePage().props.user_cart;
     const [loading, setLoading] = useState(false);
-    console.log(user_cart)
+
     const handleAddBook = ({ id, price, book_id, library_id }) => {
         router.post(route('search.books.store'), { id, price, book_id, library_id }, {
             preserveScroll: true,

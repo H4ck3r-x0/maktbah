@@ -11,10 +11,10 @@ export default function Index({ auth, carts, total }) {
         router.post(route('search.books.destroy'), { id }, {
             preserveScroll: true,
             onBefore: () => {
-                setLoading(true)
+                setLoading(true);
             },
             onSuccess: () => {
-                setLoading(false)
+                setLoading(false);
             }
         });
     }
@@ -65,14 +65,15 @@ export default function Index({ auth, carts, total }) {
                                                         </DangerButton>
                                                     </div>
                                                 </div>
+
                                             </div>
                                         )
                                     })
                                 })}
                             </div>
-                            <div className=' h-56 flex flex-col items-center  gap-2 bg-white p-6 shadow-lg rounded-lg mb-4'>
+                            <div className=' h-60 flex flex-col items-center  gap-2 bg-white p-6 shadow-lg rounded-lg'>
                                 <h1 className='flex-1 items-center gap-2 text-xl text-gray-600 font-semibold'>
-                                    <span>الإجمالي:</span>
+                                    <span>إجمالي المشتريات:</span>
                                     <span className='text-lg text-gray-500'> {total} SAR</span>
                                 </h1>
                                 <div className=''>
