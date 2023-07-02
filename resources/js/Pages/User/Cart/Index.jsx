@@ -6,7 +6,7 @@ import { useState } from 'react';
 
 export default function Index({ auth, carts, total }) {
     const [loading, setLoading] = useState(false);
-
+    console.log(carts)
     const handleRemoveBook = (id) => {
         router.post(route('search.books.destroy'), { id }, {
             preserveScroll: true,
@@ -19,7 +19,7 @@ export default function Index({ auth, carts, total }) {
         });
     }
     const createInvoice = () => {
-        router.post(route('user.cart.store'), {
+        router.post(route('user.cart.store'), { carts }, {
             preserveScroll: true,
             onBefore: () => {
                 setLoading(true);

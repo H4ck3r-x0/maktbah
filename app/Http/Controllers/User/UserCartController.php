@@ -7,6 +7,7 @@ use Inertia\Inertia;
 use App\Models\UserCart;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Models\Order;
 
 class UserCartController extends Controller
 {
@@ -18,9 +19,10 @@ class UserCartController extends Controller
         $cart = UserCart::query()
             ->with(['books.library:id,name,city,district,google_maps', 'books.book'])
             ->where('user_id', $request->user()->id)
-
             ->get();
+
         $total = $cart->where('user_id', $request->user()->id)->sum('total_price');
+
         return Inertia::render('User/Cart/Index', [
             'carts' => $cart,
             'total' => $total
