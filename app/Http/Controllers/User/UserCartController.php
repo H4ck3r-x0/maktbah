@@ -7,6 +7,7 @@ use Inertia\Inertia;
 use App\Models\UserCart;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Models\BookLibrary;
 use App\Models\Order;
 
 class UserCartController extends Controller
@@ -17,15 +18,13 @@ class UserCartController extends Controller
     public function index(Request $request)
     {
         $cart = UserCart::query()
-            ->with(['books.library:id,name,city,district,google_maps', 'books.book'])
             ->where('user_id', $request->user()->id)
+            ->with(['books.library:id,name,city,district,google_maps', 'books.book'])
             ->get();
-
-        $total = $cart->where('user_id', $request->user()->id)->sum('total_price');
 
         return Inertia::render('User/Cart/Index', [
             'carts' => $cart,
-            'total' => $total
+            'total' => $cart->sum('total_price')
         ]);
     }
 
@@ -42,6 +41,7 @@ class UserCartController extends Controller
      */
     public function store(Request $request)
     {
+        dd(($request->carts));
     }
 
     /**

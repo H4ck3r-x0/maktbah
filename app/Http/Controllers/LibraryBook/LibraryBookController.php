@@ -4,7 +4,9 @@ namespace App\Http\Controllers\LibraryBook;
 
 use App\Http\Controllers\Controller;
 use App\Models\Book;
+use App\Models\BookLibrary;
 use App\Models\Library;
+use App\Models\UserCart;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 
@@ -110,6 +112,22 @@ class LibraryBookController extends Controller
             'qty' => $request->book[0]['qty'],
             'price' => $request->book[0]['price'],
         ]);
+
+        // Get all the books from the pivot table.
+        $librariesBooks = BookLibrary::where('book_id', $request->book[0]['book_id'])->get();
+        // Get all users carts
+        $cart = UserCart::get();
+
+        // Compare user cart with the updated price, and update all users cart.
+        foreach ($librariesBooks as $book) {
+            foreach ($cart as $c) {
+                if ($c->book_library_id === $book->id && $c->total_price !== $book->price) {
+                    UserCart::where('book_library_id', $c->book_library_id)->update([
+                        'total_price' => $book->price
+                    ]);
+                }
+            }
+        }
     }
 
     /**
