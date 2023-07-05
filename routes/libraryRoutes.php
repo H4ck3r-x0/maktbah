@@ -44,7 +44,7 @@ Route::middleware('auth')->group(function () {
     Route::post('books/store', [LibraryBookController::class, 'store'])
         ->name('book.store');
 
-    Route::patch('books/update/{id}', [LibraryBookController::class, 'update'])
+    Route::post('books/update/{id}', [LibraryBookController::class, 'update'])
         ->name('book.update');
 
     Route::delete('books/destroy/{id}', [LibraryBookController::class, 'destroy'])

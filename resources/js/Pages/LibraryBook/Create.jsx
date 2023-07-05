@@ -13,7 +13,6 @@ import Pagination from '@/Pages/Components/Pagination';
 export default function Create({ auth, books, addedBooks }) {
     const filters = usePage().props.filters;
     const currentPage = usePage().props.currentPage;
-
     const { data, setData, get } = useForm({
         search: filters.search,
     });
@@ -21,7 +20,13 @@ export default function Create({ auth, books, addedBooks }) {
     const [libBooks, setLibBooks] = useState([]);
     const [qty, setQty] = useState("");
     const [price, setPrice] = useState("");
+    const [adImage, setAdImage] = useState(null);
 
+    useEffect(() => {
+        if (addedBooks.length > 0) {
+            setLibBooks(addedBooks);
+        }
+    }, [addedBooks])
 
     const search = (e) => {
         setData('search', e.target.value);
@@ -51,17 +56,13 @@ export default function Create({ auth, books, addedBooks }) {
         router.post(route('book.store'), { libBooks });
     };
 
-    useEffect(() => {
-        if (addedBooks.length > 0) {
-            setLibBooks(addedBooks);
-        }
-    }, [addedBooks])
+
 
     const updateBook = (e, bookId) => {
         e.preventDefault();
-        let book = libBooks.filter(book => book.book_id === bookId);
+        const { book_id, qty, price, ad_image } = libBooks.filter(book => book.book_id === bookId)[0];
 
-        router.patch(route('book.update', bookId), { book }, {
+        router.post(route('book.update', bookId), { book_id, qty, price, ad_image }, {
             preserveScroll: true,
         });
     }
@@ -75,12 +76,15 @@ export default function Create({ auth, books, addedBooks }) {
         setLibBooks(currentLibBooks => {
             return [
                 ...currentLibBooks,
-                { book_id: bookID, qty: qty, price: price }
+                { book_id: bookID, qty: qty, price: price, ad_image: adImage }
             ]
         })
         setQty('');
         setPrice('');
+        setAdImage(null);
     }
+
+
     const removeBook = (e, bookID) => {
         e.preventDefault();
         router.delete(route('book.destroy', bookID), {
@@ -118,6 +122,17 @@ export default function Create({ auth, books, addedBooks }) {
         }
     }
 
+    const adImageChanged = (e, bookId) => {
+        setAdImage(e.target.files[0]);
+        if (e.target.files[0]) {
+            setLibBooks((currentLibBooks) => {
+                return currentLibBooks.map(
+                    (book) => book.book_id == bookId ? { ...book, ad_image: e.target.files[0] } : book
+                )
+            })
+        }
+    }
+    console.log(libBooks);
     return (
         <Authenticated
             user={auth.user}
@@ -196,6 +211,15 @@ export default function Create({ auth, books, addedBooks }) {
                                                         defaultValue={libBooks.find((value) => value.book_id === book.id)?.price || ''}
                                                         placeholder='السعر'
                                                     />
+                                                    <div>
+                                                        <input
+                                                            name="adImage"
+                                                            onChange={(e) => adImageChanged(e, book.id)}
+                                                            type='file'
+                                                            className='w-full py-4 border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm'
+                                                        />
+
+                                                    </div>
                                                 </div>
                                                 <div className='flex pt-2'>
                                                     <div className='flex-1'>
