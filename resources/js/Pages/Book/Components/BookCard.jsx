@@ -73,7 +73,13 @@ export default function BookCard({ book }) {
                             </PrimaryButton>
                         }
                     </div>
+
                 </div>
+                {book.ad_image &&
+                    <div className="py-4 ">
+                        <img src={book.ad_image} className="w-full h-96  shadow-lg rounded-lg" alt="" loading="lazy" />
+                    </div>
+                }
             </div>
         </div>
     )

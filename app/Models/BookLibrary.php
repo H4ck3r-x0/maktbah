@@ -16,6 +16,17 @@ class BookLibrary extends Pivot implements HasMedia
 
     public $timestamps = false;
 
+    protected $appends = ['ad_image'];
+
+    /**
+     * The attributes that should be hidden for serialization.
+     *
+     * @var array<int, string>
+     */
+    protected $hidden = [
+        'media',
+    ];
+
     public function registerMediaConversions(Media $media = null): void
     {
         $this
@@ -32,5 +43,11 @@ class BookLibrary extends Pivot implements HasMedia
     public function book()
     {
         return $this->belongsTo(Book::class);
+    }
+
+    public function getAdImageAttribute()
+    {
+
+        return $this->getFirstMediaUrl('bookAdImage') ? $this->getFirstMediaUrl('bookAdImage') : null;
     }
 }
