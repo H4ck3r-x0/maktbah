@@ -6,9 +6,8 @@ import { useState } from "react";
 export default function BookCard({ book }) {
     const user_cart = usePage().props.user_cart;
     const [loading, setLoading] = useState(false);
-
-    const handleAddBook = ({ id, price, book_id, library_id }) => {
-        router.post(route('search.books.store'), { id, price, book_id, library_id }, {
+    const handleAddBook = ({ id, price, offer, book_id, library_id }) => {
+        router.post(route('search.books.store'), { id, price, offer, book_id, library_id }, {
             preserveScroll: true,
             onBefore: () => {
                 setLoading(true)
@@ -33,18 +32,25 @@ export default function BookCard({ book }) {
     return (
         <div className="flex bg-white shadow-lg rounded-lg overflow-hidden h-full">
             <div className="w-full flex flex-col justify-between p-5 h-full">
-                <div>
-                    <h1 className="text-gray-900 text-center sm:text-right font-bold text-2xl mb-4">{book.book.book_name}</h1>
-                    <div className='flex flex-col sm:flex-row sm:items-center flex-wrap gap-2 mt-1'>
-                        <span className='text-lg text-gray-600 font-semibold'>الكاتب:</span>
-                        <span className='bg-blue-100 text-blue-800 text-lg sm:text-xs  mr-1 px-2.5 py-0.5 rounded '>{book.book.author_name}</span>
-                        <span className='text-lg text-gray-600 font-semibold'>رقم الطبعة:</span>
-                        <span className='bg-blue-100 text-blue-800 text-lg sm:text-xs  mr-1 px-2.5 py-0.5 rounded'>{book.book.edition_number}</span>
-                        <span className='text-lg text-gray-600 font-semibold'>رقم المجلد:</span>
-                        <span className='bg-blue-100 text-blue-800 text-lg sm:text-xs  mr-1 px-2.5 py-0.5 rounded'>{book.book.volume_number}</span>
+                <div className=" flex items-center justify-between">
+                    <div className="w-1/2">
+                        <h1 className="text-gray-900 text-center sm:text-right font-bold text-2xl mb-4">{book.book.book_name}</h1>
+                        <div className='flex flex-col sm:flex-row sm:items-center flex-wrap gap-2 mt-1'>
+                            <span className='text-lg text-gray-600 font-semibold'>الكاتب:</span>
+                            <span className='bg-blue-100 text-blue-800 text-lg sm:text-xs  mr-1 px-2.5 py-0.5 rounded '>{book.book.author_name}</span>
+                            <span className='text-lg text-gray-600 font-semibold'>رقم الطبعة:</span>
+                            <span className='bg-blue-100 text-blue-800 text-lg sm:text-xs  mr-1 px-2.5 py-0.5 rounded'>{book.book.edition_number}</span>
+                            <span className='text-lg text-gray-600 font-semibold'>رقم المجلد:</span>
+                            <span className='bg-blue-100 text-blue-800 text-lg sm:text-xs  mr-1 px-2.5 py-0.5 rounded'>{book.book.volume_number}</span>
+                        </div>
                     </div>
+                    {book.offer &&
+                        <div className="max-w-sm  p-4 border rounded shadow-sm">
+                            <h3 className="text-sm text-red-500 font-semibold ">عرض إضافي</h3>
+                            <span className="text-sm text-justify mt-1">{book.offer}</span>
+                        </div>
+                    }
                 </div>
-
                 <div>
                     <div className='flex sm:items-center flex-col sm:flex-row flex-wrap gap-1 pt-4 '>
                         <span className='text-lg text-gray-600 font-semibold'>المكتبة:</span>

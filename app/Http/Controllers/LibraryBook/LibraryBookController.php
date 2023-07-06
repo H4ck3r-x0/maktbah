@@ -53,6 +53,7 @@ class LibraryBookController extends Controller
                     'book_id' => $book->pivot->book_id,
                     'qty' => $book->pivot->qty,
                     'price' => $book->pivot->price,
+                    'offer' => $book->pivot->offer,
                     'ad_image' => $book->pivot->getFirstMediaUrl('bookAdImage') ? $book->pivot->getFirstMediaUrl('bookAdImage') : null
                 ]
             );
@@ -74,10 +75,11 @@ class LibraryBookController extends Controller
         $user = $request->user()->load('library');
 
         foreach ($request->libBooks as $book) {
-
             $user->library->books()->sync([
                 $book['book_id'] => [
-                    'qty' => $book['qty'], 'price' => $book['price']
+                    'qty' => $book['qty'],
+                    'price' => $book['price'],
+                    'offer' => $book['offer']
                 ]
             ], false);
 

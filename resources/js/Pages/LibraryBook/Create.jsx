@@ -20,6 +20,7 @@ export default function Create({ auth, books, addedBooks }) {
     const [libBooks, setLibBooks] = useState([]);
     const [qty, setQty] = useState("");
     const [price, setPrice] = useState("");
+    const [offer, setOffer] = useState("");
     const [adImage, setAdImage] = useState(null);
 
     useEffect(() => {
@@ -56,11 +57,9 @@ export default function Create({ auth, books, addedBooks }) {
         router.post(route('book.store'), { libBooks });
     };
 
-
-
     const updateBook = (e, bookId) => {
         e.preventDefault();
-        const { book_id, qty, price, ad_image } = libBooks.filter(book => book.book_id === bookId)[0];
+        const { book_id, qty, price, ad_image, offer } = libBooks.filter(book => book.book_id === bookId)[0];
 
         router.post(route('book.update', bookId), { book_id, qty, price, ad_image }, {
             preserveScroll: true,
@@ -76,11 +75,12 @@ export default function Create({ auth, books, addedBooks }) {
         setLibBooks(currentLibBooks => {
             return [
                 ...currentLibBooks,
-                { book_id: bookID, qty: qty, price: price, ad_image: adImage }
+                { book_id: bookID, qty: qty, price: price, offer: offer, ad_image: adImage }
             ]
         })
         setQty('');
         setPrice('');
+        setOffer('');
         setAdImage(null);
     }
 
@@ -122,6 +122,18 @@ export default function Create({ auth, books, addedBooks }) {
         }
     }
 
+    const offerChanged = (e, bookId) => {
+        const { value } = e.target;
+        setOffer(value)
+        if (value !== '') {
+            setLibBooks((currentLibBooks) => {
+                return currentLibBooks.map(
+                    (book) => book.book_id == bookId ? { ...book, offer: value } : book
+                )
+            })
+        }
+    }
+
     const adImageChanged = (e, bookId) => {
         setAdImage(e.target.files[0]);
         if (e.target.files[0]) {
@@ -132,7 +144,7 @@ export default function Create({ auth, books, addedBooks }) {
             })
         }
     }
-    console.log(libBooks);
+
     return (
         <Authenticated
             user={auth.user}
@@ -211,6 +223,14 @@ export default function Create({ auth, books, addedBooks }) {
                                                         defaultValue={libBooks.find((value) => value.book_id === book.id)?.price || ''}
                                                         placeholder='السعر'
                                                     />
+                                                    <input
+                                                        onChange={(e) => offerChanged(e, book.id)}
+                                                        type='text'
+                                                        className='w-full border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm'
+                                                        min={1}
+                                                        defaultValue={libBooks.find((value) => value.book_id === book.id)?.offer || ''}
+                                                        placeholder='عرض إضافي'
+                                                    />
                                                     <div>
                                                         <input
                                                             name="adImage"
@@ -218,7 +238,6 @@ export default function Create({ auth, books, addedBooks }) {
                                                             type='file'
                                                             className='w-full py-4 border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm'
                                                         />
-
                                                     </div>
                                                 </div>
                                                 <div className='flex pt-2'>

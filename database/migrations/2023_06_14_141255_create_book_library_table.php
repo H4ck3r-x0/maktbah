@@ -17,6 +17,7 @@ return new class extends Migration
             $table->id();
             $table->string('qty')->nullable();
             $table->integer('price')->nullable();
+            $table->text('offer')->nullable();
 
             $table->foreignIdFor(Book::class, 'book_id')
                 ->constrained('books', 'id')
