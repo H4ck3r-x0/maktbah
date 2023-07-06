@@ -6,6 +6,7 @@ import { useState } from "react";
 export default function BookCard({ book }) {
     const user_cart = usePage().props.user_cart;
     const [loading, setLoading] = useState(false);
+
     const handleAddBook = ({ id, price, offer, book_id, library_id }) => {
         router.post(route('search.books.store'), { id, price, offer, book_id, library_id }, {
             preserveScroll: true,
@@ -32,8 +33,8 @@ export default function BookCard({ book }) {
     return (
         <div className="flex bg-white shadow-lg rounded-lg overflow-hidden h-full">
             <div className="w-full flex flex-col justify-between p-5 h-full">
-                <div className=" flex items-center justify-between">
-                    <div className="w-1/2">
+                <div className="flex flex-col sm:flex-row items-center justify-between">
+                    <div className="w-full sm:w-1/2">
                         <h1 className="text-gray-900 text-center sm:text-right font-bold text-2xl mb-4">{book.book.book_name}</h1>
                         <div className='flex flex-col sm:flex-row sm:items-center flex-wrap gap-2 mt-1'>
                             <span className='text-lg text-gray-600 font-semibold'>الكاتب:</span>
@@ -45,7 +46,7 @@ export default function BookCard({ book }) {
                         </div>
                     </div>
                     {book.offer &&
-                        <div className="max-w-sm  p-4 border rounded shadow-sm">
+                        <div className="max-w-sm mt-3 p-4 border rounded shadow-sm">
                             <h3 className="text-sm text-red-500 font-semibold ">عرض إضافي</h3>
                             <span className="text-sm text-justify mt-1">{book.offer}</span>
                         </div>

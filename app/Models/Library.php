@@ -41,4 +41,9 @@ class Library extends Model
             ->using(BookLibrary::class)
             ->withPivot('id', 'qty', 'price', 'offer');
     }
+
+    public function orders()
+    {
+        return $this->hasMany(Order::class);
+    }
 }

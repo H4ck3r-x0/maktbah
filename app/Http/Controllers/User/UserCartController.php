@@ -8,6 +8,7 @@ use App\Models\UserCart;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\BookLibrary;
+use App\Models\Library;
 use App\Models\Order;
 
 class UserCartController extends Controller
@@ -41,7 +42,20 @@ class UserCartController extends Controller
      */
     public function store(Request $request)
     {
-        dd(($request->carts));
+        foreach ($request->carts as $book) {
+            foreach ($book['books'] as $libraryBook) {
+                $library = Library::where('id', $libraryBook['library_id'])
+                    ->first()
+                    ->orders()
+                    ->create(
+                        [
+                            'total' => $libraryBook['price'],
+                            'book_id' => $libraryBook['book_id'],
+                            'user_id' => $request->user()->id
+                        ]
+                    );
+            }
+        }
     }
 
     /**

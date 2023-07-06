@@ -6,7 +6,7 @@ import { useState } from 'react';
 
 export default function Index({ auth, carts, total }) {
     const [loading, setLoading] = useState(false);
-    console.log(carts)
+
     const handleRemoveBook = (id) => {
         router.post(route('search.books.destroy'), { id }, {
             preserveScroll: true,
@@ -39,23 +39,43 @@ export default function Index({ auth, carts, total }) {
             <div className="py-6">
                 <div className="max-w-7xl mx-auto sm:px-6 lg:px-8">
                     <div className='w-full sm:inline-flex ml-4 items-center gap-3 px-6 '>
-                        <div className='grid grid-cols-1 sm:grid-cols-3 gap-3 w-full'>
-                            <div className='sm:col-span-2 '>
+                        <div className='grid grid-cols-1 sm:grid-cols-1 gap-3 w-full'>
+                            <div className='flex flex-col items-center  gap-2 bg-white p-6 shadow-lg rounded-lg'>
+                                <h1 className='text-xl text-gray-600 font-semibold'>
+                                    <span>إجمالي المشتريات:</span>
+                                    <span className='text-lg text-gray-500'> {total} SAR</span>
+                                </h1>
+                                <div className=''>
+                                    <PrimaryButton disabled={loading} onClick={createInvoice}>
+                                        إكمال الشراء
+                                    </PrimaryButton>
+                                </div>
+                            </div>
+                            <div className='sm:col-span-2'>
                                 {carts?.map(item => {
                                     return item.books.map(item => {
                                         return (
                                             <div key={item.id} className='bg-white p-6 shadow-lg rounded-lg mb-4'>
-                                                <div>
-                                                    <h1 className="text-gray-900 text-center sm:text-right font-bold text-2xl mb-4">{item.book.book_name}</h1>
-                                                    <div className='flex flex-col sm:flex-row sm:items-center flex-wrap gap-2 mt-1'>
-                                                        <span className='text-lg text-gray-600 font-semibold'>الكاتب:</span>
-                                                        <span className='bg-blue-100 text-blue-800 text-lg sm:text-xs  mr-1 px-2.5 py-0.5 rounded '>{item.book.author_name}</span>
-                                                        <span className='text-lg text-gray-600 font-semibold'>رقم الطبعة:</span>
-                                                        <span className='bg-blue-100 text-blue-800 text-lg sm:text-xs  mr-1 px-2.5 py-0.5 rounded'>{item.book.edition_number}</span>
-                                                        <span className='text-lg text-gray-600 font-semibold'>رقم المجلد:</span>
-                                                        <span className='bg-blue-100 text-blue-800 text-lg sm:text-xs  mr-1 px-2.5 py-0.5 rounded'>{item.book.volume_number}</span>
+                                                <div className="flex flex-col sm:flex-row items-center justify-between">
+                                                    <div className="w-full sm:w-1/2">
+                                                        <h1 className="text-gray-900 text-center sm:text-right font-bold text-2xl mb-4">{item.book.book_name}</h1>
+                                                        <div className='flex flex-col sm:flex-row sm:items-center flex-wrap gap-2 mt-1'>
+                                                            <span className='text-lg text-gray-600 font-semibold'>الكاتب:</span>
+                                                            <span className='bg-blue-100 text-blue-800 text-lg sm:text-xs  mr-1 px-2.5 py-0.5 rounded '>{item.book.author_name}</span>
+                                                            <span className='text-lg text-gray-600 font-semibold'>رقم الطبعة:</span>
+                                                            <span className='bg-blue-100 text-blue-800 text-lg sm:text-xs  mr-1 px-2.5 py-0.5 rounded'>{item.book.edition_number}</span>
+                                                            <span className='text-lg text-gray-600 font-semibold'>رقم المجلد:</span>
+                                                            <span className='bg-blue-100 text-blue-800 text-lg sm:text-xs  mr-1 px-2.5 py-0.5 rounded'>{item.book.volume_number}</span>
+                                                        </div>
                                                     </div>
+                                                    {item.offer &&
+                                                        <div className="max-w-sm mt-3 p-4 border rounded shadow-sm">
+                                                            <h3 className="text-sm text-red-500 font-semibold ">عرض إضافي</h3>
+                                                            <span className="text-sm text-justify mt-1">{item.offer}</span>
+                                                        </div>
+                                                    }
                                                 </div>
+
                                                 <div>
                                                     <div className='flex sm:items-center flex-col sm:flex-row flex-wrap gap-1 pt-4 '>
                                                         <span className='text-lg text-gray-600 font-semibold'>المكتبة:</span>
@@ -76,23 +96,17 @@ export default function Index({ auth, carts, total }) {
                                                         </DangerButton>
                                                     </div>
                                                 </div>
-
+                                                {item.ad_image &&
+                                                    <div className="py-4 ">
+                                                        <img src={item.ad_image} className="w-full h-96  shadow-lg rounded-lg" alt="" loading="lazy" />
+                                                    </div>
+                                                }
                                             </div>
                                         )
                                     })
                                 })}
                             </div>
-                            <div className=' h-60 flex flex-col items-center  gap-2 bg-white p-6 shadow-lg rounded-lg'>
-                                <h1 className='flex-1 items-center gap-2 text-xl text-gray-600 font-semibold'>
-                                    <span>إجمالي المشتريات:</span>
-                                    <span className='text-lg text-gray-500'> {total} SAR</span>
-                                </h1>
-                                <div className=''>
-                                    <PrimaryButton disabled={loading} onClick={createInvoice}>
-                                        إكمال الشراء
-                                    </PrimaryButton>
-                                </div>
-                            </div>
+
                         </div>
                     </div>
                 </div>

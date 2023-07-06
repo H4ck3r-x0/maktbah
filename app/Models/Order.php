@@ -16,12 +16,14 @@ class Order extends Model
      */
     protected $fillable = [
         'total',
-        'item_ids',
+        'book_id',
         'library_id',
         'user_id',
     ];
 
-    protected $casts = [
-        'item_ids' => 'json'
-    ];
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
 }

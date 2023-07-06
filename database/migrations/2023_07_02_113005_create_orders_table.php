@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\Book;
 use App\Models\User;
 use App\Models\Library;
 use Illuminate\Support\Facades\Schema;
@@ -16,7 +17,10 @@ return new class extends Migration
         Schema::create('orders', function (Blueprint $table) {
             $table->id();
             $table->integer('total');
-            $table->json('item_ids');
+
+            $table->foreignIdFor(Book::class, 'book_id')
+                ->constrained('books', 'id')
+                ->cascadeOnDelete();
 
             $table->foreignIdFor(Library::class, 'library_id')
                 ->constrained('libraries', 'id')
