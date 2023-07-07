@@ -2,13 +2,24 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Spatie\ModelStatus\HasStatuses;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Order extends Model
 {
     use HasFactory;
+    use HasStatuses;
 
+    const STATUS = [
+        'sent_to_library' => [
+            'key' => 'sent_to_library',
+            'message' => [
+                'ar' => 'تم الإرسال للمكتبة',
+                'en' => 'Sent To Library'
+            ],
+        ],
+    ];
     /**
      * The attributes that are mass assignable.
      *
@@ -20,6 +31,19 @@ class Order extends Model
         'library_id',
         'user_id',
     ];
+    protected $with = ['statuses'];
+    protected $appends = ['model_status', 'current_status'];
+
+
+    public function getModelStatusAttribute(): array
+    {
+        return self::STATUS;
+    }
+
+    public function getCurrentStatusAttribute(): String
+    {
+        return $this->status;
+    }
 
     public function refreshTotalPayment()
     {

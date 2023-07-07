@@ -46,6 +46,7 @@ class UserCartController extends Controller
         $order = $request->user()->orders()->create([
             'total_payment' => 0
         ]);
+
         $total_payment = 0;
 
         foreach ($request->carts as $book) {
@@ -61,7 +62,9 @@ class UserCartController extends Controller
             BookLibrary::findOrFail($detail->book_library_id)->decrement('qty');
         }
         $order->total_payment = $total_payment;
+        $order->setStatus(Order::STATUS['sent_to_library']['key']);
         $order->save();
+
         return redirect()->route('user.order.index');
         // $request->user()->carts()->delete();
     }

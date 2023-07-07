@@ -1,4 +1,3 @@
-import DangerButton from '@/Components/DangerButton';
 import PrimaryButton from '@/Components/PrimaryButton';
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
 import { Head, router } from '@inertiajs/react';
@@ -38,12 +37,11 @@ export default function Index({ auth, orders }) {
                                                     {order.id}
                                                 </th>
                                                 <td className="px-6 py-4">
-                                                    تم الارسال للمكتبة
+                                                    {order.model_status[order.current_status]['message']['ar']}
                                                 </td>
                                                 <td className="px-6 py-4">
                                                     {order.total_payment} ريال
                                                 </td>
-
                                                 <td className="px-6 py-4">
                                                     <PrimaryButton className='text-xs sm:text-sm'>
                                                         مشاهدة التفاصيل
@@ -52,12 +50,9 @@ export default function Index({ auth, orders }) {
                                             </tr>
                                         )
                                     }))}
-
                                 </tbody>
                             </table>
                         </div>
-
-
                     </div>
                 </div>
             </div>
