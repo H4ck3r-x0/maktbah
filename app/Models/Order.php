@@ -15,15 +15,29 @@ class Order extends Model
      * @var array<int, string>
      */
     protected $fillable = [
-        'total',
+        'total_payment',
         'book_id',
         'library_id',
         'user_id',
     ];
 
+    public function refreshTotalPayment()
+    {
+        $total_payment = 0;
+        foreach ($this->details as $detail) {
+            $total_payment += $detail->price;
+        }
+        $this->total_payment = $total_payment;
+        $this->save();
+    }
 
     public function user()
     {
         return $this->belongsTo(User::class);
+    }
+
+    public function details()
+    {
+        return $this->hasMany(OrderDetail::class);
     }
 }

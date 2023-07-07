@@ -18,7 +18,8 @@ export default function Index({ auth, carts, total }) {
             }
         });
     }
-    const createInvoice = () => {
+
+    const createOrder = () => {
         router.post(route('user.cart.store'), { carts }, {
             preserveScroll: true,
             onBefore: () => {
@@ -38,20 +39,20 @@ export default function Index({ auth, carts, total }) {
             <Head title="السلة" />
             <div className="py-6">
                 <div className="max-w-7xl mx-auto sm:px-6 lg:px-8">
-                    <div className='w-full sm:inline-flex ml-4 items-center gap-3 px-6 '>
+                    <div className='w-full sm:inline-flex ml-4 items-center gap-3 px-6'>
                         <div className='grid grid-cols-1 sm:grid-cols-1 gap-3 w-full'>
-                            <div className='flex flex-col items-center  gap-2 bg-white p-6 shadow-lg rounded-lg'>
+                            <div className='flex flex-col items-center  bg-white p-6 shadow-lg rounded-lg'>
                                 <h1 className='text-xl text-gray-600 font-semibold'>
                                     <span>إجمالي المشتريات:</span>
                                     <span className='text-lg text-gray-500'> {total} SAR</span>
                                 </h1>
-                                <div className=''>
-                                    <PrimaryButton disabled={loading} onClick={createInvoice}>
+                                <div>
+                                    <PrimaryButton disabled={loading} onClick={createOrder}>
                                         إكمال الشراء
                                     </PrimaryButton>
                                 </div>
                             </div>
-                            <div className='sm:col-span-2'>
+                            <div className=''>
                                 {carts?.map(item => {
                                     return item.books.map(item => {
                                         return (

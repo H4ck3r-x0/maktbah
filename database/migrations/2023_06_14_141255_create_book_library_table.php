@@ -16,7 +16,7 @@ return new class extends Migration
         Schema::create('book_library', function (Blueprint $table) {
             $table->id();
             $table->string('qty')->nullable();
-            $table->integer('price')->nullable();
+            $table->decimal('price', 10, 2)->nullable();
             $table->text('offer')->nullable();
 
             $table->foreignIdFor(Book::class, 'book_id')

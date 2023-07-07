@@ -4,6 +4,7 @@ use App\Http\Controllers\Book\SearchBooksController;
 use App\Http\Controllers\Dashboard\DashboardController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\User\UserCartController;
+use App\Http\Controllers\User\UserOrderController;
 use App\Http\Controllers\User\UserProfileController;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -39,6 +40,12 @@ Route::middleware('auth')->group(function () {
 
     Route::post('/cart', [UserCartController::class, 'store'])
         ->name('user.cart.store');
+
+    // User Cart
+
+    // User Order
+    Route::get('/orders', [UserOrderController::class, 'index'])
+        ->name('user.order.index');
 });
 
 require __DIR__ . '/auth.php';

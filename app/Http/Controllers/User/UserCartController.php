@@ -10,6 +10,7 @@ use App\Http\Controllers\Controller;
 use App\Models\BookLibrary;
 use App\Models\Library;
 use App\Models\Order;
+use App\Models\OrderDetail;
 
 class UserCartController extends Controller
 {
@@ -42,20 +43,27 @@ class UserCartController extends Controller
      */
     public function store(Request $request)
     {
+        $order = $request->user()->orders()->create([
+            'total_payment' => 0
+        ]);
+        $total_payment = 0;
+
         foreach ($request->carts as $book) {
             foreach ($book['books'] as $libraryBook) {
-                $library = Library::where('id', $libraryBook['library_id'])
-                    ->first()
-                    ->orders()
-                    ->create(
-                        [
-                            'total' => $libraryBook['price'],
-                            'book_id' => $libraryBook['book_id'],
-                            'user_id' => $request->user()->id
-                        ]
-                    );
+                $detail = OrderDetail::create([
+                    'order_id' => $order->id,
+                    'book_library_id' => $book['book_library_id'],
+                    'book_id' => $libraryBook['book_id'],
+                    'price' => $libraryBook['price']
+                ]);
+                $total_payment += $detail->price;
             }
+            BookLibrary::findOrFail($detail->book_library_id)->decrement('qty');
         }
+        $order->total_payment = $total_payment;
+        $order->save();
+        return redirect()->route('user.order.index');
+        // $request->user()->carts()->delete();
     }
 
     /**
