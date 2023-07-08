@@ -1,6 +1,6 @@
 import PrimaryButton from '@/Components/PrimaryButton';
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
-import { Head, router } from '@inertiajs/react';
+import { Head, Link, router } from '@inertiajs/react';
 import { useState } from 'react';
 export default function Index({ auth, orders }) {
     console.log(orders);
@@ -43,9 +43,11 @@ export default function Index({ auth, orders }) {
                                                     {order.total_payment} ريال
                                                 </td>
                                                 <td className="px-6 py-4">
-                                                    <PrimaryButton className='text-xs sm:text-sm'>
-                                                        مشاهدة التفاصيل
-                                                    </PrimaryButton>
+                                                    <Link href={route('user.order.show', order.id)}>
+                                                        <PrimaryButton className='text-xs sm:text-sm'>
+                                                            التفاصيل
+                                                        </PrimaryButton>
+                                                    </Link>
                                                 </td>
                                             </tr>
                                         )

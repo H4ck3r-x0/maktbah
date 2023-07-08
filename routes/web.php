@@ -46,6 +46,9 @@ Route::middleware('auth')->group(function () {
     // User Order
     Route::get('/orders', [UserOrderController::class, 'index'])
         ->name('user.order.index');
+
+    Route::get('/orders/{id}', [UserOrderController::class, 'show'])
+        ->name('user.order.show');
 });
 
 require __DIR__ . '/auth.php';

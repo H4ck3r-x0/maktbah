@@ -5,7 +5,9 @@ namespace App\Http\Controllers\User;
 use Inertia\Inertia;
 use App\Models\Order;
 use Illuminate\Http\Request;
+use Barryvdh\DomPDF\Facade\Pdf;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Response;
 
 class UserOrderController extends Controller
 {
@@ -45,7 +47,11 @@ class UserOrderController extends Controller
      */
     public function show(string $id)
     {
-        //
+        // Need to authorize who can view it or etc ..
+        $order = Order::with(['details.book.library',  'details.book.book',  'user:id,name,phone,city,district'])->findOrFail($id);
+        return Inertia::render('User/Order/Show', [
+            'order' => $order
+        ]);
     }
 
     /**

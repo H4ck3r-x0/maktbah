@@ -64,9 +64,9 @@ class UserCartController extends Controller
         $order->total_payment = $total_payment;
         $order->setStatus(Order::STATUS['sent_to_library']['key']);
         $order->save();
+        $request->user()->carts()->delete();
 
         return redirect()->route('user.order.index');
-        // $request->user()->carts()->delete();
     }
 
     /**
