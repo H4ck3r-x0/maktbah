@@ -21,7 +21,7 @@ class LibraryController extends Controller
     public function index()
     {
         $query = Library::query()
-            ->with(['user'])
+            ->with('user')
             ->when(request()->search ?? false, function ($query, $search) {
                 $query->where('name', 'like', "%{$search}%")
                     ->orWhereHas('user', function ($query) use ($search) {
