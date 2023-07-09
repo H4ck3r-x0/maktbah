@@ -66,7 +66,7 @@ export default function Search({ auth, books, cities, districts }) {
                             value={data.search ? data.search : ''}
                             onChange={(e) => setData('search', e.target.value)}
                             type="text"
-                            className='w-full sm:max-w-lg  border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm'
+                            className='w-full sm:max-w-xl  border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm'
                             placeholder='إبحث بإسم الكتاب او المؤلف ...'
                         />
 

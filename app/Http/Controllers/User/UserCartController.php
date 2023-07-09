@@ -2,15 +2,15 @@
 
 namespace App\Http\Controllers\User;
 
-use App\Models\User;
 use Inertia\Inertia;
-use App\Models\UserCart;
-use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
-use App\Models\BookLibrary;
-use App\Models\Library;
 use App\Models\Order;
+use App\Models\UserCart;
+use App\Models\BookLibrary;
 use App\Models\OrderDetail;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
+use App\Http\Controllers\Controller;
 
 class UserCartController extends Controller
 {
@@ -43,28 +43,34 @@ class UserCartController extends Controller
      */
     public function store(Request $request)
     {
-        $order = $request->user()->orders()->create([
-            'total_payment' => 0
-        ]);
-
-        $total_payment = 0;
-
-        foreach ($request->carts as $book) {
-            foreach ($book['books'] as $libraryBook) {
-                $detail = OrderDetail::create([
-                    'order_id' => $order->id,
-                    'book_library_id' => $book['book_library_id'],
-                    'book_id' => $libraryBook['book_id'],
-                    'price' => $libraryBook['price']
+        try {
+            DB::transaction(function () use ($request) {
+                $order = $request->user()->orders()->create([
+                    'total_payment' => 0
                 ]);
-                $total_payment += $detail->price;
-            }
-            BookLibrary::findOrFail($detail->book_library_id)->decrement('qty');
+
+                $total_payment = 0;
+
+                foreach ($request->carts as $book) {
+                    foreach ($book['books'] as $libraryBook) {
+                        $detail = Orderdetail::create([
+                            'order_id' => $order->id,
+                            'book_library_id' => $book['book_library_id'],
+                            'book_id' => $libraryBook['book_id'],
+                            'price' => $libraryBook['price']
+                        ]);
+                        $total_payment += $detail->price;
+                    }
+                    BookLibrary::findOrFail($detail->book_library_id)->decrement('qty');
+                }
+                $order->total_payment = $total_payment;
+                $order->setStatus(Order::STATUS['sent_to_library']['key']);
+                $order->save();
+                $request->user()->carts()->delete();
+            });
+        } catch (\Exception $e) {
+            Log::error($e);
         }
-        $order->total_payment = $total_payment;
-        $order->setStatus(Order::STATUS['sent_to_library']['key']);
-        $order->save();
-        $request->user()->carts()->delete();
 
         return redirect()->route('user.order.index');
     }

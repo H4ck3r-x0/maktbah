@@ -27,16 +27,9 @@ export default function AuthenticatedHeader({ user }) {
                             <NavLink href={route('search.books.index')} active={route().current('search.books.index')}>
                                 الكتب
                             </NavLink>
-                            {/* <div className='inline-flex ml-4 items-center gap-2'>
-                                <input
-                                    type="text"
-                                    className='w-80 border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm'
-                                    placeholder='إبحث بإسم الكتاب او المؤلف ...'
-                                />
-                                <PrimaryButton>
-                                    بحث
-                                </PrimaryButton>
-                            </div> */}
+                            <NavLink href={route('user.order.index')} active={route().current('user.order.index')}>
+                                الطلبات
+                            </NavLink>
                         </div>
                     </div>
 
@@ -111,6 +104,12 @@ export default function AuthenticatedHeader({ user }) {
                 <div className="pt-2 pb-3 space-y-1">
                     <ResponsiveNavLink href={route('dashboard')} active={route().current('dashboard')}>
                         الرئيسية
+                    </ResponsiveNavLink>
+                    <ResponsiveNavLink href={route('search.books.index')} active={route().current('search.books.index')}>
+                        الكتب
+                    </ResponsiveNavLink>
+                    <ResponsiveNavLink href={route('user.order.index')} active={route().current('user.order.index')}>
+                        الطلبات
                     </ResponsiveNavLink>
                 </div>
 

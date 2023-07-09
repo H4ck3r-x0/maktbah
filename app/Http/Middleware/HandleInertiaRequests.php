@@ -35,7 +35,7 @@ class HandleInertiaRequests extends Middleware
                 'user' => $request->user()
             ],
             'flash' => [
-                'createNewLibrary' => fn () => $request->session()->get('createNewLibrary')
+                'createNewLibrary' => fn () => $request->session()->get('createNewLibrary'),
             ],
             'user_cart' => [
                 'cart' => fn () => $request->user()?->carts()->get()
