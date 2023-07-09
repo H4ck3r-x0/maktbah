@@ -53,6 +53,7 @@ class UserCartController extends Controller
 
                 foreach ($request->carts as $book) {
                     foreach ($book['books'] as $libraryBook) {
+                        $order->library_id = $libraryBook['library_id'];
                         $detail = Orderdetail::create([
                             'order_id' => $order->id,
                             'book_library_id' => $book['book_library_id'],

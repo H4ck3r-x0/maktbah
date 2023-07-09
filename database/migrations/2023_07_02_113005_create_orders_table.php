@@ -19,6 +19,11 @@ return new class extends Migration
             $table->id();
             $table->decimal('total_payment', 18, 2);
 
+            $table->foreignIdFor(Library::class, 'library_id')
+                ->nullable()
+                ->constrained('libraries', 'id')
+                ->cascadeOnDelete();
+
             $table->foreignIdFor(User::class, 'user_id')
                 ->constrained('users', 'id')
                 ->cascadeOnDelete();
