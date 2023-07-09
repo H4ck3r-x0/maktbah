@@ -46,7 +46,7 @@ class UserCartController extends Controller
         try {
             DB::transaction(function () use ($request) {
                 $order = $request->user()->orders()->create([
-                    'total_payment' => 0
+                    'total_payment' => 0,
                 ]);
 
                 $total_payment = 0;
@@ -68,11 +68,10 @@ class UserCartController extends Controller
                 $order->save();
                 $request->user()->carts()->delete();
             });
+            return redirect()->route('user.order.index');
         } catch (\Exception $e) {
             Log::error($e);
         }
-
-        return redirect()->route('user.order.index');
     }
 
     /**
