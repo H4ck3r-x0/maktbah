@@ -43,7 +43,11 @@ export default function Show({ auth, order }) {
                             <div className='flex flex-col gap-3'>
                                 <h1 className='text-lg  text-gray-600'>{order.user.name}</h1>
                                 <h1 className='text-lg  text-gray-600'>{order.user.phone}</h1>
-                                <h1 className='text-lg  text-gray-600'>{order.user.city + ' - ' + order.user.district}</h1>
+                                {order.user.city && order.user.district &&
+                                    <h1 className='text-lg  text-gray-600'>
+                                        {order.user.city + ' - ' + order.user.district}
+                                    </h1>
+                                }
                             </div>
                         </div>
                         <div className="relative overflow-x-auto">

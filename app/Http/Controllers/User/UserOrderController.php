@@ -48,7 +48,18 @@ class UserOrderController extends Controller
     public function show(string $id)
     {
         // Need to authorize who can view it or etc ..
-        $order = Order::with(['details.book.library',  'details.book.book',  'user:id,name,phone,city,district'])->findOrFail($id);
+        $order = Order::query()
+            ->with(
+                [
+                    'details.book.library',
+                    'details.book.book',
+                    'user:id,name,phone,city,district'
+                ]
+            )
+            ->findOrFail($id);
+
+        $this->authorize('view', $order);
+
         return Inertia::render('User/Order/Show', [
             'order' => $order
         ]);

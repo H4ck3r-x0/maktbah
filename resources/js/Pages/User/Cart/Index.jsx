@@ -1,7 +1,7 @@
 import DangerButton from '@/Components/DangerButton';
 import PrimaryButton from '@/Components/PrimaryButton';
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
-import { Head, router } from '@inertiajs/react';
+import { Head, Link, router } from '@inertiajs/react';
 import { useState } from 'react';
 
 export default function Index({ auth, carts, total }) {
@@ -42,15 +42,28 @@ export default function Index({ auth, carts, total }) {
                     <div className='w-full sm:inline-flex ml-4 items-center gap-3 px-6'>
                         <div className='grid grid-cols-1 sm:grid-cols-1 gap-3 w-full'>
                             <div className='flex flex-col items-center  bg-white p-6 shadow-lg rounded-lg'>
-                                <h1 className='text-xl text-gray-600 font-semibold'>
-                                    <span>إجمالي المشتريات:</span>
-                                    <span className='text-lg text-gray-500'> {total} SAR</span>
-                                </h1>
-                                <div>
-                                    <PrimaryButton disabled={loading} onClick={createOrder}>
-                                        إكمال الشراء
-                                    </PrimaryButton>
-                                </div>
+                                {carts.length > 0 ?
+                                    <>
+                                        <h1 className='text-xl text-gray-600 font-semibold'>
+                                            <span>إجمالي المشتريات:</span>
+                                            <span className='text-lg text-gray-500'> {total} SAR</span>
+                                        </h1>
+                                        <div>
+                                            <PrimaryButton disabled={loading} onClick={createOrder}>
+                                                إكمال الشراء
+                                            </PrimaryButton>
+                                        </div>
+                                    </> :
+                                    <div className='flex flex-col items-center gap-2'>
+                                        <h1 className='text-xl'>لا يوجد كتب في السلة.</h1>
+                                        <Link href={route('search.books.index')}>
+                                            <PrimaryButton>
+                                                إذهب الى الكتب
+                                            </PrimaryButton>
+                                        </Link>
+                                    </div>
+                                }
+
                             </div>
                             <div className=''>
                                 {carts?.map(item => {
