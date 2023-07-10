@@ -120,7 +120,6 @@ export default function Index({ auth, carts, total }) {
                                     })
                                 })}
                             </div>
-
                         </div>
                     </div>
                 </div>

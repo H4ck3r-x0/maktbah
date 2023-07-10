@@ -1,9 +1,7 @@
 import PrimaryButton from '@/Components/PrimaryButton';
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
-import { Head, Link, router } from '@inertiajs/react';
-import { useState } from 'react';
+import { Head, Link } from '@inertiajs/react';
 export default function Index({ auth, orders }) {
-    console.log(orders);
     return (
         <AuthenticatedLayout
             user={auth.user}
@@ -29,7 +27,7 @@ export default function Index({ auth, orders }) {
                                 </tr>
                             </thead>
                             <tbody>
-                                {orders.map((order => {
+                                {orders.map(((order) => {
                                     return (
                                         <tr key={order.id} className="bg-white ">
                                             <th scope="row" className="px-6 py-4  text-gray-900 whitespace-nowrap ">

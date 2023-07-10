@@ -1,8 +1,7 @@
 <?php
 
-use App\Models\Book;
 use App\Models\User;
-use App\Models\BookLibrary;
+use App\Models\Library;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
@@ -26,6 +25,10 @@ return new class extends Migration
 
             $table->foreignIdFor(User::class, 'user_id')
                 ->constrained('users', 'id')
+                ->cascadeOnDelete();
+
+            $table->foreignIdFor(Library::class, 'library_id')
+                ->constrained('libraries', 'id')
                 ->cascadeOnDelete();
             $table->timestamps();
         });

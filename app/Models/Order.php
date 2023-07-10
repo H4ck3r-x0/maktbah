@@ -45,15 +45,15 @@ class Order extends Model
         return $this->status;
     }
 
-    public function refreshTotalPayment()
-    {
-        $total_payment = 0;
-        foreach ($this->details as $detail) {
-            $total_payment += $detail->price;
-        }
-        $this->total_payment = $total_payment;
-        $this->save();
-    }
+    // public function refreshTotalPayment()
+    // {
+    //     $total_payment = 0;
+    //     foreach ($this->details as $detail) {
+    //         $total_payment += $detail->price;
+    //     }
+    //     $this->total_payment = $total_payment;
+    //     $this->save();
+    // }
 
     public function user()
     {

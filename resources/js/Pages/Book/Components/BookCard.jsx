@@ -8,6 +8,7 @@ export default function BookCard({ book }) {
     const [loading, setLoading] = useState(false);
 
     const handleAddBook = ({ id, price, offer, book_id, library_id }) => {
+        console.log('lib id ', library_id)
         router.post(route('search.books.store'), { id, price, offer, book_id, library_id }, {
             preserveScroll: true,
             onBefore: () => {

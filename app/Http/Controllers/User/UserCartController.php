@@ -30,13 +30,6 @@ class UserCartController extends Controller
         ]);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
 
     /**
      * Store a newly created resource in storage.
@@ -45,28 +38,34 @@ class UserCartController extends Controller
     {
         try {
             DB::transaction(function () use ($request) {
-                $order = $request->user()->orders()->create([
-                    'total_payment' => 0,
-                ]);
-
-                $total_payment = 0;
-
                 foreach ($request->carts as $book) {
+                    $order = Order::firstOrCreate(
+                        [
+                            'library_id' => $book['library_id'],
+                            'user_id' => $book['user_id'],
+                        ],
+                        [
+                            'total_payment' => 0
+                        ]
+                    );
+
                     foreach ($book['books'] as $libraryBook) {
-                        $order->library_id = $libraryBook['library_id'];
                         $detail = Orderdetail::create([
                             'order_id' => $order->id,
                             'book_library_id' => $book['book_library_id'],
                             'book_id' => $libraryBook['book_id'],
-                            'price' => $libraryBook['price']
+                            'price' => $libraryBook['price'],
+                            'total_price' => $libraryBook['price']
                         ]);
-                        $total_payment += $detail->price;
+
+                        $order->increment('total_payment', $libraryBook['price']);
+                    }
+                    if (!$order->latestStatus(Order::STATUS['sent_to_library']['key'])) {
+                        $order->setStatus(Order::STATUS['sent_to_library']['key']);
                     }
                     BookLibrary::findOrFail($detail->book_library_id)->decrement('qty');
                 }
-                $order->total_payment = $total_payment;
-                $order->setStatus(Order::STATUS['sent_to_library']['key']);
-                $order->save();
+
                 $request->user()->carts()->delete();
             });
             return redirect()->route('user.order.index');
@@ -75,21 +74,6 @@ class UserCartController extends Controller
         }
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
-    {
-        //
-    }
 
     /**
      * Update the specified resource in storage.

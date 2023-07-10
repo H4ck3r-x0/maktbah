@@ -19,6 +19,7 @@ class UserCart extends Model
         'book_library_id',
         'book_id',
         'user_id',
+        'library_id',
     ];
 
     public function user()

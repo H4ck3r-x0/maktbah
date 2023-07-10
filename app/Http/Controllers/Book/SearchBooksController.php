@@ -66,6 +66,7 @@ class SearchBooksController extends Controller
         $request->user()->carts()->create([
             'total_price' => $request->price,
             'book_library_id' => $request->id,
+            'library_id' => $request->library_id,
         ]);
 
 

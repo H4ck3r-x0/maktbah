@@ -76,7 +76,11 @@ export default function Show({ auth, order }) {
                                                 <th scope="row" className="px-3 py-4 text-gray-600 whitespace-nowrap ">
                                                     <div>
                                                         <h1> {detail.book.library.name}</h1>
-                                                        <span className='text-sm text-gray-400'>{detail.book.library.city + ' - ' + detail.book.library.district}</span>
+                                                        {detail.book.library.city && detail.book.library.district &&
+                                                            <h1 className='text-lg  text-gray-600'>
+                                                                {detail.book.library.city + ' - ' + detail.book.library.district}
+                                                            </h1>
+                                                        }
                                                     </div>
                                                 </th>
                                                 <th scope="row" className="px-3py-4  text-gray-600 whitespace-nowrap ">
