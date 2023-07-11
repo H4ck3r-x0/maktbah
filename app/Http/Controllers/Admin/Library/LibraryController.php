@@ -22,6 +22,7 @@ class LibraryController extends Controller
     {
         $query = Library::query()
             ->with(['user', 'orders'])
+            ->withSum('orders', 'total_payment')
             ->when(request()->search ?? false, function ($query, $search) {
                 $query->where('name', 'like', "%{$search}%")
                     ->orWhereHas('user', function ($query) use ($search) {
@@ -34,15 +35,22 @@ class LibraryController extends Controller
             ->when(request()->district ?? false, function ($query, $district) {
                 $query->where('district', $district);
             })
+            ->when(request()->orders ?? false, function ($query, $orders) {
+                $query->whereHas('orders', function () use ($orders, $query) {
+                    $orders === 'highest' ?
+                        $query->orderBy('orders_sum_total_payment', 'DESC')
+                        : $query->orderBy('orders_sum_total_payment', 'ASC');
+                });
+            })
             ->orderBy('id', 'DESC')
             ->paginate(15)
             ->withQueryString();
-        // dd($query);
+
         return Inertia::render('Admin/Library/Index', [
             'libraries' => $query,
             'cities' => City::all(),
             'districts' => District::all(),
-            'filters' => request()->only(['search', 'city', 'district', 'account_type']),
+            'filters' => request()->only(['search', 'city', 'district', 'orders']),
             'currentPage' => request()->page,
         ]);
     }

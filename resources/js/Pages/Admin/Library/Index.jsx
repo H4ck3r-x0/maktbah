@@ -16,11 +16,16 @@ export default function Index({ auth, libraries, cities, districts }) {
     const { data, setData, delete: destroy, get, processing, reset } = useForm({
         search: filters.search,
         city: filters.city,
-        district: filters.district
+        district: filters.district,
+        orders: filters.orders
     });
 
     const search = (e) => {
         setData('search', e.target.value);
+    }
+
+    const ordersChanged = (e) => {
+        setData('orders', e.target.value);
     }
 
     const deleteLibraray = (id) => {
@@ -31,23 +36,25 @@ export default function Index({ auth, libraries, cities, districts }) {
     }
 
     const searchLibraries = () => {
-        get(route('admin.library.index', { search: data.search, city: data.city, page: currentPage }), {
-            preserveScroll: true,
-            preserveState: true,
-            replace: true
-        });
+        get(route('admin.library.index',
+            { search: data.search, city: data.city, orders: data.orders, page: currentPage }),
+            {
+                preserveScroll: true,
+                preserveState: true,
+                replace: true
+            });
     };
 
     const delayedSearch = useCallback(
         debounce(searchLibraries, 500),
 
-        [data.search, data.city, data.district, currentPage]
+        [data.search, data.city, data.district, data.orders, currentPage]
     );
 
     useEffect(() => {
         delayedSearch();
         return delayedSearch.cancel;
-    }, [data.search, data.city, data.district, delayedSearch])
+    }, [data.search, data.city, data.district, data.orders, delayedSearch])
 
     const cityChanged = (e) => {
         const cityId = e.target.value;
@@ -126,6 +133,17 @@ export default function Index({ auth, libraries, cities, districts }) {
                                     }
                                 </select>
                             </div>
+                            <div className='mb-2'>
+                                <select
+                                    onChange={ordersChanged}
+                                    name="district"
+                                    id="district"
+                                    className='mt-2 block w-full border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm'>
+                                    <option value="">المبيعات</option>
+                                    <option value="highest">الأعلى</option>
+                                    <option value="lowest">الأقل</option>
+                                </select>
+                            </div>
 
                             {data.search !== '' || data.account_type !== '' ?
                                 <PrimaryButton onClick={() => reset()}>
@@ -145,6 +163,10 @@ export default function Index({ auth, libraries, cities, districts }) {
                                             </th>
                                             <th scope="col" className="px-6 py-3 tracking-wider">
                                                 أسم المكتبة
+                                            </th>
+
+                                            <th scope="col" className="px-6 py-3 tracking-wider">
+                                                المبيعات
                                             </th>
                                             <th scope="col" className="px-6 py-3 tracking-wider">
                                                 المدينة
@@ -171,6 +193,14 @@ export default function Index({ auth, libraries, cities, districts }) {
                                                 </th>
                                                 <td className="px-6 py-4">
                                                     {library.name}
+                                                </td>
+
+                                                <td className="px-6 py-4 w-fit">
+                                                    {library.orders_sum_total_payment ?
+                                                        <span className='text-green-500 text-sm  font-semibold'>
+                                                            {library.orders_sum_total_payment} ريال
+                                                        </span> :
+                                                        'لايوجد'}
                                                 </td>
                                                 <td className="px-6 py-4">
                                                     {library.city}
