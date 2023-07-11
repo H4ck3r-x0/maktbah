@@ -10,14 +10,19 @@ export default function Index({ auth, books }) {
     const currentPage = usePage().props.currentPage;
     const { data, setData, get, processing } = useForm({
         search: filters.search,
+        orderd: filters.orderd,
     });
 
     const search = (e) => {
         setData('search', e.target.value);
     }
 
+    const orderdChanged = (e) => {
+        setData('orderd', e.target.value);
+    }
+
     const searchBooks = () => {
-        get(route('admin.book.index', { search: data.search, page: currentPage }), {
+        get(route('admin.book.index', { search: data.search, orderd: data.orderd, page: currentPage }), {
             preserveScroll: true,
             preserveState: true,
             replace: true
@@ -27,14 +32,14 @@ export default function Index({ auth, books }) {
     const delayedSearch = useCallback(
         debounce(searchBooks, 500),
 
-        [data.search, currentPage]
+        [data.search, data.orderd, currentPage]
     );
 
     useEffect(() => {
         delayedSearch();
 
         return delayedSearch.cancel;
-    }, [data.search, delayedSearch])
+    }, [data.search, data.orderd, delayedSearch])
 
     return (
         <AdminAuthenticatedLayout
@@ -49,7 +54,7 @@ export default function Index({ auth, books }) {
                 </div>
             }
         >
-            <Head title="جميع اعضاء الموقع" />
+            <Head title="جميع الكتب" />
 
             <div className="">
                 <div className="max-w-7xl mx-auto sm:px-6 lg:px-8">
@@ -65,8 +70,21 @@ export default function Index({ auth, books }) {
                                 placeholder="أبحث بالاسم .."
                             />
 
+                            <select
+                                onChange={orderdChanged}
+                                name="bookOrdered" id="bookOrdered"
+                                className=' block  border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm'
+                            >
+                                <option value="">أعلى الكتب طلب</option>
+                                <option value="highest">الأعلى</option>
+                                <option value="lowest">الأقل</option>
+                            </select>
+
                             {data.search !== '' ?
-                                <PrimaryButton onClick={() => setData('search', '')}>
+                                <PrimaryButton onClick={() => {
+                                    setData('search', '');
+                                    setData('orderd', '');
+                                }}>
                                     إعادة تعيين
                                 </PrimaryButton> : null
                             }
@@ -91,6 +109,9 @@ export default function Index({ auth, books }) {
                                                 رقم المجلد
                                             </th>
                                             <th scope="col" className="px-6 py-3 tracking-wider">
+                                                عدد الطلبات
+                                            </th>
+                                            <th scope="col" className="px-6 py-3 tracking-wider">
                                                 العمليات
                                             </th>
                                         </tr>
@@ -109,6 +130,9 @@ export default function Index({ auth, books }) {
                                                 </td>
                                                 <td className="px-6 py-4">
                                                     {book.volume_number}
+                                                </td>
+                                                <td className="px-6 py-4">
+                                                    {book.count_orders_count}
                                                 </td>
                                                 <td className="px-0 py-4">
                                                     <div className='flex items-center gap-2'>

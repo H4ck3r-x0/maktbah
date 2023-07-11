@@ -15,9 +15,17 @@ class BookController extends Controller
     public function index()
     {
         $books = Book::query()
+            ->withCount(['countOrders'])
             ->when(request()->search ?? false, function ($query, $search) {
                 $query->where('book_name', 'like', "%{$search}%")
                     ->orWhere('author_name', 'like', "%{$search}%");
+            })
+            ->when(request()->orderd ?? false, function ($query, $orderd) {
+                $query->whereHas('countOrders', function () use ($orderd, $query) {
+                    $orderd === 'highest' ?
+                        $query->orderBy('count_orders_count', 'DESC')
+                        : $query->orderBy('count_orders_count', 'ASC');
+                });
             })
             ->orderBy('id', 'DESC')
             ->paginate(15)
@@ -25,7 +33,7 @@ class BookController extends Controller
 
         return Inertia::render('Admin/Book/Index', [
             'books' => $books,
-            'filters' => request()->only(['search']),
+            'filters' => request()->only(['search', 'orderd']),
             'currentPage' => request()->page,
         ]);
     }
