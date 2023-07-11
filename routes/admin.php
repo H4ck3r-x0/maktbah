@@ -8,6 +8,7 @@ use App\Http\Controllers\Admin\Common\CityController;
 use App\Http\Controllers\Admin\Common\DistrictController;
 use App\Http\Controllers\Admin\Common\MajorController;
 use App\Http\Controllers\Admin\Library\LibraryController;
+use App\Http\Controllers\Admin\Order\OrderController;
 use App\Http\Controllers\Admin\User\UserController;
 
 Route::middleware('auth')->group(function () {
@@ -62,4 +63,9 @@ Route::middleware('auth')->group(function () {
     Route::post('books/store', [BookController::class, 'store'])->name('book.store');
     Route::get('books/edit/{id}', [BookController::class, 'edit'])->name('book.edit');
     Route::patch('books/update/{id}', [BookController::class, 'update'])->name('book.update');
+
+    // Orders
+    Route::get('orders', [OrderController::class, 'index'])->name('order.index');
+    Route::get('/orders/{id}', [OrderController::class, 'show'])
+        ->name('order.show');
 });

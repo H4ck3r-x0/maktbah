@@ -131,6 +131,6 @@ export default function Index({ auth, books }) {
                     </div>
                 </div>
             </div>
-        </AdminAuthenticatedLayout>
+        </AdminAuthenticatedLayout >
     );
 }

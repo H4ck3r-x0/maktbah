@@ -13,7 +13,7 @@ class UserOrderPolicy
      */
     public function view(User $user, Order $order): Response
     {
-        return $user->id == $order->user_id
+        return $user->id == $order->user_id || $user->role == 'admin'
             ? Response::allow()
             : Response::denyAsNotFound();
     }
