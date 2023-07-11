@@ -21,7 +21,7 @@ class LibraryController extends Controller
     public function index()
     {
         $query = Library::query()
-            ->with('user')
+            ->with(['user', 'orders'])
             ->when(request()->search ?? false, function ($query, $search) {
                 $query->where('name', 'like', "%{$search}%")
                     ->orWhereHas('user', function ($query) use ($search) {
@@ -37,7 +37,7 @@ class LibraryController extends Controller
             ->orderBy('id', 'DESC')
             ->paginate(15)
             ->withQueryString();
-
+        // dd($query);
         return Inertia::render('Admin/Library/Index', [
             'libraries' => $query,
             'cities' => City::all(),

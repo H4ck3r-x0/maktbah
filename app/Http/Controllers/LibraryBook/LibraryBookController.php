@@ -170,9 +170,10 @@ class LibraryBookController extends Controller
         // Check if it has media 
         $bookMedia = $user->library->books()
             ->wherePivot('book_id', $id)
-            ->first()->pivot->getMedia('bookAdImage');
+            ->first();
 
-        if (isset($bookMedia[0])) {
+        if ($bookMedia !== null && isset($bookMedia[0])) {
+            $bookMedia->pivot->getMedia('bookAdImage');
             $bookMedia[0]->delete();
         }
 

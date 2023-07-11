@@ -1,6 +1,7 @@
 import PrimaryButton from '@/Components/PrimaryButton';
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
 import { Head, Link } from '@inertiajs/react';
+import moment from 'moment/min/moment-with-locales';
 export default function Index({ auth, orders }) {
     return (
         <AuthenticatedLayout
@@ -23,7 +24,10 @@ export default function Index({ auth, orders }) {
                                     <th scope="col" className="px-6 py-3">
                                         إجمالي الطلب
                                     </th>
-                                    <th scope="col" className="px-6 py-3"></th>
+                                    <th scope="col" className="px-6 py-3">
+                                        تاريخ الانشاء
+                                    </th>
+                                    <th scope="col" className="px-6 py-3">العمليات</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -38,6 +42,9 @@ export default function Index({ auth, orders }) {
                                             </td>
                                             <td className="px-6 py-4">
                                                 {order.total_payment} ريال
+                                            </td>
+                                            <td className="px-6 py-4">
+                                                {moment(order.created_at).locale('ar').format('MMMM Do YYYY')}
                                             </td>
                                             <td className="px-6 py-4">
                                                 <Link href={route('user.order.show', order.id)}>

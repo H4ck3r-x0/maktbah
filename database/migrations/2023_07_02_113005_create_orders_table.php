@@ -17,12 +17,14 @@ return new class extends Migration
     {
         Schema::create('orders', function (Blueprint $table) {
             $table->id();
-            $table->decimal('total_payment', 18, 2);
+            $table->decimal('total_payment', 18, 2)->nullable();
 
             $table->foreignIdFor(Library::class, 'library_id')
                 ->nullable()
                 ->constrained('libraries', 'id')
                 ->cascadeOnDelete();
+
+
 
             $table->foreignIdFor(User::class, 'user_id')
                 ->constrained('users', 'id')

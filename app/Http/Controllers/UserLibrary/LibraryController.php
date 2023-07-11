@@ -18,7 +18,8 @@ class LibraryController extends Controller
      */
     public function index()
     {
-        $user = User::with('library.branches')->findOrFail(request()->user()->id);
+        $user = User::with('library.branches')
+            ->findOrFail(request()->user()->id);
 
         if ($user->library === null) {
             return redirect()
@@ -36,7 +37,8 @@ class LibraryController extends Controller
      */
     public function create()
     {
-        $user = User::with('library')->findOrFail(request()->user()->id);
+        $user = User::with('library')
+            ->findOrFail(request()->user()->id);
 
         if ($user->cannot('create', Library::class)) {
             return redirect()

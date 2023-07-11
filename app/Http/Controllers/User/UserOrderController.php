@@ -5,9 +5,7 @@ namespace App\Http\Controllers\User;
 use Inertia\Inertia;
 use App\Models\Order;
 use Illuminate\Http\Request;
-use Barryvdh\DomPDF\Facade\Pdf;
 use App\Http\Controllers\Controller;
-use Illuminate\Support\Facades\Response;
 
 class UserOrderController extends Controller
 {
@@ -19,6 +17,7 @@ class UserOrderController extends Controller
         $orders = Order::query()
             ->where('user_id', request()->user()->id)
             ->with(['details.book.library'])
+            ->latest()
             ->get();
 
         return Inertia::render('User/Order/Index', [
@@ -47,7 +46,6 @@ class UserOrderController extends Controller
      */
     public function show(string $id)
     {
-        // Need to authorize who can view it or etc ..
         $order = Order::query()
             ->with(
                 [

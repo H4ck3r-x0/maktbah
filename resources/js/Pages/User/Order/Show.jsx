@@ -38,7 +38,7 @@ export default function Show({ auth, order }) {
                         <div className='w-full flex items-center justify-between'>
                             <div className='flex flex-col gap-3'>
                                 <h1 className='text-lg  text-gray-600'>رقم الطلب : {order.id}</h1>
-                                <h1 className='text-lg  text-gray-600'>تاريخ الإنشاء : {moment(order.created_at).locale('ar').format('MMMM Do YYYY, h:mm:ss a')}</h1>
+                                <h1 className='text-lg  text-gray-600'>تاريخ الإنشاء : {moment(order.created_at).locale('ar').format('MMMM Do YYYY')}</h1>
                             </div>
                             <div className='flex flex-col gap-3'>
                                 <h1 className='text-lg  text-gray-600'>{order.user.name}</h1>
@@ -77,7 +77,7 @@ export default function Show({ auth, order }) {
                                                     <div>
                                                         <h1> {detail.book.library.name}</h1>
                                                         {detail.book.library.city && detail.book.library.district &&
-                                                            <h1 className='text-lg  text-gray-600'>
+                                                            <h1 className='text-sm text-gray-400'>
                                                                 {detail.book.library.city + ' - ' + detail.book.library.district}
                                                             </h1>
                                                         }
@@ -94,7 +94,7 @@ export default function Show({ auth, order }) {
                                                     </div>
                                                 </th>
                                                 <th scope="row" className="px-3 py-4  text-gray-600 whitespace-nowrap ">
-                                                    {detail.book.offer ? detail.book.offer : ''}
+                                                    {detail.book.offer ? detail.book.offer : 'لايوجد'}
                                                 </th>
                                                 <th scope="row" className="px-3 py-4  text-gray-600 whitespace-nowrap ">
                                                     {detail.book.price} ريال

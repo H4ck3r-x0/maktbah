@@ -67,6 +67,8 @@ export default function Create({ auth, cities, districts }) {
                                 <div>
                                     <InputLabel htmlFor="city" value="المدينة" />
                                     <select
+                                        required
+
                                         onChange={cityChanged}
                                         className={`w-full mt-2 border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm `}>
                                         <option value="">أختر المدينة</option>
@@ -84,6 +86,7 @@ export default function Create({ auth, cities, districts }) {
                                     <InputLabel htmlFor="city" value="الحي" />
 
                                     <select
+                                        required
                                         onChange={(e) => setData('district', e.target.value)}
                                         className={`w-full mt-2 border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm `}>
                                         <option value="">أختر الحي</option>

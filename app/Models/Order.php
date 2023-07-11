@@ -31,6 +31,7 @@ class Order extends Model
         'library_id',
         'user_id',
     ];
+
     protected $with = ['statuses'];
     protected $appends = ['model_status', 'current_status'];
 
