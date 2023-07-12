@@ -3,6 +3,7 @@ import ApplicationLogo from '@/Components/ApplicationLogo';
 import Dropdown from '@/Components/Dropdown';
 import ResponsiveNavLink from '@/Components/ResponsiveNavLink';
 import { Link } from '@inertiajs/react';
+import NotificationIcon from './Library/NotificationIcon';
 
 export default function AuthenticatedLibraryHeader({ user }) {
     const [showingNavigationDropdown, setShowingNavigationDropdown] = useState(false);
@@ -86,7 +87,10 @@ export default function AuthenticatedLibraryHeader({ user }) {
                     </div>
 
                     <div className="hidden sm:flex sm:items-center sm:ml-6">
-                        <div className="ml-3 relative">
+                        <div className="flex items-center ml-3 relative">
+                            <div>
+                                <NotificationIcon />
+                            </div>
                             <Dropdown>
                                 <Dropdown.Trigger>
                                     <span className="inline-flex rounded-md">

@@ -32,7 +32,8 @@ class HandleInertiaRequests extends Middleware
     {
         return array_merge(parent::share($request), [
             'auth' => [
-                'user' => $request->user()
+                'user' => $request->user(),
+                'unreadNotificationsCount' => $request->user()?->unreadNotifications->count()
             ],
             'flash' => [
                 'createNewLibrary' => fn () => $request->session()->get('createNewLibrary'),

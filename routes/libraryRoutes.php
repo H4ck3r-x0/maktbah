@@ -3,11 +3,15 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserLibrary\LibraryController;
 use App\Http\Controllers\LibraryBook\LibraryBookController;
+use App\Http\Controllers\UserLibrary\NotificationController;
 use App\Http\Controllers\UserLibrary\LibraryBranchController;
 
 Route::middleware('auth')->group(function () {
     Route::get('dashboard', [LibraryController::class, 'index'])
         ->name('library.dashboard');
+
+    Route::get('notifications', [NotificationController::class, 'index'])
+        ->name('library.notification');
 
     // Main Library
     Route::get('edit/{id}', [LibraryController::class, 'edit'])

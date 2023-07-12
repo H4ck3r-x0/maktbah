@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers\User;
 
+use App\Models\User;
 use Inertia\Inertia;
 use App\Models\Order;
+use App\Models\Library;
 use App\Models\UserCart;
 use App\Models\BookLibrary;
 use App\Models\OrderDetail;
@@ -11,6 +13,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Notification;
+use App\Notifications\Order\OrderCreatedNotification;
 
 class UserCartController extends Controller
 {
@@ -30,7 +34,9 @@ class UserCartController extends Controller
         ]);
     }
 
-
+    /**
+     * Store a newly created resource in storage.
+     */
     public function store(Request $request)
     {
         try {
@@ -67,6 +73,14 @@ class UserCartController extends Controller
                     if (!$order->latestStatus(Order::STATUS['sent_to_library']['key'])) {
                         $order->setStatus(Order::STATUS['sent_to_library']['key']);
                     }
+                }
+
+                // Send notification to user who owns the library
+                foreach ($libraries as $libraryId => $order) {
+                    $library = Library::find($libraryId);
+                    $user = User::find($library->user_id);
+                    Notification::send($user, (new OrderCreatedNotification($order))
+                        ->onQueue('notifications'));
                 }
 
                 $request->user()->carts()->delete();
