@@ -214,7 +214,7 @@ export default function Index({ auth, libraries, cities, districts }) {
                                                 <td className="px-6 py-4">
                                                     {library.phone}
                                                 </td>
-                                                <td className="px-0 py-4">
+                                                <td className="px-0 py-4" id='here'>
                                                     <div className='flex items-center gap-2'>
                                                         <Link href={route('admin.library.edit', library.id)}>
                                                             <PrimaryButton>

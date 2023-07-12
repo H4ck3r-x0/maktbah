@@ -23,19 +23,19 @@ class LibraryController extends Controller
         $query = Library::query()
             ->with(['user', 'orders'])
             ->withSum('orders', 'total_payment')
-            ->when(request()->search ?? false, function ($query, $search) {
+            ->when(request()->search, function ($query, $search) {
                 $query->where('name', 'like', "%{$search}%")
                     ->orWhereHas('user', function ($query) use ($search) {
                         $query->where('name', 'like', "%{$search}%");
                     });
             })
-            ->when(request()->city ?? false, function ($query, $city) {
+            ->when(request()->city, function ($query, $city) {
                 $query->where('city', $city);
             })
-            ->when(request()->district ?? false, function ($query, $district) {
+            ->when(request()->district, function ($query, $district) {
                 $query->where('district', $district);
             })
-            ->when(request()->orders ?? false, function ($query, $orders) {
+            ->when(request()->orders, function ($query, $orders) {
                 $query->whereHas('orders', function () use ($orders, $query) {
                     $orders === 'highest' ?
                         $query->orderBy('orders_sum_total_payment', 'DESC')

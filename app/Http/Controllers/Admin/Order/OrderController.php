@@ -16,7 +16,7 @@ class OrderController extends Controller
     {
         $orders = Order::query()
             ->with(['details.book.library', 'user:id,name,phone'])
-            ->when(request()->search ?? false, function ($query, $search) {
+            ->when(request()->search, function ($query, $search) {
                 $query->whereHas('user', function ($query) use ($search) {
                     $query->where('name', 'like', "%{$search}%");
                 })->orWhere('id', $search);

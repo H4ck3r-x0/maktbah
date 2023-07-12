@@ -18,28 +18,36 @@ class SearchBooksController extends Controller
      */
     public function index()
     {
-        $books = BookLibrary::query()
-            ->with(['library:id,name,city,district,user_id', 'book:id,book_name,author_name,edition_number,volume_number'])
-            ->where('qty', '>', 0)
-            ->when(request()->search ?? false, function ($query, $search) {
-                $query->whereHas('book', function ($query) use ($search) {
-                    $query->where('book_name', 'like', "%{$search}%")
-                        ->orWhere('author_name', 'like', "%{$search}%");
-                });
-            })
-            ->when(request()->city ?? false, function ($query, $city) {
-                $query->whereHas('library', function ($query) use ($city) {
-                    $query->where('city', 'like', "%{$city}%");
-                });
-            })
-            ->when(request()->district ?? false, function ($query, $district) {
-                $query->whereHas('library', function ($query) use ($district) {
-                    $query->where('district', 'like', "%{$district}%");
-                });
-            })
+        $query = BookLibrary::query()
+            ->with([
+                'library:id,name,city,district,user_id',
+                'book:id,book_name,author_name,edition_number,volume_number'
+            ])
+            ->where('qty', '>', 0);
 
-            ->paginate(5)
-            ->withQueryString();
+        if (request()->has('search')) {
+            $search = request()->input('search');
+            $query->whereHas('book', function ($query) use ($search) {
+                $query->where('book_name', 'like', "%{$search}%")
+                    ->orWhere('author_name', 'like', "%{$search}%");
+            });
+        }
+
+        if (request()->has('city')) {
+            $city = request()->input('city');
+            $query->whereHas('library', function ($query) use ($city) {
+                $query->where('city', 'like', "%{$city}%");
+            });
+        }
+
+        if (request()->has('district')) {
+            $district = request()->input('district');
+            $query->whereHas('library', function ($query) use ($district) {
+                $query->where('district', 'like', "%{$district}%");
+            });
+        }
+
+        $books = $query->paginate(5)->withQueryString();
 
         return Inertia::render('Book/Search', [
             'books' => $books,
@@ -49,6 +57,7 @@ class SearchBooksController extends Controller
             'filters' => request()->only(['search', 'city', 'district', 'page']),
         ]);
     }
+
 
     /**
      * Show the form for creating a new resource.
