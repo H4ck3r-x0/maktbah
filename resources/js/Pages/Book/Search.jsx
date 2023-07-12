@@ -54,16 +54,14 @@ export default function Search({ auth, books, cities, districts }) {
     return (
         <AuthenticatedLayout
             user={auth.user}
-            header={<h2 className="font-semibold text-xl text-gray-800 leading-tight">البحث عن الكتب</h2>}
         >
             <Head title="البحث عن الكتب" />
 
             <div className="py-2">
                 <div className="max-w-7xl mx-auto sm:px-6 lg:px-8">
                     <div className='w-full sm:inline-flex ml-4 items-center gap-3 px-6 '>
-
                         <input
-                            value={data.search ? data.search : ''}
+                            value={data.search || ''}
                             onChange={(e) => setData('search', e.target.value)}
                             type="text"
                             className='w-full sm:max-w-xl  border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm'
@@ -73,7 +71,7 @@ export default function Search({ auth, books, cities, districts }) {
                         <div className='mb-2'>
                             <select
                                 onChange={cityChanged}
-                                value={data.city}
+                                value={data.city || ''}
                                 name="city"
                                 id="city"
                                 className='mt-2 block w-full border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm'>
@@ -89,7 +87,7 @@ export default function Search({ auth, books, cities, districts }) {
                         <div className='mb-2'>
                             <select
                                 onChange={districtChanged}
-                                value={data.district}
+                                value={data.district || ''}
                                 name="district"
                                 id="district"
                                 className='mt-2 block w-full border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm'>
