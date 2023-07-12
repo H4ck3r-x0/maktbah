@@ -10,7 +10,7 @@ export default function Dashboard({ auth, booksCount, libraryCount, studentCount
         >
             <Head title="لوحة التحكم" />
 
-            <div className="py-12">
+            <div className="py-6">
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                     <h1 className='text-xl mb-2 font-semibold text-gray-600'>
                         إحصائيات
