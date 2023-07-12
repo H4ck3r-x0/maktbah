@@ -21,7 +21,8 @@ class SearchBooksController extends Controller
         $query = BookLibrary::query()
             ->with([
                 'library:id,name,city,district,user_id',
-                'book:id,book_name,author_name,edition_number,volume_number'
+                'book:id,book_name,author_name,edition_number,volume_number',
+
             ])
             ->where('qty', '>', 0);
 

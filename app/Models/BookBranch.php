@@ -2,19 +2,19 @@
 
 namespace App\Models;
 
-use Spatie\Image\Manipulations;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
 use Illuminate\Database\Eloquent\Relations\Pivot;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Spatie\MediaLibrary\MediaCollections\Models\Media;
 
-class BookLibrary extends Pivot implements HasMedia
+
+class BookBranch extends Pivot implements HasMedia
 {
     use HasFactory;
     use InteractsWithMedia;
 
     public $timestamps = false;
+    public $table = 'book_library_branch';
 
     protected $appends = ['ad_image'];
 
@@ -28,9 +28,9 @@ class BookLibrary extends Pivot implements HasMedia
     ];
 
 
-    public function library()
+    public function branch()
     {
-        return $this->belongsTo(Library::class);
+        return $this->belongsTo(LibraryBranch::class);
     }
 
     public function book()
@@ -40,7 +40,6 @@ class BookLibrary extends Pivot implements HasMedia
 
     public function getAdImageAttribute()
     {
-
         return $this->getFirstMediaUrl('bookAdImage') ? $this->getFirstMediaUrl('bookAdImage') : null;
     }
 }

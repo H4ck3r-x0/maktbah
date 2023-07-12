@@ -1,7 +1,8 @@
 <?php
 
-use App\Http\Controllers\Branch\BranchController;
+use App\Http\Controllers\Branch\BranchBookController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Branch\BranchController;
 
 Route::middleware('auth')->group(function () {
     Route::get('dashboard', [BranchController::class, 'index'])->name('branch.dashboard');
@@ -11,4 +12,11 @@ Route::middleware('auth')->group(function () {
 
     Route::patch('update/{id}', [BranchController::class, 'update'])
         ->name('update');
+
+    // Branch Books
+    Route::get('books/create', [BranchBookController::class, 'create'])
+        ->name('book.create');
+
+    Route::post('books/store', [BranchBookController::class, 'store'])
+        ->name('book.store');
 });

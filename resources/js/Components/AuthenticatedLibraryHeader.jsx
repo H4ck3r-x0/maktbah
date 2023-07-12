@@ -4,6 +4,7 @@ import Dropdown from '@/Components/Dropdown';
 import ResponsiveNavLink from '@/Components/ResponsiveNavLink';
 import { Link } from '@inertiajs/react';
 import NotificationIcon from './Library/NotificationIcon';
+import NavLink from './NavLink';
 
 export default function AuthenticatedLibraryHeader({ user }) {
     const [showingNavigationDropdown, setShowingNavigationDropdown] = useState(false);
@@ -81,8 +82,10 @@ export default function AuthenticatedLibraryHeader({ user }) {
                                         <Dropdown.Link href={route('book.create')}>إضافة كتب</Dropdown.Link>
                                     </Dropdown.Content>
                                 </Dropdown>
-
                             </div>
+                            <NavLink href={route('library.order.index')} active={route().current('library.order.index')}>
+                                الطلبات
+                            </NavLink>
                         </div>
                     </div>
 

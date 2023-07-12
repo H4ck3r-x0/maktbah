@@ -57,6 +57,11 @@ class User extends Authenticatable
         return $this->hasOne(Library::class);
     }
 
+    public function branch()
+    {
+        return $this->hasOne(LibraryBranch::class);
+    }
+
     public function libraryBranch()
     {
         return $this->hasMany(LibraryBranch::class);

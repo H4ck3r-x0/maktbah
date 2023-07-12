@@ -5,6 +5,7 @@ use App\Http\Controllers\UserLibrary\LibraryController;
 use App\Http\Controllers\LibraryBook\LibraryBookController;
 use App\Http\Controllers\UserLibrary\NotificationController;
 use App\Http\Controllers\UserLibrary\LibraryBranchController;
+use App\Http\Controllers\UserLibrary\OrderController;
 
 Route::middleware('auth')->group(function () {
     Route::get('dashboard', [LibraryController::class, 'index'])
@@ -53,4 +54,11 @@ Route::middleware('auth')->group(function () {
 
     Route::delete('books/destroy/{id}', [LibraryBookController::class, 'destroy'])
         ->name('book.destroy');
+
+    // Orders
+    Route::get('orders', [OrderController::class, 'index'])
+        ->name('library.order.index');
+
+    Route::get('/orders/{id}', [OrderController::class, 'show'])
+        ->name('library.order.show');
 });
