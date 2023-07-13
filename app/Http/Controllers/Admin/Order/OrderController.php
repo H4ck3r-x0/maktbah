@@ -15,11 +15,15 @@ class OrderController extends Controller
     public function index()
     {
         $orders = Order::query()
-            ->with(['details.book.library', 'user:id,name,phone'])
+            ->with(['details.book.library', 'user:id,name,phone', 'library:id,name'])
             ->when(request()->search, function ($query, $search) {
                 $query->whereHas('user', function ($query) use ($search) {
                     $query->where('name', 'like', "%{$search}%");
-                })->orWhere('id', $search);
+                })
+                    ->orWhere('id', $search)
+                    ->orWhereHas('library', function ($query) use ($search) {
+                        $query->where('name', 'like', "%{$search}%");
+                    });
             })
             ->latest()
             ->get();

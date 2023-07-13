@@ -53,7 +53,7 @@ export default function AuthenticatedLibraryHeader({ user }) {
                                 </Dropdown>
                             </div>
                             <div className='inline-flex ml-4 items-center px-1 pt-1 border-b-2 text-md font-medium leading-5 transition duration-150 ease-in-out focus:outline-none'>
-                                <Dropdown>
+                                {/* <Dropdown>
                                     <Dropdown.Trigger>
                                         <span className="inline-flex rounded-md">
                                             <button
@@ -81,8 +81,11 @@ export default function AuthenticatedLibraryHeader({ user }) {
                                     <Dropdown.Content>
                                         <Dropdown.Link href={route('book.create')}>إضافة كتب</Dropdown.Link>
                                     </Dropdown.Content>
-                                </Dropdown>
+                                </Dropdown> */}
                             </div>
+                            <NavLink href={route('book.create')} active={route().current('book.create')}>
+                                الكتب
+                            </NavLink>
                             <NavLink href={route('library.order.index')} active={route().current('library.order.index')}>
                                 الطلبات
                             </NavLink>

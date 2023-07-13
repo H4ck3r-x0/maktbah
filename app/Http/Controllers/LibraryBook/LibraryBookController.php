@@ -73,7 +73,8 @@ class LibraryBookController extends Controller
                 $book['book_id'] => [
                     'qty' => $book['qty'],
                     'price' => $book['price'],
-                    'offer' => $book['offer']
+                    'offer' => $book['offer'],
+                    'library_branch_id' => null,
                 ]
             ], false);
 

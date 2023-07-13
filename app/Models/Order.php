@@ -46,6 +46,11 @@ class Order extends Model
         return $this->status;
     }
 
+    public function library()
+    {
+        return $this->belongsTo(Library::class);
+    }
+
     // public function refreshTotalPayment()
     // {
     //     $total_payment = 0;

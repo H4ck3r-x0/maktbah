@@ -18,14 +18,22 @@ return new class extends Migration
             $table->string('qty')->nullable();
             $table->decimal('price', 10, 2)->nullable();
             $table->text('offer')->nullable();
+            $table->unsignedBigInteger('library_branch_id')->nullable();
+
 
             $table->foreignIdFor(Book::class, 'book_id')
                 ->constrained('books', 'id')
                 ->cascadeOnDelete();
 
             $table->foreignIdFor(Library::class, 'library_id')
+                ->nullable()
                 ->constrained('libraries', 'id')
                 ->cascadeOnDelete();
+
+            $table->foreign('library_branch_id')
+                ->references('id')
+                ->on('library_branches')
+                ->onDelete('cascade');
         });
     }
 

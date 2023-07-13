@@ -35,10 +35,10 @@ class LibraryBranch extends Model
         return $this->belongsTo(Library::class);
     }
 
-    // public function books()
-    // {
-    //     return $this->belongsToMany(Book::class)
-    //         ->using(BookBranch::class,)
-    //         ->withPivot('qty', 'price', 'offer');
-    // }
+
+    public function books()
+    {
+        return $this->belongsToMany(Book::class, 'book_library', 'library_branch_id', 'book_id')
+            ->withPivot('qty', 'price', 'offer');
+    }
 }

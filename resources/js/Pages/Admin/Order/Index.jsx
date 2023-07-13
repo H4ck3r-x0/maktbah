@@ -55,7 +55,7 @@ export default function Index({ auth, orders }) {
                                 value={data.search ? data.search : ''}
                                 autoComplete="search"
                                 onChange={search}
-                                placeholder="رقم الطلب،  صاحب الطلب"
+                                placeholder="رقم الطلب ، صاحب الطلب ،اسم المكتبة"
 
                             />
 
@@ -75,6 +75,9 @@ export default function Index({ auth, orders }) {
                                     </th>
                                     <th scope="col" className="px-6 py-3">
                                         صاحب الطلب
+                                    </th>
+                                    <th scope="col" className="px-6 py-3">
+                                        أسم المكتبة
                                     </th>
                                     <th scope="col" className="px-6 py-3">
                                         حالة الطلب
@@ -97,6 +100,9 @@ export default function Index({ auth, orders }) {
                                             </th>
                                             <th scope="row" className="px-6 py-4">
                                                 {order.user.name}
+                                            </th>
+                                            <th scope="row" className="px-6 py-4">
+                                                {order.library.name}
                                             </th>
                                             <td className="px-6 py-4">
                                                 {order.model_status[order.current_status]['message']['ar']}

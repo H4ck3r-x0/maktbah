@@ -57,27 +57,29 @@ export default function BookCard({ book }) {
         <div className="flex bg-white shadow-md rounded-lg overflow-hidden">
             <ToastContainer />
             <div className="w-full p-5">
-                <h1 className="text-gray-900 font-bold text-2xl mb-2">{book.book.book_name}</h1>
+                <h1 className="text-gray-900 font-bold text-2xl mb-2">
+                    أسم الكتاب: {book.book.book_name}
+                </h1>
                 <div className="flex flex-wrap gap-2 mt-1">
-                    <span className="text-lg text-gray-600 font-semibold">الكاتب:</span>
+                    <span className="text-2xl text-gray-600 font-semibold">الكاتب:</span>
                     <span className="bg-blue-100 text-blue-800 text-lg px-2.5 py-0.5 rounded">{book.book.author_name}</span>
-                    <span className="text-lg text-gray-600 font-semibold">رقم الطبعة:</span>
+                    <span className="text-2xl text-gray-600 font-semibold">رقم الطبعة:</span>
                     <span className="bg-blue-100 text-blue-800 text-lg px-2.5 py-0.5 rounded">{book.book.edition_number}</span>
-                    <span className="text-lg text-gray-600 font-semibold">رقم المجلد:</span>
+                    <span className="text-2xl text-gray-600 font-semibold">رقم المجلد:</span>
                     <span className="bg-blue-100 text-blue-800 text-lg px-2.5 py-0.5 rounded">{book.book.volume_number}</span>
                 </div>
                 {book.offer && (
                     <div className="max-w-sm mt-3 p-4 border rounded shadow-sm bg-red-100">
-                        <h3 className="text-lg text-red-500 font-semibold mb-1">عرض إضافي</h3>
-                        <span className="text-lg text-justify">{book.offer}</span>
+                        <h3 className="text-2xl text-red-500 font-semibold mb-1">عرض إضافي</h3>
+                        <span className="text-2xl text-justify">{book.offer}</span>
                     </div>
                 )}
                 <div className="flex flex-wrap gap-1 pt-4">
-                    <span className="text-lg text-gray-600 font-semibold">المكتبة:</span>
+                    <span className="text-2xl text-gray-600 font-semibold">المكتبة:</span>
                     <span className="bg-gray-100 text-gray-800 text-lg px-2.5 py-0.5 rounded">{book.library.name}</span>
-                    <span className="text-lg text-gray-600 font-semibold">المدينة:</span>
+                    <span className="text-2xl text-gray-600 font-semibold">المدينة:</span>
                     <span className="bg-gray-100 text-gray-800 text-lg px-2.5 py-0.5 rounded">{book.library.city}</span>
-                    <span className="text-lg text-gray-600 font-semibold">الحي:</span>
+                    <span className="text-2xl text-gray-600 font-semibold">الحي:</span>
                     <span className="bg-gray-100 text-gray-800 text-lg px-2.5 py-0.5 rounded">{book.library.district}</span>
                 </div>
                 <div className="flex items-center justify-between mt-6">

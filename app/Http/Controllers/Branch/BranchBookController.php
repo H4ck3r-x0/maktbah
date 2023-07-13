@@ -26,10 +26,9 @@ class BranchBookController extends Controller
 
 
         $library = LibraryBranch::where('user_id', request()->user()->id)
-            // ->with('books')
+            ->with('books')
             ->first();
 
-        dd($library);
         $addedBooks = [];
         foreach ($library->books as $book) {
             array_push(
@@ -58,8 +57,35 @@ class BranchBookController extends Controller
     public function store(Request $request)
     {
         $user = $request->user()->load('branch');
+
+        $libraryBranch = $user->branch;
+
+        foreach ($request->libBooks as $book) {
+            $libraryBranch->books()->syncWithoutDetaching([
+                $book['book_id'] => [
+                    'qty' => $book['qty'],
+                    'price' => $book['price'],
+                    'offer' => $book['offer'],
+                    'library_branch_id' => $libraryBranch->id,
+                    'library_id' => null,
+                ]
+            ]);
+
+            // if (gettype($book['ad_image']) === 'object') {
+            //     $attachedBook = $libraryBranch->books()
+            //         ->wherePivot('book_id', $book['book_id'])
+            //         ->first()
+            //         ->pivot;
+
+            //     $attachedBook->addMedia($book['ad_image'])
+            //         ->toMediaCollection('bookAdImage');
+            // }
+        }
+
         return redirect()->back();
     }
+
+
 
     /**
      * Display the specified resource.
