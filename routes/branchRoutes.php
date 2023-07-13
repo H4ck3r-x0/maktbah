@@ -5,7 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Branch\BranchController;
 
 Route::middleware('auth')->group(function () {
-    Route::get('dashboard', [BranchController::class, 'index'])->name('branch.dashboard');
+    Route::get('dashboard', [BranchController::class, 'index'])->name('dashboard');
 
     Route::get('edit/{id}', [BranchController::class, 'edit'])
         ->name('edit');

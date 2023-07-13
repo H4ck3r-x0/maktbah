@@ -30,10 +30,10 @@ Route::middleware('auth')->group(function () {
 
     // Library Branch
     Route::get('branch/edit/{id}', [LibraryBranchController::class, 'edit'])
-        ->name('branch.edit');
+        ->name('library.edit.branch');
 
     Route::patch('branch/update/{id}', [LibraryBranchController::class, 'update'])
-        ->name('branch.update');
+        ->name('library.update.branch');
 
     Route::get('branch/create', [LibraryBranchController::class, 'create'])
         ->name('branch.create');

@@ -22,7 +22,7 @@ export default function Edit({ auth, branch, cities, districts }) {
     const submit = (e) => {
         e.preventDefault();
 
-        patch(route('update', branch.id));
+        patch(route('branch.update', branch.id));
     };
 
     const cityChanged = (e) => {

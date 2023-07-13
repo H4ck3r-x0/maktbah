@@ -2,14 +2,12 @@
 
 namespace App\Models;
 
-use App\Models\BookBranch;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class LibraryBranch extends Model
 {
     use HasFactory;
-
 
     /**
      * The attributes that are mass assignable.
@@ -37,10 +35,10 @@ class LibraryBranch extends Model
         return $this->belongsTo(Library::class);
     }
 
-    public function books()
-    {
-        return $this->belongsToMany(Book::class, 'book_library_branch')
-            // ->using(BookBranch::class)
-            ->withPivot('qty', 'price', 'offer');
-    }
+    // public function books()
+    // {
+    //     return $this->belongsToMany(Book::class)
+    //         ->using(BookBranch::class,)
+    //         ->withPivot('qty', 'price', 'offer');
+    // }
 }

@@ -12,13 +12,6 @@ use Inertia\Inertia;
 
 class LibraryBookController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
-    public function index()
-    {
-        //
-    }
 
     /**
      * Show the form for creating a new resource.
@@ -46,6 +39,7 @@ class LibraryBookController extends Controller
         }
 
         $addedBooks = [];
+
         foreach ($library->books as $book) {
             array_push(
                 $addedBooks,
@@ -97,21 +91,7 @@ class LibraryBookController extends Controller
         return redirect()->back();
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
-    {
-        //
-    }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
-    {
-        //
-    }
 
     /**
      * Update the specified resource in storage.
@@ -127,9 +107,9 @@ class LibraryBookController extends Controller
             'qty' => $request->qty,
             'price' => $request->price,
         ]);
+
         // Get all the books from the pivot table.
         $librariesBooks = BookLibrary::where('book_id', $request->book_id)->get();
-
 
         if ($request->hasFile('ad_image')) {
             $bookMedia = $library->books()

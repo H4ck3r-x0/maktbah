@@ -34,7 +34,7 @@ export default function Create({ auth, books, addedBooks }) {
     }
 
     const searchBooks = () => {
-        get(route('book.create', { search: data.search, page: currentPage }), {
+        get(route('branch.book.create', { search: data.search, page: currentPage }), {
             preserveScroll: true,
             preserveState: true,
             replace: true
@@ -54,7 +54,7 @@ export default function Create({ auth, books, addedBooks }) {
 
     const submit = (e) => {
         e.preventDefault();
-        router.post(route('book.store'), { libBooks });
+        router.post(route('branch.book.store'), { libBooks });
     };
 
     const updateBook = (e, bookId) => {

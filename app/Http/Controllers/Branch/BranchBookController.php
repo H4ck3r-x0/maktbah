@@ -11,14 +11,6 @@ use App\Models\LibraryBranch;
 class BranchBookController extends Controller
 {
     /**
-     * Display a listing of the resource.
-     */
-    public function index()
-    {
-        //
-    }
-
-    /**
      * Show the form for creating a new resource.
      */
     public function create()
@@ -34,15 +26,10 @@ class BranchBookController extends Controller
 
 
         $library = LibraryBranch::where('user_id', request()->user()->id)
-            ->with('books')
+            // ->with('books')
             ->first();
 
-        if ($library === null) {
-            return redirect()
-                ->route('library.create')
-                ->with('createNewLibrary', 'الرجاء إنشاء مكتبتك الأساسية قبل إضافة كتب!');
-        }
-
+        dd($library);
         $addedBooks = [];
         foreach ($library->books as $book) {
             array_push(
@@ -71,27 +58,6 @@ class BranchBookController extends Controller
     public function store(Request $request)
     {
         $user = $request->user()->load('branch');
-
-        foreach ($request->libBooks as $book) {
-            $user->branch->books()->sync([
-                $book['book_id'] => [
-                    'qty' => $book['qty'],
-                    'price' => $book['price'],
-                    'offer' => $book['offer']
-                ]
-            ], false);
-
-            // if (gettype($book['ad_image']) === 'object') {
-            //     $attachedBook = $user->branch->books()
-            //         ->wherePivot('book_id', $book['book_id'])
-            //         ->first()
-            //         ->pivot;
-
-            //     $attachedBook->addMedia($book['ad_image'])
-            //         ->toMediaCollection('bookAdImage');
-            // }
-        }
-
         return redirect()->back();
     }
 

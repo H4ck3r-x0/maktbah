@@ -231,14 +231,18 @@ export default function Create({ auth, books, addedBooks }) {
                                                         defaultValue={libBooks.find((value) => value.book_id === book.id)?.offer || ''}
                                                         placeholder='عرض إضافي'
                                                     />
-                                                    <div>
-                                                        <input
-                                                            name="adImage"
-                                                            onChange={(e) => adImageChanged(e, book.id)}
-                                                            type='file'
-                                                            className='w-full py-4 border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm'
-                                                        />
+                                                    <div className='py-4 w-full'>
+                                                        <label className="flex items-center justify-center w-full py-2 px-4 border border-gray-300 rounded-md shadow-sm transition duration-300 focus:border-indigo-500 focus:ring-indigo-500 hover:border-indigo-500 focus:outline-none hover:cursor-pointer">
+                                                            <span className="mr-2">أختر صورة الأعلان</span>
+                                                            <input
+                                                                name="adImage"
+                                                                onChange={(e) => adImageChanged(e, book.id)}
+                                                                type="file"
+                                                                className="hidden"
+                                                            />
+                                                        </label>
                                                     </div>
+
                                                 </div>
                                                 <div className='flex pt-2'>
                                                     <div className='flex-1'>

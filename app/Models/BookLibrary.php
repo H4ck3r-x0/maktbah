@@ -2,12 +2,10 @@
 
 namespace App\Models;
 
-use Spatie\Image\Manipulations;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
 use Illuminate\Database\Eloquent\Relations\Pivot;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Spatie\MediaLibrary\MediaCollections\Models\Media;
 
 class BookLibrary extends Pivot implements HasMedia
 {
@@ -40,7 +38,6 @@ class BookLibrary extends Pivot implements HasMedia
 
     public function getAdImageAttribute()
     {
-
         return $this->getFirstMediaUrl('bookAdImage') ? $this->getFirstMediaUrl('bookAdImage') : null;
     }
 }
