@@ -6,12 +6,12 @@ import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import './custom-toast.css';
 
-export default function BookCard({ book }) {
+export default function BookCardBranch({ book }) {
     const user_cart = usePage().props.user_cart;
     const [loading, setLoading] = useState(false);
 
-    const handleAddBook = ({ id, price, offer, book_id, library_id }) => {
-        router.post(route('search.books.store'), { id, price, offer, book_id, library_id }, {
+    const handleAddBook = ({ id, price, offer, book_id, library_branch_id }) => {
+        router.post(route('search.books.store'), { id, price, offer, book_id, library_branch_id }, {
             preserveScroll: true,
             onBefore: () => {
                 setLoading(true);
@@ -76,11 +76,11 @@ export default function BookCard({ book }) {
                 )}
                 <div className="flex flex-wrap gap-1 pt-4">
                     <span className="text-2xl text-gray-600 font-semibold">المكتبة:</span>
-                    <span className="bg-gray-100 text-gray-800 text-lg px-2.5 py-0.5 rounded">{book.library?.name}</span>
+                    <span className="bg-gray-100 text-gray-800 text-lg px-2.5 py-0.5 rounded">{book.branch.name}</span>
                     <span className="text-2xl text-gray-600 font-semibold">المدينة:</span>
-                    <span className="bg-gray-100 text-gray-800 text-lg px-2.5 py-0.5 rounded">{book.library?.city}</span>
+                    <span className="bg-gray-100 text-gray-800 text-lg px-2.5 py-0.5 rounded">{book.branch.city}</span>
                     <span className="text-2xl text-gray-600 font-semibold">الحي:</span>
-                    <span className="bg-gray-100 text-gray-800 text-lg px-2.5 py-0.5 rounded">{book.library?.district}</span>
+                    <span className="bg-gray-100 text-gray-800 text-lg px-2.5 py-0.5 rounded">{book.branch.district}</span>
                 </div>
                 <div className="flex items-center justify-between mt-6">
                     <h1 className="text-blue-500 font-bold text-2xl">{book.price} ريال</h1>

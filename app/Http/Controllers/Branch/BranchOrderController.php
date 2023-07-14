@@ -1,13 +1,13 @@
 <?php
 
-namespace App\Http\Controllers\User;
+namespace App\Http\Controllers\Branch;
 
 use Inertia\Inertia;
 use App\Models\Order;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
-class UserOrderController extends Controller
+class BranchOrderController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -15,16 +15,21 @@ class UserOrderController extends Controller
     public function index()
     {
         $orders = Order::query()
-            ->where('user_id', request()->user()->id)
-            ->with([
-                'details.book.library',
-                'details.book.branch',
-            ])
+            ->where('branch_id', request()->user()->branch->id)
+            ->with(['details.book.branch', 'user:id,name,phone'])
+            ->when(request()->search, function ($query, $search) {
+                $query->whereHas('user', function ($query) use ($search) {
+                    $query->where('name', 'like', "%{$search}%");
+                })->orWhere('id', $search);
+            })
             ->latest()
             ->get();
 
-        return Inertia::render('User/Order/Index', [
+
+        return Inertia::render('Branch/Order/Index', [
             'orders' => $orders,
+            'currentPage' => request()->page,
+            'filters' => request()->only(['search', 'page']),
         ]);
     }
 
@@ -52,7 +57,6 @@ class UserOrderController extends Controller
         $order = Order::query()
             ->with(
                 [
-                    'details.book.library',
                     'details.book.branch',
                     'details.book.book',
                     'user:id,name,phone,city,district'
@@ -60,9 +64,8 @@ class UserOrderController extends Controller
             )
             ->findOrFail($id);
 
-        $this->authorize('view', $order);
 
-        return Inertia::render('User/Order/Show', [
+        return Inertia::render('Branch/Order/Show', [
             'order' => $order
         ]);
     }

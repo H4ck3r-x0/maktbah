@@ -74,24 +74,14 @@ export default function Show({ auth, order }) {
                                         return (
                                             <tr key={detail.id} className="bg-white border">
                                                 <th scope="row" className="px-3 py-4 text-gray-600 whitespace-nowrap ">
-                                                    {detail.book.library !== null ?
-                                                        <div>
-                                                            <h1> {detail.book.library.name}</h1>
-                                                            {detail.book.library.city && detail.book.library.district &&
-                                                                <h1 className='text-sm text-gray-400'>
-                                                                    {detail.book.library.city + ' - ' + detail.book.library.district}
-                                                                </h1>
-                                                            }
-                                                        </div> :
-                                                        <div>
-                                                            <h1> {detail.book.branch.name}</h1>
-                                                            {detail.book.branch.city && detail.book.branch.district &&
-                                                                <h1 className='text-sm text-gray-400'>
-                                                                    {detail.book.branch.city + ' - ' + detail.book.branch.district}
-                                                                </h1>
-                                                            }
-                                                        </div>
-                                                    }
+                                                    <div>
+                                                        <h1> {detail.book.branch.name}</h1>
+                                                        {detail.book.branch.city && detail.book.branch.district &&
+                                                            <h1 className='text-sm text-gray-400'>
+                                                                {detail.book.branch.city + ' - ' + detail.book.branch.district}
+                                                            </h1>
+                                                        }
+                                                    </div>
                                                 </th>
                                                 <th scope="row" className="px-3py-4  text-gray-600 whitespace-nowrap ">
                                                     <div>

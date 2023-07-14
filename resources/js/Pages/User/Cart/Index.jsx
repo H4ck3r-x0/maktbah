@@ -92,12 +92,24 @@ export default function Index({ auth, carts, total }) {
 
                                                 <div>
                                                     <div className='flex sm:items-center flex-col sm:flex-row flex-wrap gap-1 pt-4 '>
-                                                        <span className='text-lg text-gray-600 font-semibold'>المكتبة:</span>
-                                                        <span className='bg-gray-100 text-gray-800 text-lg sm:text-xs mr-1 px-2.5 py-0.5 rounded'>{item.library.name}</span>
-                                                        <span className='text-lg text-gray-600 font-semibold'>المدينة:</span>
-                                                        <span className='bg-gray-100 text-gray-800 text-lg sm:text-xs mr-1 px-2.5 py-0.5 rounded'>{item.library.city}</span>
-                                                        <span className='text-lg text-gray-600 font-semibold'>الحي:</span>
-                                                        <span className='bg-gray-100 text-gray-800 text-lg sm:text-xs  mr-1 px-2.5 py-0.5 rounded'>{item.library.district}</span>
+                                                        {item.library !== null ?
+                                                            <>
+                                                                <span className='text-lg text-gray-600 font-semibold'>المكتبة:</span>
+                                                                <span className='bg-gray-100 text-gray-800 text-lg sm:text-xs mr-1 px-2.5 py-0.5 rounded'>{item.library?.name}</span>
+                                                                <span className='text-lg text-gray-600 font-semibold'>المدينة:</span>
+                                                                <span className='bg-gray-100 text-gray-800 text-lg sm:text-xs mr-1 px-2.5 py-0.5 rounded'>{item.library?.city}</span>
+                                                                <span className='text-lg text-gray-600 font-semibold'>الحي:</span>
+                                                                <span className='bg-gray-100 text-gray-800 text-lg sm:text-xs  mr-1 px-2.5 py-0.5 rounded'>{item.library?.district}</span></>
+                                                            :
+                                                            <>
+                                                                <span className='text-lg text-gray-600 font-semibold'>المكتبة:</span>
+                                                                <span className='bg-gray-100 text-gray-800 text-lg sm:text-xs mr-1 px-2.5 py-0.5 rounded'>{item.branch?.name}</span>
+                                                                <span className='text-lg text-gray-600 font-semibold'>المدينة:</span>
+                                                                <span className='bg-gray-100 text-gray-800 text-lg sm:text-xs mr-1 px-2.5 py-0.5 rounded'>{item.branch?.city}</span>
+                                                                <span className='text-lg text-gray-600 font-semibold'>الحي:</span>
+                                                                <span className='bg-gray-100 text-gray-800 text-lg sm:text-xs  mr-1 px-2.5 py-0.5 rounded'>{item.branch?.district}</span></>
+                                                        }
+
                                                     </div>
                                                 </div>
                                                 <div className="flex item-center justify-between mt-6 ">

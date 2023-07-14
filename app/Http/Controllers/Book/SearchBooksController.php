@@ -21,8 +21,8 @@ class SearchBooksController extends Controller
         $query = BookLibrary::query()
             ->with([
                 'library:id,name,city,district,user_id',
+                'branch:id,name,city,district,user_id',
                 'book:id,book_name,author_name,edition_number,volume_number',
-
             ])
             ->where('qty', '>', 0);
 
@@ -38,14 +38,20 @@ class SearchBooksController extends Controller
             $city = request()->input('city');
             $query->whereHas('library', function ($query) use ($city) {
                 $query->where('city', 'like', "%{$city}%");
-            });
+            })
+                ->orWhereHas('branch', function ($query) use ($city) {
+                    $query->where('city', 'like', "%{$city}%");
+                });
         }
 
         if (request()->has('district')) {
             $district = request()->input('district');
             $query->whereHas('library', function ($query) use ($district) {
                 $query->where('district', 'like', "%{$district}%");
-            });
+            })
+                ->orWhereHas('branch', function ($query) use ($district) {
+                    $query->where('district', 'like', "%{$district}%");
+                });
         }
 
         $books = $query->paginate(5)->withQueryString();
@@ -61,14 +67,6 @@ class SearchBooksController extends Controller
 
 
     /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
      * Store a newly created resource in storage.
      */
     public function store(Request $request)
@@ -77,35 +75,12 @@ class SearchBooksController extends Controller
             'total_price' => $request->price,
             'book_library_id' => $request->id,
             'library_id' => $request->library_id,
+            'branch_id' => $request->library_branch_id
         ]);
-
 
         return redirect()->back();
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
-    {
-        //
-    }
 
     /**
      * Remove the specified resource from storage.

@@ -4,6 +4,7 @@ import { useCallback, useEffect, useState } from 'react';
 import debounce from "lodash/debounce";
 import Pagination from '@/Pages/Components/Pagination';
 import BookCard from './Components/BookCard';
+import BookCardBranch from './Components/BookCardBranch';
 
 export default function Search({ auth, books, cities, districts }) {
     const filters = usePage().props.filters;
@@ -118,7 +119,9 @@ export default function Search({ auth, books, cities, districts }) {
                                 }
                                 {books.data.map(item => {
                                     return (
-                                        <BookCard book={item} key={item.id} />
+                                        item.library !== null ?
+                                            <BookCard book={item} key={item.id} /> :
+                                            <BookCardBranch book={item} key={item.id} />
                                     )
                                 })}
                             </div>

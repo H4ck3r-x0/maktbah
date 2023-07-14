@@ -1,9 +1,21 @@
 import { Link, usePage } from "@inertiajs/react";
 
-export default function NotificationIcon({ }) {
+export default function NotificationIcon({ auth }) {
+    const user = usePage().props.auth.user;
     const unreadNotificationsCount = usePage().props.auth.unreadNotificationsCount;
+
+    const role = () => {
+        if (user.role === 'library') {
+            return 'library.notification';
+        }
+        if (user.role === 'branch') {
+
+            return 'branch.notification';
+        }
+    }
+
     return (
-        <Link href={route('library.notification')}>
+        <Link href={route(role())}>
             <div className="flex items-center gap-1">
                 <span className="text-gray-600">{unreadNotificationsCount}</span>
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="text-gray-600 w-6 h-6">

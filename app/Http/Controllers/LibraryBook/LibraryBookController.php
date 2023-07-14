@@ -74,7 +74,6 @@ class LibraryBookController extends Controller
                     'qty' => $book['qty'],
                     'price' => $book['price'],
                     'offer' => $book['offer'],
-                    'library_branch_id' => null,
                 ]
             ], false);
 
@@ -154,8 +153,8 @@ class LibraryBookController extends Controller
             ->first();
 
         if ($bookMedia !== null && isset($bookMedia[0])) {
-            $bookMedia->pivot->getMedia('bookAdImage');
-            $bookMedia[0]->delete();
+            $image = $bookMedia->pivot->getMedia('bookAdImage');
+            $image[0]->delete();
         }
 
         $user->library->books()->wherePivot('book_id', $id)->detach();

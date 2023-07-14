@@ -29,6 +29,7 @@ class Order extends Model
         'total_payment',
         'book_id',
         'library_id',
+        'branch_id',
         'user_id',
     ];
 
@@ -51,15 +52,11 @@ class Order extends Model
         return $this->belongsTo(Library::class);
     }
 
-    // public function refreshTotalPayment()
-    // {
-    //     $total_payment = 0;
-    //     foreach ($this->details as $detail) {
-    //         $total_payment += $detail->price;
-    //     }
-    //     $this->total_payment = $total_payment;
-    //     $this->save();
-    // }
+    public function branch()
+    {
+        return $this->belongsTo(LibraryBranch::class);
+    }
+
 
     public function user()
     {

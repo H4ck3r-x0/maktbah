@@ -2,6 +2,7 @@
 
 use App\Models\User;
 use App\Models\Library;
+use App\Models\LibraryBranch;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
@@ -28,7 +29,13 @@ return new class extends Migration
                 ->cascadeOnDelete();
 
             $table->foreignIdFor(Library::class, 'library_id')
+                ->nullable()
                 ->constrained('libraries', 'id')
+                ->cascadeOnDelete();
+
+            $table->foreignIdFor(LibraryBranch::class, 'branch_id')
+                ->nullable()
+                ->constrained('library_branches', 'id')
                 ->cascadeOnDelete();
             $table->timestamps();
         });

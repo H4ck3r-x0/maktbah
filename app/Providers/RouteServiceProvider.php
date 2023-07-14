@@ -47,7 +47,6 @@ class RouteServiceProvider extends ServiceProvider
 
             Route::prefix('branch')
                 ->name('branch.')
-
                 ->middleware('auth', 'web', 'isBranch')
                 ->group(base_path('routes/branchRoutes.php'));
         });

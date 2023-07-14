@@ -31,6 +31,11 @@ class BookLibrary extends Pivot implements HasMedia
         return $this->belongsTo(Library::class);
     }
 
+    public function branch()
+    {
+        return $this->belongsTo(LibraryBranch::class, 'library_branch_id');
+    }
+
     public function book()
     {
         return $this->belongsTo(Book::class);
@@ -38,6 +43,7 @@ class BookLibrary extends Pivot implements HasMedia
 
     public function getAdImageAttribute()
     {
-        return $this->getFirstMediaUrl('bookAdImage') ? $this->getFirstMediaUrl('bookAdImage') : null;
+        return $this->getFirstMediaUrl('bookAdImage') ?
+            $this->getFirstMediaUrl('bookAdImage') : null;
     }
 }
