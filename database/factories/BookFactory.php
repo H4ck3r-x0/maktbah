@@ -17,7 +17,6 @@ class BookFactory extends Factory
     public function definition(): array
     {
         return [
-            // 'book_name' => fake()->words(5, true),
             'book_name' => fake()->realText(fake()->numberBetween(20, 40)),
             'author_name' => fake()->lastName(),
             'edition_number' => fake()->numberBetween(0, 30),
