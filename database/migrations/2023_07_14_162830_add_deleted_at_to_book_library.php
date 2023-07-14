@@ -11,13 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('books', function (Blueprint $table) {
-            $table->id();
-            $table->string('book_name')->unique()->nullable();
-            $table->string('author_name')->nullable();
-            $table->string('edition_number')->nullable();
-            $table->string('volume_number')->nullable();
-            $table->timestamps();
+        Schema::table('book_library', function (Blueprint $table) {
             $table->softDeletes();
         });
     }
@@ -27,6 +21,7 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('books');
+        Schema::table('book_library', function (Blueprint $table) {
+        });
     }
 };

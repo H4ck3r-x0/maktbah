@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Relations\Pivot;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
@@ -11,6 +12,7 @@ class BookLibrary extends Pivot implements HasMedia
 {
     use HasFactory;
     use InteractsWithMedia;
+    use SoftDeletes;
 
     public $timestamps = false;
 

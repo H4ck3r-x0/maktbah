@@ -48,7 +48,10 @@ class LibraryBookController extends Controller
                     'qty' => $book->pivot->qty,
                     'price' => $book->pivot->price,
                     'offer' => $book->pivot->offer,
-                    'ad_image' => $book->pivot->getFirstMediaUrl('bookAdImage') ? $book->pivot->getFirstMediaUrl('bookAdImage') : null
+                    'ad_image' => $book->pivot->getFirstMediaUrl('bookAdImage') ?
+                        $book->pivot->getFirstMediaUrl('bookAdImage') : null,
+                    'deleted_at' => $book->pivot->deleted_at,
+
                 ]
             );
         }
@@ -157,6 +160,6 @@ class LibraryBookController extends Controller
             $image[0]->delete();
         }
 
-        $user->library->books()->wherePivot('book_id', $id)->detach();
+        $user->library->books()->updateExistingPivot($id, ['deleted_at' => now()]);
     }
 }

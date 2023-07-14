@@ -256,10 +256,11 @@ export default function Create({ auth, books, addedBooks }) {
                                                             <SecondaryButton onClick={(e) => updateBook(e, book.id)}>تحديث</SecondaryButton>
                                                         }
                                                     </div>
-                                                    <p></p>
                                                     {libBooks.some(value => value.book_id == book.id) &&
                                                         <div>
-                                                            <DangerButton onClick={(e) => removeBook(e, book.id)}>X</DangerButton>
+                                                            <DangerButton onClick={(e) => removeBook(e, book.id)}>
+                                                                حذف
+                                                            </DangerButton>
                                                         </div>
                                                     }
                                                 </div>
