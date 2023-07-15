@@ -15,13 +15,20 @@ class OrderController extends Controller
     public function index()
     {
         $orders = Order::query()
-            ->with(['details.book.library', 'user:id,name,phone', 'library:id,name'])
+            ->with([
+                'details.book.library',
+                'details.book.branch',
+                'user:id,name,phone', 'library:id,name'
+            ])
             ->when(request()->search, function ($query, $search) {
                 $query->whereHas('user', function ($query) use ($search) {
                     $query->where('name', 'like', "%{$search}%");
                 })
                     ->orWhere('id', $search)
                     ->orWhereHas('library', function ($query) use ($search) {
+                        $query->where('name', 'like', "%{$search}%");
+                    })
+                    ->orWhereHas('branch', function ($query) use ($search) {
                         $query->where('name', 'like', "%{$search}%");
                     });
             })
@@ -45,6 +52,7 @@ class OrderController extends Controller
             ->with(
                 [
                     'details.book.library',
+                    'details.book.branch',
                     'details.book.book',
                     'user:id,name,phone,city,district'
                 ]

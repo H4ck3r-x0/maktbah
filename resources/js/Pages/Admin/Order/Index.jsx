@@ -56,14 +56,7 @@ export default function Index({ auth, orders }) {
                                 autoComplete="search"
                                 onChange={search}
                                 placeholder="رقم الطلب ، صاحب الطلب ،اسم المكتبة"
-
                             />
-
-                            {data.search !== '' ?
-                                <PrimaryButton onClick={() => setData('search', '')}>
-                                    إعادة تعيين
-                                </PrimaryButton> : null
-                            }
                         </div>
                     </div>
                     <div className="relative overflow-x-auto">
@@ -102,7 +95,9 @@ export default function Index({ auth, orders }) {
                                                 {order.user.name}
                                             </th>
                                             <th scope="row" className="px-6 py-4">
-                                                {order.library.name}
+                                                {order.details[0]?.book.library ?
+                                                    order.details[0]?.book.library.name :
+                                                    order.details[0]?.book.branch.name}
                                             </th>
                                             <td className="px-6 py-4">
                                                 {order.model_status[order.current_status]['message']['ar']}
@@ -128,6 +123,6 @@ export default function Index({ auth, orders }) {
                     </div>
                 </div>
             </div>
-        </AuthenticatedLayout >
+        </AuthenticatedLayout>
     )
 }

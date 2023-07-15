@@ -9,7 +9,6 @@ import { useState } from 'react';
 import { useCallback } from 'react';
 import debounce from "lodash/debounce";
 import Pagination from '@/Pages/Components/Pagination';
-import InputLabel from '@/Components/InputLabel';
 
 export default function Create({ auth, books, addedBooks }) {
     const filters = usePage().props.filters;
@@ -69,16 +68,16 @@ export default function Create({ auth, books, addedBooks }) {
 
 
     const addBooks = (bookID) => {
-        if (price === '' || qty === "") {
+        if (price === '' || qty === '') {
             alert('الرجاء اضافه اكمال جميع بيانات الكتاب');
             return;
         }
-        setLibBooks(currentLibBooks => {
-            return [
-                ...currentLibBooks,
-                { book_id: bookID, qty: qty, price: price, offer: offer, ad_image: adImage }
-            ]
-        })
+
+        setLibBooks(currentLibBooks => [
+            ...currentLibBooks,
+            { book_id: bookID, qty: qty, price: price, offer: offer, ad_image: adImage }
+        ]);
+
         setQty('');
         setPrice('');
         setOffer('');
@@ -101,12 +100,11 @@ export default function Create({ auth, books, addedBooks }) {
     const qtyChanged = (e, bookId) => {
         const { value } = e.target;
         setQty(value)
+
         if (value !== '') {
-            setLibBooks((currentLibBooks) => {
-                return currentLibBooks.map(
-                    (book) => book.book_id == bookId ? { ...book, qty: value } : book
-                )
-            })
+            setLibBooks(currentLibBooks => currentLibBooks.map(
+                (book) => book.book_id === bookId ? { ...book, qty: value } : book
+            ));
         }
     }
 
@@ -114,11 +112,9 @@ export default function Create({ auth, books, addedBooks }) {
         const { value } = e.target;
         setPrice(value)
         if (value !== '') {
-            setLibBooks((currentLibBooks) => {
-                return currentLibBooks.map(
-                    (book) => book.book_id == bookId ? { ...book, price: value } : book
-                )
-            })
+            setLibBooks(currentLibBooks => currentLibBooks.map(
+                (book) => book.book_id === bookId ? { ...book, price: value } : book
+            ));
         }
     }
 
@@ -126,22 +122,19 @@ export default function Create({ auth, books, addedBooks }) {
         const { value } = e.target;
         setOffer(value)
         if (value !== '') {
-            setLibBooks((currentLibBooks) => {
-                return currentLibBooks.map(
-                    (book) => book.book_id == bookId ? { ...book, offer: value } : book
-                )
-            })
+            setLibBooks(currentLibBooks => currentLibBooks.map(
+                (book) => book.book_id === bookId ? { ...book, offer: value } : book
+            ));
         }
     }
 
     const adImageChanged = (e, bookId) => {
         setAdImage(e.target.files[0]);
+
         if (e.target.files[0]) {
-            setLibBooks((currentLibBooks) => {
-                return currentLibBooks.map(
-                    (book) => book.book_id == bookId ? { ...book, ad_image: e.target.files[0] } : book
-                )
-            })
+            setLibBooks(currentLibBooks => currentLibBooks.map(
+                (book) => book.book_id === bookId ? { ...book, ad_image: e.target.files[0] } : book
+            ));
         }
     }
 
@@ -172,7 +165,7 @@ export default function Create({ auth, books, addedBooks }) {
                                 type="text"
                                 id="search"
                                 name="search"
-                                value={data.search ? data.search : ''}
+                                value={data.search || ''}
                                 autoComplete="search"
                                 onChange={search}
                                 placeholder='ابحث بإسم الكتاب او الكاتب ...'

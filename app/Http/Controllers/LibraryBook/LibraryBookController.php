@@ -160,6 +160,6 @@ class LibraryBookController extends Controller
             $image[0]->delete();
         }
 
-        $user->library->books()->updateExistingPivot($id, ['deleted_at' => now()]);
+        $user->library->books()->detach();
     }
 }
