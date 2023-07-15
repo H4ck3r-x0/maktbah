@@ -2,6 +2,7 @@
 
 namespace App\Http;
 
+use App\Http\Middleware\IsUser;
 use App\Http\Middleware\IsAdmin;
 use App\Http\Middleware\IsBranch;
 use App\Http\Middleware\isLibrary;
@@ -45,7 +46,7 @@ class Kernel extends HttpKernel
 
         'api' => [
             // \Laravel\Sanctum\Http\Middleware\EnsureFrontendRequestsAreStateful::class,
-            \Illuminate\Routing\Middleware\ThrottleRequests::class.':api',
+            \Illuminate\Routing\Middleware\ThrottleRequests::class . ':api',
             \Illuminate\Routing\Middleware\SubstituteBindings::class,
         ],
     ];
@@ -71,5 +72,6 @@ class Kernel extends HttpKernel
         'isAdmin' => IsAdmin::class,
         'isLibrary' => isLibrary::class,
         'isBranch' => IsBranch::class,
+        'isUser' => IsUser::class,
     ];
 }

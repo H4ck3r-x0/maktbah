@@ -41,11 +41,11 @@ export default function Notification({ auth, notifications }) {
                                                 </h4>
                                             </div>
                                         </div>
-                                        {/* <Link href={route('library.order.show', notification.data.order_id)}>
+                                        <Link href={route('branch.order.show', notification.data.order_id)}>
                                             <PrimaryButton>
                                                 مشاهدة الطلب
                                             </PrimaryButton>
-                                        </Link> */}
+                                        </Link>
                                     </div>
                                 )
                             })}

@@ -1,13 +1,14 @@
 <?php
 
-use App\Http\Controllers\Book\SearchBooksController;
-use App\Http\Controllers\Dashboard\DashboardController;
+use Inertia\Inertia;
+use App\Http\Middleware\IsUser;
+use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\User\UserCartController;
 use App\Http\Controllers\User\UserOrderController;
+use App\Http\Controllers\Book\SearchBooksController;
 use App\Http\Controllers\User\UserProfileController;
-use Illuminate\Support\Facades\Route;
-use Inertia\Inertia;
+use App\Http\Controllers\Dashboard\DashboardController;
 
 Route::get('/', function () {
     return Inertia::render('Welcome', [
@@ -28,9 +29,15 @@ Route::middleware('auth')->group(function () {
     // User
 
     // Books - Search for books, adding books to user cart and remove.
-    Route::get('/books', [SearchBooksController::class, 'index'])->name('search.books.index');
-    Route::post('/books/store', [SearchBooksController::class, 'store'])->name('search.books.store');
-    Route::post('/books/destroy', [SearchBooksController::class, 'destroy'])->name('search.books.destroy');
+    Route::middleware([IsUser::class])->group(function () {
+        Route::get('/books', [SearchBooksController::class, 'index'])
+            ->name('search.books.index');
+        Route::post('/books/store', [SearchBooksController::class, 'store'])
+            ->name('search.books.store');
+        Route::post('/books/destroy', [SearchBooksController::class, 'destroy'])
+            ->name('search.books.destroy');
+    });
+
     // Books - Search for books, adding books to user cart and remove.
 
     // User Cart
@@ -50,4 +57,4 @@ Route::middleware('auth')->group(function () {
         ->name('user.order.show');
 });
 
-require __DIR__.'/auth.php';
+require __DIR__ . '/auth.php';

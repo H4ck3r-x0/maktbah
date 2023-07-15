@@ -39,7 +39,7 @@ class User extends Authenticatable
         'roles',
     ];
 
-    protected $appends = ['role'];
+    protected $appends = ['role', 'role_name'];
 
     /**
      * The attributes that should be cast.
@@ -50,6 +50,8 @@ class User extends Authenticatable
         // 'email_verified_at' => 'datetime',
         'password' => 'hashed',
     ];
+
+
 
     public function library()
     {
@@ -86,20 +88,28 @@ class User extends Authenticatable
         return $this->roles()->first()->name ?? null;
     }
 
+    public function getRoleNameAttribute()
+    {
+        $roleNames = [
+            'user' => 'طالب / طالبة',
+            'library' => 'مكتبة',
+            'branch' => 'فرع مكتبة',
+            'teacher' => 'استاذ / استاذة',
+            'stationery' => 'قرطاسية',
+        ];
+
+        return $roleNames[$this->role] ?? $this->role;
+    }
+
+
     public function getRedirectRoute()
     {
-        if ($this->role === 'admin') {
-            return '/admin/dashboard';
-        }
+        $redirectRoutes = [
+            'admin' => '/admin/dashboard',
+            'library' => '/library/dashboard',
+            'branch' => '/branch/dashboard',
+        ];
 
-        if ($this->role === 'library') {
-            return '/library/dashboard';
-        }
-
-        if ($this->role === 'branch') {
-            return '/branch/dashboard';
-        }
-
-        return '/dashboard';
+        return $redirectRoutes[$this->role] ?? '/dashboard';
     }
 }

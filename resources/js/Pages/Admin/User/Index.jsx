@@ -82,7 +82,7 @@ export default function Index({ auth, users }) {
                                     id="account_type"
                                     className='mt-2 block w-full border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm'>
                                     <option value="">أختر نوع الحساب</option>
-                                    <option value="user">عميل</option>
+                                    <option value="user">طالب / طالبة</option>
                                     <option value="library">مكتبة</option>
                                     <option value="teacher">استاذ / استاذة</option>
                                     <option value="stationery">قرطاسية</option>
@@ -139,7 +139,7 @@ export default function Index({ auth, users }) {
                                                     {user.city}
                                                 </td>
                                                 <td className="px-6 py-4">
-                                                    {user.role}
+                                                    {user.role_name}
                                                 </td>
                                                 <td className="px-0 py-4">
                                                     <div className='flex items-center gap-2'>
