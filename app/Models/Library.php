@@ -39,7 +39,7 @@ class Library extends Model
     {
         return $this->belongsToMany(Book::class)
             ->using(BookLibrary::class)
-            ->withPivot('id', 'qty', 'price', 'offer');
+            ->withPivot('id', 'qty', 'price', 'offer', 'deleted_at');
     }
 
     public function orders()

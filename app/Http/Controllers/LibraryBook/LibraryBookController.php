@@ -32,6 +32,7 @@ class LibraryBookController extends Controller
             ->with('books')
             ->first();
 
+
         if ($library === null) {
             return redirect()
                 ->route('library.create')
@@ -51,7 +52,6 @@ class LibraryBookController extends Controller
                     'ad_image' => $book->pivot->getFirstMediaUrl('bookAdImage') ?
                         $book->pivot->getFirstMediaUrl('bookAdImage') : null,
                     'deleted_at' => $book->pivot->deleted_at,
-
                 ]
             );
         }
@@ -160,6 +160,13 @@ class LibraryBookController extends Controller
             $image[0]->delete();
         }
 
-        $user->library->books()->detach();
+        $user->library->books()->updateExistingPivot($id, ['deleted_at' => now()]);
+    }
+
+    public function restore(string $id)
+    {
+        $user = request()->user()->load('library');
+
+        $user->library->books()->updateExistingPivot($id, ['deleted_at' => null]);
     }
 }

@@ -19,27 +19,11 @@ class OrderDetail extends Model
         'total_price'
     ];
 
-    // public static function boot()
-    // {
-    //     parent::boot();
-
-    //     static::saving(function ($model) {
-    //         if ($model->total_price < 1) {
-    //             $model->refreshTotalPrice();
-    //         }
-    //         $model->order->refreshTotalPayment();
-    //     });
-    // }
-
-    // public function refreshTotalPrice()
-    // {
-    //     $this->total_price = $this->price;
-    //     $this->save();
-    // }
 
     public function book()
     {
-        return $this->belongsTo(BookLibrary::class, 'book_library_id', 'id');
+        return $this->belongsTo(BookLibrary::class, 'book_library_id', 'id')
+            ->withTrashed();
     }
 
     public function order()

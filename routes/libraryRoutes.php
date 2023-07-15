@@ -55,6 +55,9 @@ Route::middleware('auth')->group(function () {
     Route::delete('books/destroy/{id}', [LibraryBookController::class, 'destroy'])
         ->name('book.destroy');
 
+    Route::post('books/restore/{id}', [LibraryBookController::class, 'restore'])
+        ->name('book.restore');
+
     // Orders
     Route::get('orders', [OrderController::class, 'index'])
         ->name('library.order.index');

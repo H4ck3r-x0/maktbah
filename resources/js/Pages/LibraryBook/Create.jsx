@@ -66,16 +66,18 @@ export default function Create({ auth, books, addedBooks }) {
         });
     }
 
-
     const addBooks = (bookID) => {
         if (price === '' || qty === '') {
             alert('الرجاء اضافه اكمال جميع بيانات الكتاب');
             return;
         }
 
+        const addedBook = addedBooks.find((value) => value.book_id === bookID);
+        const deletedAt = addedBook ? addedBook.deleted_at : null;
+
         setLibBooks(currentLibBooks => [
             ...currentLibBooks,
-            { book_id: bookID, qty: qty, price: price, offer: offer, ad_image: adImage }
+            { book_id: bookID, qty: qty, price: price, offer: offer, ad_image: adImage, deleted_at: deletedAt }
         ]);
 
         setQty('');
@@ -88,6 +90,18 @@ export default function Create({ auth, books, addedBooks }) {
     const removeBook = (e, bookID) => {
         e.preventDefault();
         router.delete(route('book.destroy', bookID), {
+            preserveScroll: true,
+            onSuccess: () => {
+                setLibBooks(currentLibBooks => {
+                    return currentLibBooks.filter(book => book.book_id !== bookID);
+                })
+            }
+        });
+    }
+
+    const restoreBook = (e, bookID) => {
+        e.preventDefault();
+        router.post(route('book.restore', bookID), {
             preserveScroll: true,
             onSuccess: () => {
                 setLibBooks(currentLibBooks => {
@@ -137,7 +151,7 @@ export default function Create({ auth, books, addedBooks }) {
             ));
         }
     }
-
+    console.log(libBooks)
     return (
         <Authenticated
             user={auth.user}
@@ -145,7 +159,6 @@ export default function Create({ auth, books, addedBooks }) {
                 <div className='flex items-center justify-between'>
                     <h2 className="flex flex-col gap-2 font-semibold text-xl text-gray-800 leading-tight">
                         <span>إضافة كتاب جديد</span>
-                        <span className='text-sm text-indigo-400 tracking-wider '>ملاحظة اذا اردت حذف كتاب يمكنك وضع الكمية الى 0</span>
                     </h2>
 
                     <Link href={route('library.dashboard')}>
@@ -249,13 +262,19 @@ export default function Create({ auth, books, addedBooks }) {
                                                             <SecondaryButton onClick={(e) => updateBook(e, book.id)}>تحديث</SecondaryButton>
                                                         }
                                                     </div>
-                                                    {libBooks.some(value => value.book_id == book.id) &&
+                                                    {libBooks.some(value => value.book_id === book.id) && (
                                                         <div>
-                                                            <DangerButton onClick={(e) => removeBook(e, book.id)}>
-                                                                حذف
-                                                            </DangerButton>
+                                                            {libBooks.some(value => value.book_id === book.id && value.deleted_at === null) ? (
+                                                                <DangerButton onClick={(e) => removeBook(e, book.id)}>
+                                                                    حذف
+                                                                </DangerButton>
+                                                            ) : (
+                                                                <DangerButton onClick={(e) => restoreBook(e, book.id)}>
+                                                                    إستعادة
+                                                                </DangerButton>
+                                                            )}
                                                         </div>
-                                                    }
+                                                    )}
                                                 </div>
                                             </div>
                                         </div>

@@ -31,6 +31,9 @@ Route::middleware('auth')->group(function () {
     Route::delete('books/destroy/{id}', [BranchBookController::class, 'destroy'])
         ->name('book.destroy');
 
+    Route::post('books/restore/{id}', [BranchBookController::class, 'restore'])
+        ->name('book.restore');
+
     // Orders
     Route::get('orders', [BranchOrderController::class, 'index'])
         ->name('order.index');

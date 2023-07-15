@@ -40,7 +40,10 @@ class BranchBookController extends Controller
                     'qty' => $book->pivot->qty,
                     'price' => $book->pivot->price,
                     'offer' => $book->pivot->offer,
-                    'ad_image' => $book->pivot->getFirstMediaUrl('bookAdImage') ? $book->pivot->getFirstMediaUrl('bookAdImage') : null
+                    'ad_image' => $book->pivot->getFirstMediaUrl('bookAdImage') ?
+                        $book->pivot->getFirstMediaUrl('bookAdImage')
+                        : null,
+                    'deleted_at' => $book->pivot->deleted_at,
                 ]
             );
         }
@@ -160,11 +163,17 @@ class BranchBookController extends Controller
             ->wherePivot('book_id', $id)
             ->first();
 
-        if ($bookMedia !== null) {
+        if ($bookMedia !== null && isset($bookMedia[0])) {
             $image =  $bookMedia->pivot->getMedia('bookAdImage');
             $image[0]->delete();
         }
 
-        $user->branch->books()->wherePivot('book_id', $id)->detach();
+        $user->branch->books()->updateExistingPivot($id, ['deleted_at' => now()]);
+    }
+
+    public function restore(string $id)
+    {
+        $user = request()->user()->load('branch');
+        $user->branch->books()->updateExistingPivot($id, ['deleted_at' => null]);
     }
 }

@@ -39,7 +39,7 @@ class LibraryBranch extends Model
     {
         return $this->belongsToMany(Book::class, 'book_library', 'library_branch_id', 'book_id')
             ->using(BookLibrary::class)
-            ->withPivot('id', 'qty', 'price', 'offer');
+            ->withPivot('id', 'qty', 'price', 'offer', 'deleted_at');
     }
 
     public function orders()
