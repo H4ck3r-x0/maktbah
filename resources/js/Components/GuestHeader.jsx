@@ -69,20 +69,21 @@ export default function GuestHeader() {
             <div className={(showingNavigationDropdown ? 'block' : 'hidden') + ' sm:hidden'}>
                 <div className="pt-2 pb-3 space-y-1">
                     <ResponsiveNavLink href={route('dashboard')} active={route().current('dashboard')}>
-                        Dashboard
+                        الرئيسية
                     </ResponsiveNavLink>
                 </div>
 
                 <div className="pt-4 pb-1 border-t border-gray-200">
-                    <div className="px-4">
-                        <div className="font-medium text-base text-gray-800">user name</div>
-                        <div className="font-medium text-sm text-gray-500">email </div>
-                    </div>
-
-                    <div className="mt-3 space-y-1">
-                        <ResponsiveNavLink href={route('profile.edit')}>Profile</ResponsiveNavLink>
-                        <ResponsiveNavLink method="post" href={route('logout')} as="button">
-                            Log Out
+                    <div className="flex items-center justify-between gap-2 px-4 mt-3 space-y-1">
+                        <ResponsiveNavLink
+                            className='bg-indigo-600 px-8 py-2 text-white font-semibold rounded-2xl  shadow-lg transition-all'
+                            href={route('register')}>
+                            تسجيل جديد
+                        </ResponsiveNavLink>
+                        <ResponsiveNavLink
+                            className='bg-white  px-8 py-2 text-gray-700 font-semibold rounded-2xl shadow-md transition-all'
+                            href={route('login')}>
+                            تسجيل دخول
                         </ResponsiveNavLink>
                     </div>
                 </div>

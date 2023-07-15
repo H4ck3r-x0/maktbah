@@ -42,7 +42,6 @@ export default function Login({ status, canResetPassword }) {
                         name="username"
                         value={data.username}
                         className="mt-2 block w-full"
-                        // autoComplete="username"
                         isFocused={true}
                         onChange={(e) => setData('username', e.target.value)}
                     />
@@ -78,7 +77,7 @@ export default function Login({ status, canResetPassword }) {
                 </div>
 
                 <div className="flex items-center  mt-4">
-                    <PrimaryButton className="ml-4" disabled={processing}>
+                    <PrimaryButton className="ml-4 text-xs" disabled={processing}>
                         تسجيل دخول
                     </PrimaryButton>
                     {canResetPassword && (
@@ -89,8 +88,6 @@ export default function Login({ status, canResetPassword }) {
                             نسيت كلمة المرور؟
                         </Link>
                     )}
-
-
                 </div>
             </form>
         </GuestLayout>

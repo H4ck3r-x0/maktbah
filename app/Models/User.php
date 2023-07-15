@@ -51,7 +51,10 @@ class User extends Authenticatable
         'password' => 'hashed',
     ];
 
-
+    public function stationery()
+    {
+        return $this->hasOne(Stationery::class);
+    }
 
     public function library()
     {
