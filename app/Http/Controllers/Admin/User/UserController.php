@@ -2,13 +2,13 @@
 
 namespace App\Http\Controllers\Admin\User;
 
+use App\Http\Controllers\Controller;
 use App\Models\User;
-use Inertia\Inertia;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rule;
 use Illuminate\Validation\Rules;
-use App\Http\Controllers\Controller;
-use Illuminate\Support\Facades\Hash;
+use Inertia\Inertia;
 
 class UserController extends Controller
 {
@@ -54,8 +54,8 @@ class UserController extends Controller
             'account_type' => 'required|string|max:255',
             'gender' => 'required|string|max:255',
             'name' => 'required|string|max:255',
-            'phone' => 'required|string|unique:' . User::class,
-            'username' => 'required|string|alpha_dash|max:255|unique:' . User::class,
+            'phone' => 'required|string|unique:'.User::class,
+            'username' => 'required|string|alpha_dash|max:255|unique:'.User::class,
             'password' => ['required', Rules\Password::defaults()],
         ]);
 
@@ -67,7 +67,7 @@ class UserController extends Controller
             'password' => Hash::make($request->password),
         ]);
 
-        if (!$request->has('account_type') && $request->account_type !== 'admin') {
+        if (! $request->has('account_type') && $request->account_type !== 'admin') {
             $user->assignRole('user');
         }
 
@@ -90,7 +90,7 @@ class UserController extends Controller
     public function edit(string $id)
     {
         return Inertia::render('Admin/User/Edit', [
-            'user' => User::findOrFail($id)
+            'user' => User::findOrFail($id),
         ]);
     }
 

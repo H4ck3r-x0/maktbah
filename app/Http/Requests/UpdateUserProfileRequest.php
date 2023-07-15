@@ -23,7 +23,7 @@ class UpdateUserProfileRequest extends FormRequest
     {
         return [
             'major' => 'required|string|max:255',
-            'level' => 'required|string|max:255'
+            'level' => 'required|string|max:255',
         ];
     }
 }

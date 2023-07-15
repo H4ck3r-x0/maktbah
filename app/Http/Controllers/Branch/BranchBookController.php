@@ -2,13 +2,13 @@
 
 namespace App\Http\Controllers\Branch;
 
-use App\Models\Book;
-use Inertia\Inertia;
-use App\Models\UserCart;
-use App\Models\BookLibrary;
-use Illuminate\Http\Request;
-use App\Models\LibraryBranch;
 use App\Http\Controllers\Controller;
+use App\Models\Book;
+use App\Models\BookLibrary;
+use App\Models\LibraryBranch;
+use App\Models\UserCart;
+use Illuminate\Http\Request;
+use Inertia\Inertia;
 
 class BranchBookController extends Controller
 {
@@ -25,7 +25,6 @@ class BranchBookController extends Controller
             ->orderBy('id', 'DESC')
             ->paginate(15)
             ->withQueryString();
-
 
         $library = LibraryBranch::where('user_id', request()->user()->id)
             ->with('books')
@@ -69,7 +68,7 @@ class BranchBookController extends Controller
                     'qty' => $book['qty'],
                     'price' => $book['price'],
                     'offer' => $book['offer'],
-                ]
+                ],
             ]);
 
             if (isset($book['ad_image']) && gettype($book['ad_image']) === 'object') {
@@ -85,8 +84,6 @@ class BranchBookController extends Controller
 
         return redirect()->back();
     }
-
-
 
     /**
      * Display the specified resource.
@@ -145,7 +142,7 @@ class BranchBookController extends Controller
             foreach ($cart as $c) {
                 if ($c->book_library_id === $book->id && $c->total_price !== $book->price) {
                     UserCart::where('book_library_id', $c->book_library_id)->update([
-                        'total_price' => $book->price
+                        'total_price' => $book->price,
                     ]);
                 }
             }
@@ -158,13 +155,13 @@ class BranchBookController extends Controller
     public function destroy(string $id)
     {
         $user = request()->user()->load('branch');
-        // Check if it has media 
+        // Check if it has media
         $bookMedia = $user->branch->books()
             ->wherePivot('book_id', $id)
             ->first();
 
         if ($bookMedia !== null && isset($bookMedia[0])) {
-            $image =  $bookMedia->pivot->getMedia('bookAdImage');
+            $image = $bookMedia->pivot->getMedia('bookAdImage');
             $image[0]->delete();
         }
 

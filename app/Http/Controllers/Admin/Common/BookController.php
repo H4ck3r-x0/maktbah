@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers\Admin\Common;
 
-use App\Models\Book;
-use Inertia\Inertia;
-use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Models\Book;
+use Illuminate\Http\Request;
+use Inertia\Inertia;
 
 class BookController extends Controller
 {
@@ -77,7 +77,7 @@ class BookController extends Controller
     public function edit(string $id)
     {
         return Inertia::render('Admin/Book/Edit', [
-            'book' => Book::findOrFail($id)
+            'book' => Book::findOrFail($id),
         ]);
     }
 

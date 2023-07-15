@@ -1,7 +1,5 @@
 <?php
 
-use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\Admin\AdminDashboardController;
 use App\Http\Controllers\Admin\Common\BookController;
 use App\Http\Controllers\Admin\Common\CityController;
@@ -10,6 +8,8 @@ use App\Http\Controllers\Admin\Common\MajorController;
 use App\Http\Controllers\Admin\Library\LibraryController;
 use App\Http\Controllers\Admin\Order\OrderController;
 use App\Http\Controllers\Admin\User\UserController;
+use App\Http\Controllers\ProfileController;
+use Illuminate\Support\Facades\Route;
 
 Route::middleware('auth')->group(function () {
     // Admin Setting and Profile routes
@@ -18,7 +18,6 @@ Route::middleware('auth')->group(function () {
     Route::patch('profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
     // Admin Setting and Profile routes
-
 
     //  Library Routes
     Route::get('libraries', [LibraryController::class, 'index'])->name('library.index');
@@ -35,7 +34,6 @@ Route::middleware('auth')->group(function () {
     Route::delete('users/destroy/{id}', [UserController::class, 'destroy'])->name('user.destroy');
     Route::get('/users/edit/{id}', [UserController::class, 'edit'])->name('user.edit');
     Route::patch('/users/update/{id}', [UserController::class, 'update'])->name('user.update');
-
 
     // Settings - City
     Route::get('cities/create', [CityController::class, 'create'])->name('city.create');

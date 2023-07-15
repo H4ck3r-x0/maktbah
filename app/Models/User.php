@@ -2,13 +2,12 @@
 
 namespace App\Models;
 
-use App\Models\LibraryBranch;
 use App\Models\User\UserProfile;
-use Laravel\Sanctum\HasApiTokens;
-use Spatie\Permission\Traits\HasRoles;
-use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Notifications\Notifiable;
+use Laravel\Sanctum\HasApiTokens;
+use Spatie\Permission\Traits\HasRoles;
 
 class User extends Authenticatable
 {
@@ -26,7 +25,7 @@ class User extends Authenticatable
         'gender',
         'password',
         'city',
-        'district'
+        'district',
     ];
 
     /**

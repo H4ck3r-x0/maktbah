@@ -12,7 +12,6 @@ use Inertia\Inertia;
 
 class LibraryBookController extends Controller
 {
-
     /**
      * Show the form for creating a new resource.
      */
@@ -27,11 +26,9 @@ class LibraryBookController extends Controller
             ->paginate(15)
             ->withQueryString();
 
-
         $library = Library::where('user_id', request()->user()->id)
             ->with('books')
             ->first();
-
 
         if ($library === null) {
             return redirect()
@@ -77,7 +74,7 @@ class LibraryBookController extends Controller
                     'qty' => $book['qty'],
                     'price' => $book['price'],
                     'offer' => $book['offer'],
-                ]
+                ],
             ], false);
 
             if (gettype($book['ad_image']) === 'object') {
@@ -93,8 +90,6 @@ class LibraryBookController extends Controller
 
         return redirect()->back();
     }
-
-
 
     /**
      * Update the specified resource in storage.
@@ -137,7 +132,7 @@ class LibraryBookController extends Controller
             foreach ($cart as $c) {
                 if ($c->book_library_id === $book->id && $c->total_price !== $book->price) {
                     UserCart::where('book_library_id', $c->book_library_id)->update([
-                        'total_price' => $book->price
+                        'total_price' => $book->price,
                     ]);
                 }
             }
@@ -150,7 +145,7 @@ class LibraryBookController extends Controller
     public function destroy(string $id)
     {
         $user = request()->user()->load('library');
-        // Check if it has media 
+        // Check if it has media
         $bookMedia = $user->library->books()
             ->wherePivot('book_id', $id)
             ->first();

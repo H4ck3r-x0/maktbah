@@ -2,11 +2,11 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\Pivot;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
-use Illuminate\Database\Eloquent\SoftDeletes;
-use Illuminate\Database\Eloquent\Relations\Pivot;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class BookLibrary extends Pivot implements HasMedia
 {
@@ -26,7 +26,6 @@ class BookLibrary extends Pivot implements HasMedia
     protected $hidden = [
         'media',
     ];
-
 
     public function library()
     {

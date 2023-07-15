@@ -2,13 +2,13 @@
 
 namespace App\Http\Controllers\Branch;
 
-use App\Models\City;
-use Inertia\Inertia;
-use App\Models\District;
-use Illuminate\Http\Request;
-use App\Models\LibraryBranch;
-use Illuminate\Validation\Rule;
 use App\Http\Controllers\Controller;
+use App\Models\City;
+use App\Models\District;
+use App\Models\LibraryBranch;
+use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
+use Inertia\Inertia;
 
 class BranchController extends Controller
 {
@@ -21,8 +21,8 @@ class BranchController extends Controller
             ->where('user_id', request()->user()->id)
             ->first();
 
-        return  Inertia::render('Branch/Dashboard', [
-            'branch' => $branch
+        return Inertia::render('Branch/Dashboard', [
+            'branch' => $branch,
         ]);
     }
 
@@ -59,10 +59,10 @@ class BranchController extends Controller
 
         $this->authorize('view', $branch);
 
-        return  Inertia::render('Branch/Edit', [
+        return Inertia::render('Branch/Edit', [
             'branch' => $branch,
             'cities' => City::all(),
-            'districts' => District::all()
+            'districts' => District::all(),
         ]);
     }
 

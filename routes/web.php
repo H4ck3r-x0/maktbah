@@ -9,7 +9,6 @@ use App\Http\Controllers\User\UserProfileController;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
-
 Route::get('/', function () {
     return Inertia::render('Welcome', [
         'canLogin' => Route::has('login'),
@@ -51,4 +50,4 @@ Route::middleware('auth')->group(function () {
         ->name('user.order.show');
 });
 
-require __DIR__ . '/auth.php';
+require __DIR__.'/auth.php';

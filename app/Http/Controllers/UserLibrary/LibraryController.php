@@ -2,14 +2,14 @@
 
 namespace App\Http\Controllers\UserLibrary;
 
+use App\Http\Controllers\Controller;
 use App\Models\City;
-use App\Models\User;
-use Inertia\Inertia;
-use App\Models\Library;
 use App\Models\District;
+use App\Models\Library;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
-use App\Http\Controllers\Controller;
+use Inertia\Inertia;
 
 class LibraryController extends Controller
 {
@@ -27,8 +27,8 @@ class LibraryController extends Controller
                 ->with('createNewLibrary', 'الرجاء إنشاء مكتبتك الأساسية');
         }
 
-        return  Inertia::render('Library/Dashboard', [
-            'library' => $user->library
+        return Inertia::render('Library/Dashboard', [
+            'library' => $user->library,
         ]);
     }
 
@@ -46,9 +46,9 @@ class LibraryController extends Controller
                 ->with('createNewLibrary', 'الرجاء إنشاء مكتبتك الأساسية');
         }
 
-        return  Inertia::render('Library/Create', [
+        return Inertia::render('Library/Create', [
             'cities' => City::all(),
-            'districts' => District::all()
+            'districts' => District::all(),
         ]);
     }
 
@@ -58,7 +58,7 @@ class LibraryController extends Controller
     public function store(Request $request)
     {
         request()->validate([
-            'phone' => 'required|string|max:255|unique:' . Library::class,
+            'phone' => 'required|string|max:255|unique:'.Library::class,
         ]);
 
         $request->user()->library()->create([
@@ -89,10 +89,10 @@ class LibraryController extends Controller
         $library = Library::with('user')->findOrFail($id);
         $this->authorize('view', $library);
 
-        return  Inertia::render('Library/Edit', [
+        return Inertia::render('Library/Edit', [
             'library' => $library,
             'cities' => City::all(),
-            'districts' => District::all()
+            'districts' => District::all(),
         ]);
     }
 

@@ -18,7 +18,7 @@ class HandleInertiaRequests extends Middleware
     /**
      * Determine the current asset version.
      */
-    public function version(Request $request): string|null
+    public function version(Request $request): ?string
     {
         return parent::version($request);
     }
@@ -33,13 +33,13 @@ class HandleInertiaRequests extends Middleware
         return array_merge(parent::share($request), [
             'auth' => [
                 'user' => $request->user(),
-                'unreadNotificationsCount' => $request->user()?->unreadNotifications->count()
+                'unreadNotificationsCount' => $request->user()?->unreadNotifications->count(),
             ],
             'flash' => [
                 'createNewLibrary' => fn () => $request->session()->get('createNewLibrary'),
             ],
             'user_cart' => [
-                'cart' => fn () => $request->user()?->carts()->get()
+                'cart' => fn () => $request->user()?->carts()->get(),
             ],
             'ziggy' => function () use ($request) {
                 return array_merge((new Ziggy)->toArray(), [

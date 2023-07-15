@@ -20,7 +20,7 @@ class LibraryFactory extends Factory
     public function definition(): array
     {
         return [
-            'name' => 'مكتبة' . ' ' . fake()->unique()->lastName(),
+            'name' => 'مكتبة'.' '.fake()->unique()->lastName(),
             'phone' => fake()->phoneNumber(),
             'CR' => fake()->randomNumber(5, true),
             'city' => City::inRandomOrder()->first()->name,

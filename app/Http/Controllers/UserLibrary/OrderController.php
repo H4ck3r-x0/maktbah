@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers\UserLibrary;
 
-use Inertia\Inertia;
+use App\Http\Controllers\Controller;
 use App\Models\Order;
 use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
+use Inertia\Inertia;
 
 class OrderController extends Controller
 {
@@ -24,7 +24,6 @@ class OrderController extends Controller
             })
             ->latest()
             ->get();
-
 
         return Inertia::render('Library/Order/Index', [
             'orders' => $orders,
@@ -59,14 +58,13 @@ class OrderController extends Controller
                 [
                     'details.book.library',
                     'details.book.book',
-                    'user:id,name,phone,city,district'
+                    'user:id,name,phone,city,district',
                 ]
             )
             ->findOrFail($id);
 
-
         return Inertia::render('Library/Order/Show', [
-            'order' => $order
+            'order' => $order,
         ]);
     }
 

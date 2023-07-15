@@ -2,16 +2,16 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\ProfileUpdateRequest;
 use App\Models\City;
-use Inertia\Inertia;
-use App\Models\Major;
-use Inertia\Response;
 use App\Models\District;
+use App\Models\Major;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Redirect;
-use App\Http\Requests\ProfileUpdateRequest;
+use Inertia\Inertia;
+use Inertia\Response;
 
 class ProfileController extends Controller
 {
@@ -20,7 +20,7 @@ class ProfileController extends Controller
      */
     public function edit(Request $request): Response
     {
-        $majors  = Auth::user()->hasRole('user') ? Major::all() : null;
+        $majors = Auth::user()->hasRole('user') ? Major::all() : null;
 
         if (Auth::user()->hasRole('user')) {
             Auth::user()->load('user_profile');
@@ -30,7 +30,7 @@ class ProfileController extends Controller
             'status' => session('status'),
             'majors' => $majors,
             'cities' => City::all(),
-            'districts' => District::all()
+            'districts' => District::all(),
         ]);
     }
 

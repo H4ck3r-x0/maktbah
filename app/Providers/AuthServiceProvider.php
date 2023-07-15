@@ -4,13 +4,12 @@ namespace App\Providers;
 
 // use Illuminate\Support\Facades\Gate;
 
-use App\Models\Order;
 use App\Models\Library;
 use App\Models\LibraryBranch;
-use App\Policies\UserOrderPolicy;
-use Illuminate\Support\Facades\Gate;
+use App\Models\Order;
 use App\Policies\Branch\BranchPolicy;
 use App\Policies\UserLibrary\UserLibraryPolicy;
+use App\Policies\UserOrderPolicy;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 
 class AuthServiceProvider extends ServiceProvider

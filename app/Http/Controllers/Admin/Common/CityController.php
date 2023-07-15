@@ -23,7 +23,7 @@ class CityController extends Controller
     public function create()
     {
         return Inertia::render('Admin/Settings/City/Create', [
-            'cities' => City::all()
+            'cities' => City::all(),
         ]);
     }
 
@@ -33,11 +33,11 @@ class CityController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'name' => 'required|string|max:255|unique:' . City::class,
+            'name' => 'required|string|max:255|unique:'.City::class,
         ]);
 
         City::create([
-            'name' => $request->name
+            'name' => $request->name,
         ]);
 
         return redirect()->back();
@@ -57,7 +57,7 @@ class CityController extends Controller
     public function edit(string $id)
     {
         return Inertia::render('Admin/Settings/City/Edit', [
-            'city' => City::findOrFail($id)
+            'city' => City::findOrFail($id),
         ]);
     }
 
@@ -67,7 +67,7 @@ class CityController extends Controller
     public function update(Request $request, string $id)
     {
         $request->validate([
-            'name' => 'required|string|max:255|unique:' . City::class,
+            'name' => 'required|string|max:255|unique:'.City::class,
         ]);
         $city = City::findOrFail($id);
         $city->name = $request->name;

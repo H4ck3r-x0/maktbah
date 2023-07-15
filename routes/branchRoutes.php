@@ -1,10 +1,10 @@
 <?php
 
-use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\Branch\BranchController;
 use App\Http\Controllers\Branch\BranchBookController;
-use App\Http\Controllers\Branch\BranchOrderController;
+use App\Http\Controllers\Branch\BranchController;
 use App\Http\Controllers\Branch\BranchNotificationController;
+use App\Http\Controllers\Branch\BranchOrderController;
+use Illuminate\Support\Facades\Route;
 
 Route::middleware('auth')->group(function () {
     Route::get('dashboard', [BranchController::class, 'index'])->name('dashboard');

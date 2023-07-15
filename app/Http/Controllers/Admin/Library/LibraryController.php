@@ -2,16 +2,16 @@
 
 namespace App\Http\Controllers\Admin\Library;
 
+use App\Http\Controllers\Controller;
 use App\Models\City;
-use App\Models\User;
-use Inertia\Inertia;
-use App\Models\Library;
 use App\Models\District;
+use App\Models\Library;
+use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rule;
 use Illuminate\Validation\Rules;
-use App\Http\Controllers\Controller;
-use Illuminate\Support\Facades\Hash;
+use Inertia\Inertia;
 
 class LibraryController extends Controller
 {
@@ -62,7 +62,7 @@ class LibraryController extends Controller
     {
         return Inertia::render('Admin/Library/Create', [
             'cities' => City::all(),
-            'districts' => District::all()
+            'districts' => District::all(),
         ]);
     }
 
@@ -72,9 +72,9 @@ class LibraryController extends Controller
     public function store()
     {
         request()->validate([
-            'libraryOwnerName' => 'required|string|max:255|unique:users,name,' . User::class,
-            'username' => 'required|string|alpha_dash|max:255|unique:' . User::class,
-            'phone' => 'required|string|max:255|unique:' . Library::class,
+            'libraryOwnerName' => 'required|string|max:255|unique:users,name,'.User::class,
+            'username' => 'required|string|alpha_dash|max:255|unique:'.User::class,
+            'phone' => 'required|string|max:255|unique:'.Library::class,
             'password' => ['required', Rules\Password::defaults()],
         ]);
 
@@ -116,7 +116,7 @@ class LibraryController extends Controller
         return Inertia::render('Admin/Library/Edit', [
             'library' => $library,
             'cities' => City::all(),
-            'districts' => District::all()
+            'districts' => District::all(),
         ]);
     }
 

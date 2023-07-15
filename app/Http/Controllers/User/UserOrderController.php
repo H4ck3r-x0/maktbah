@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers\User;
 
-use Inertia\Inertia;
+use App\Http\Controllers\Controller;
 use App\Models\Order;
 use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
+use Inertia\Inertia;
 
 class UserOrderController extends Controller
 {
@@ -55,7 +55,7 @@ class UserOrderController extends Controller
                     'details.book.library',
                     'details.book.branch',
                     'details.book.book',
-                    'user:id,name,phone,city,district'
+                    'user:id,name,phone,city,district',
                 ]
             )
             ->findOrFail($id);
@@ -63,7 +63,7 @@ class UserOrderController extends Controller
         $this->authorize('view', $order);
 
         return Inertia::render('User/Order/Show', [
-            'order' => $order
+            'order' => $order,
         ]);
     }
 

@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers\Branch;
 
-use Inertia\Inertia;
+use App\Http\Controllers\Controller;
 use App\Models\Order;
 use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
+use Inertia\Inertia;
 
 class BranchOrderController extends Controller
 {
@@ -24,7 +24,6 @@ class BranchOrderController extends Controller
             })
             ->latest()
             ->get();
-
 
         return Inertia::render('Branch/Order/Index', [
             'orders' => $orders,
@@ -59,14 +58,13 @@ class BranchOrderController extends Controller
                 [
                     'details.book.branch',
                     'details.book.book',
-                    'user:id,name,phone,city,district'
+                    'user:id,name,phone,city,district',
                 ]
             )
             ->findOrFail($id);
 
-
         return Inertia::render('Branch/Order/Show', [
-            'order' => $order
+            'order' => $order,
         ]);
     }
 

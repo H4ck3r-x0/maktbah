@@ -2,14 +2,13 @@
 
 namespace App\Http\Controllers\Book;
 
-use App\Models\City;
-use Inertia\Inertia;
-use App\Models\District;
-use App\Models\BookLibrary;
-use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Models\BookLibrary;
+use App\Models\City;
+use App\Models\District;
 use App\Models\UserCart;
-use Illuminate\Support\Facades\Redis;
+use Illuminate\Http\Request;
+use Inertia\Inertia;
 
 class SearchBooksController extends Controller
 {
@@ -65,7 +64,6 @@ class SearchBooksController extends Controller
         ]);
     }
 
-
     /**
      * Store a newly created resource in storage.
      */
@@ -75,12 +73,11 @@ class SearchBooksController extends Controller
             'total_price' => $request->price,
             'book_library_id' => $request->id,
             'library_id' => $request->library_id,
-            'branch_id' => $request->library_branch_id
+            'branch_id' => $request->library_branch_id,
         ]);
 
         return redirect()->back();
     }
-
 
     /**
      * Remove the specified resource from storage.

@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers\Branch;
 
-use Inertia\Inertia;
-use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Http\Request;
+use Inertia\Inertia;
 
 class BranchNotificationController extends Controller
 {
@@ -16,8 +16,9 @@ class BranchNotificationController extends Controller
         foreach (request()->user()->unreadNotifications as $notification) {
             $notification->markAsRead();
         }
+
         return Inertia::render('Branch/Notification', [
-            'notifications' => request()->user()->notifications
+            'notifications' => request()->user()->notifications,
         ]);
     }
 

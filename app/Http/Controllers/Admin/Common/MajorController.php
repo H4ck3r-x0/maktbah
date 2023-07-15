@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers\Admin\Common;
 
-use Inertia\Inertia;
+use App\Http\Controllers\Controller;
 use App\Models\Major;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
-use App\Http\Controllers\Controller;
+use Inertia\Inertia;
 
 class MajorController extends Controller
 {
@@ -24,7 +24,7 @@ class MajorController extends Controller
     public function create()
     {
         return Inertia::render('Admin/Settings/Major/Create', [
-            'majors' => Major::all()
+            'majors' => Major::all(),
         ]);
     }
 
@@ -34,8 +34,8 @@ class MajorController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'name' => 'required|string|max:255|unique:' . Major::class,
-            'levels' => 'required|numeric'
+            'name' => 'required|string|max:255|unique:'.Major::class,
+            'levels' => 'required|numeric',
         ]);
 
         $requestedLevels = (int) $request->levels;
@@ -67,7 +67,7 @@ class MajorController extends Controller
     public function edit(string $id)
     {
         return Inertia::render('Admin/Settings/Major/Edit', [
-            'major' => Major::findOrFail($id)
+            'major' => Major::findOrFail($id),
         ]);
     }
 
@@ -78,7 +78,7 @@ class MajorController extends Controller
     {
         $request->validate([
             'name' => ['required', 'string', Rule::unique(Major::class)->ignore($id)],
-            'levels' => 'required|numeric'
+            'levels' => 'required|numeric',
         ]);
 
         $requestedLevels = (int) $request->levels;

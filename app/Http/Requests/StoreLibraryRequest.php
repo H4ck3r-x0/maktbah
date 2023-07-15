@@ -25,7 +25,7 @@ class StoreLibraryRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => 'required|string|max:255|unique:' . Library::class,
+            'name' => 'required|string|max:255|unique:'.Library::class,
         ];
     }
 }

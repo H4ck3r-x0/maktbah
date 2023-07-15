@@ -16,7 +16,7 @@ class Major extends Model
      */
     protected $fillable = [
         'name',
-        'levels'
+        'levels',
     ];
 
     protected $casts = [

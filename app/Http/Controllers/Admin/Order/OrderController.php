@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers\Admin\Order;
 
-use Inertia\Inertia;
+use App\Http\Controllers\Controller;
 use App\Models\Order;
 use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
+use Inertia\Inertia;
 
 class OrderController extends Controller
 {
@@ -18,7 +18,7 @@ class OrderController extends Controller
             ->with([
                 'details.book.library',
                 'details.book.branch',
-                'user:id,name,phone', 'library:id,name'
+                'user:id,name,phone', 'library:id,name',
             ])
             ->when(request()->search, function ($query, $search) {
                 $query->whereHas('user', function ($query) use ($search) {
@@ -42,7 +42,6 @@ class OrderController extends Controller
         ]);
     }
 
-
     /**
      * Display the specified resource.
      */
@@ -54,7 +53,7 @@ class OrderController extends Controller
                     'details.book.library',
                     'details.book.branch',
                     'details.book.book',
-                    'user:id,name,phone,city,district'
+                    'user:id,name,phone,city,district',
                 ]
             )
 
@@ -63,10 +62,9 @@ class OrderController extends Controller
         $this->authorize('view', $order);
 
         return Inertia::render('User/Order/Show', [
-            'order' => $order
+            'order' => $order,
         ]);
     }
-
 
     /**
      * Update the specified resource in storage.

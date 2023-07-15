@@ -2,9 +2,9 @@
 
 namespace App\Models;
 
-use Spatie\ModelStatus\HasStatuses;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
+use Spatie\ModelStatus\HasStatuses;
 
 class Order extends Model
 {
@@ -16,10 +16,11 @@ class Order extends Model
             'key' => 'sent_to_library',
             'message' => [
                 'ar' => 'تم الإرسال للمكتبة',
-                'en' => 'Sent To Library'
+                'en' => 'Sent To Library',
             ],
         ],
     ];
+
     /**
      * The attributes that are mass assignable.
      *
@@ -34,15 +35,15 @@ class Order extends Model
     ];
 
     protected $with = ['statuses'];
-    protected $appends = ['model_status', 'current_status'];
 
+    protected $appends = ['model_status', 'current_status'];
 
     public function getModelStatusAttribute(): array
     {
         return self::STATUS;
     }
 
-    public function getCurrentStatusAttribute(): String
+    public function getCurrentStatusAttribute(): string
     {
         return $this->status;
     }
@@ -56,7 +57,6 @@ class Order extends Model
     {
         return $this->belongsTo(LibraryBranch::class);
     }
-
 
     public function user()
     {

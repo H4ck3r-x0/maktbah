@@ -2,16 +2,16 @@
 
 namespace App\Http\Controllers\UserLibrary;
 
+use App\Http\Controllers\Controller;
 use App\Models\City;
-use App\Models\User;
-use Inertia\Inertia;
 use App\Models\District;
-use Illuminate\Http\Request;
 use App\Models\LibraryBranch;
+use App\Models\User;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rule;
 use Illuminate\Validation\Rules;
-use App\Http\Controllers\Controller;
-use Illuminate\Support\Facades\Hash;
+use Inertia\Inertia;
 
 class LibraryBranchController extends Controller
 {
@@ -36,9 +36,9 @@ class LibraryBranchController extends Controller
                 ->with('createNewLibrary', 'الرجاء إنشاء مكتبتك الأساسية');
         }
 
-        return  Inertia::render('LibraryBranch/Create', [
+        return Inertia::render('LibraryBranch/Create', [
             'cities' => City::all(),
-            'districts' => District::all()
+            'districts' => District::all(),
         ]);
     }
 
@@ -48,9 +48,9 @@ class LibraryBranchController extends Controller
     public function store()
     {
         request()->validate([
-            'libraryOwnerName' => 'required|string|max:255|unique:users,name,' . User::class,
-            'username' => 'required|string|alpha_dash|max:255|unique:' . User::class,
-            'phone' => 'required|string|max:255|unique:' . LibraryBranch::class,
+            'libraryOwnerName' => 'required|string|max:255|unique:users,name,'.User::class,
+            'username' => 'required|string|alpha_dash|max:255|unique:'.User::class,
+            'phone' => 'required|string|max:255|unique:'.LibraryBranch::class,
             'password' => ['required', Rules\Password::defaults()],
         ]);
 
@@ -69,7 +69,7 @@ class LibraryBranchController extends Controller
             'city' => request()->city,
             'district' => request()->district,
             'google_maps' => request()->google_maps,
-            'library_id' => $mainLibrary->library->id
+            'library_id' => $mainLibrary->library->id,
         ]);
 
         $user->assignRole('branch');
@@ -92,10 +92,10 @@ class LibraryBranchController extends Controller
     {
         $branch = LibraryBranch::with('user')->findOrFail($id);
 
-        return  Inertia::render('LibraryBranch/Edit', [
+        return Inertia::render('LibraryBranch/Edit', [
             'branch' => $branch,
             'cities' => City::all(),
-            'districts' => District::all()
+            'districts' => District::all(),
         ]);
     }
 

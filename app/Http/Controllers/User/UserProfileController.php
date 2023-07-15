@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers\User;
 
-use App\Models\User\UserProfile;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreUserProfileRequest;
 use App\Http\Requests\UpdateUserProfileRequest;
+use App\Models\User\UserProfile;
 
 class UserProfileController extends Controller
 {

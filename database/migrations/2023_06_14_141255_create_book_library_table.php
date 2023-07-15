@@ -20,7 +20,6 @@ return new class extends Migration
             $table->text('offer')->nullable();
             $table->unsignedBigInteger('library_branch_id')->nullable();
 
-
             $table->foreignIdFor(Book::class, 'book_id')
                 ->constrained('books', 'id')
                 ->cascadeOnDelete();

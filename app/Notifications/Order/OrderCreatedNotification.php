@@ -4,8 +4,8 @@ namespace App\Notifications\Order;
 
 use App\Models\Order;
 use Illuminate\Bus\Queueable;
-use Illuminate\Notifications\Notification;
 use Illuminate\Contracts\Queue\ShouldQueue;
+use Illuminate\Notifications\Notification;
 
 class OrderCreatedNotification extends Notification implements ShouldQueue
 {
@@ -31,8 +31,6 @@ class OrderCreatedNotification extends Notification implements ShouldQueue
         return ['database'];
     }
 
-
-
     /**
      * Get the array representation of the notification.
      *
@@ -42,7 +40,7 @@ class OrderCreatedNotification extends Notification implements ShouldQueue
     {
         return [
             'order_id' => $this->order->id,
-            'message' =>  'لديك طلب جديد',
+            'message' => 'لديك طلب جديد',
         ];
     }
 }

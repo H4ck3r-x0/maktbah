@@ -3,7 +3,6 @@
 namespace App\Http\Controllers\UserLibrary;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
 use Inertia\Inertia;
 
 class NotificationController extends Controller
@@ -16,8 +15,9 @@ class NotificationController extends Controller
         foreach (request()->user()->unreadNotifications as $notification) {
             $notification->markAsRead();
         }
+
         return Inertia::render('Library/Notification', [
-            'notifications' => request()->user()->notifications
+            'notifications' => request()->user()->notifications,
         ]);
     }
 

@@ -24,7 +24,7 @@ class MajorFactory extends Factory
 
         return [
             'name' => fake()->sentence(),
-            'levels' => $levels
+            'levels' => $levels,
         ];
     }
 }
