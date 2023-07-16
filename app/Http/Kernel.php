@@ -6,6 +6,7 @@ use App\Http\Middleware\IsUser;
 use App\Http\Middleware\IsAdmin;
 use App\Http\Middleware\IsBranch;
 use App\Http\Middleware\isLibrary;
+use App\Http\Middleware\isTeacher;
 use Illuminate\Foundation\Http\Kernel as HttpKernel;
 
 class Kernel extends HttpKernel
@@ -73,5 +74,6 @@ class Kernel extends HttpKernel
         'isLibrary' => isLibrary::class,
         'isBranch' => IsBranch::class,
         'isUser' => IsUser::class,
+        'isTeacher' => isTeacher::class,
     ];
 }

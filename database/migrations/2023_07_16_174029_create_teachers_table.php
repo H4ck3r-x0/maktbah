@@ -12,17 +12,17 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('stationeries', function (Blueprint $table) {
+        Schema::create('teachers', function (Blueprint $table) {
             $table->id();
-            $table->string('name')->unique()->nullable();
-            $table->string('phone')->unique()->nullable();
-            $table->string('district')->nullable();
-            $table->string('city')->nullable();
-            $table->string('google_maps')->nullable();
+            $table->string('specialty')->nullable();
+            $table->string('university_name')->nullable();
+
 
             $table->foreignIdFor(User::class, 'user_id')
+                ->nullable()
                 ->constrained('users', 'id')
                 ->cascadeOnDelete();
+
             $table->timestamps();
         });
     }
@@ -32,6 +32,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('stationeries');
+        Schema::dropIfExists('teachers');
     }
 };

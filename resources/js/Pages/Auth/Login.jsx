@@ -90,6 +90,12 @@ export default function Login({ status, canResetPassword }) {
                     )}
                 </div>
             </form>
+            <div className=' flex  itmes-center justify-between pt-8 '>
+                <p className='text-xs sm:text-sm text-gray-600  px-4 py-2'>لا يوجد لديك حساب؟</p>
+                <Link href={route('register')} className='text-xs  px-4 py-2 bg-indigo-600 border border-transparent rounded-md font-semibold  text-white  hover:bg-indigo-700 focus:bg-indigo-700 active:bg-indigo-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 transition ease-in-out duration-150'>
+                    إنظم الينا الان
+                </Link>
+            </div>
         </GuestLayout>
     );
 }

@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Stationery extends Model
+class Note extends Model
 {
     use HasFactory;
 
@@ -16,15 +16,9 @@ class Stationery extends Model
      */
     protected $fillable = [
         'name',
-        'phone',
-        'district',
-        'city',
-        'google_maps',
+        'url',
+        'description',
         'user_id',
+        'teacher_id',
     ];
-
-    public function user()
-    {
-        return $this->belongsTo(User::class);
-    }
 }

@@ -47,13 +47,12 @@ class User extends Authenticatable
      * @var array<string, string>
      */
     protected $casts = [
-        // 'email_verified_at' => 'datetime',
         'password' => 'hashed',
     ];
 
-    public function stationery()
+    public function teacher()
     {
-        return $this->hasOne(Stationery::class);
+        return $this->hasOne(Teacher::class);
     }
 
     public function library()
@@ -111,6 +110,7 @@ class User extends Authenticatable
             'admin' => '/admin/dashboard',
             'library' => '/library/dashboard',
             'branch' => '/branch/dashboard',
+            'teacher' => '/teacher/dashboard',
         ];
 
         return $redirectRoutes[$this->role] ?? '/dashboard';

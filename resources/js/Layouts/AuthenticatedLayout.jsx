@@ -2,6 +2,7 @@ import AdminAuthenticatedHeader from '@/Components/AdminAuthenticatedHeader';
 import AuthenticatedBranchHeader from '@/Components/AuthenticatedBranchHeader';
 import AuthenticatedHeader from '@/Components/AuthenticatedHeader';
 import AuthenticatedLibraryHeader from '@/Components/AuthenticatedLibraryHeader';
+import AuthenticatedTeacherHeader from '@/Components/AuthenticatedTeacherHeader';
 
 export default function Authenticated({ user, header, children }) {
     return (
@@ -13,6 +14,8 @@ export default function Authenticated({ user, header, children }) {
             {user.role == 'library' && <AuthenticatedLibraryHeader user={user} />}
 
             {user.role == 'branch' && <AuthenticatedBranchHeader user={user} />}
+
+            {user.role == 'teacher' && <AuthenticatedTeacherHeader user={user} />}
 
             {header && (
                 <header className="bg-white shadow">
