@@ -57,30 +57,30 @@ export default function BookCardBranch({ book }) {
         <div className="flex bg-white shadow-md rounded-lg overflow-hidden">
             <ToastContainer />
             <div className="w-full p-5">
-                <h1 className="text-gray-900 font-bold text-2xl mb-2">
+                <h1 className="text-xl text-gray-900 font-bold sm:text-2xl ">
                     أسم الكتاب: {book.book.book_name}
                 </h1>
-                <div className="flex flex-wrap gap-2 mt-1">
-                    <span className="text-2xl text-gray-600 font-semibold">الكاتب:</span>
-                    <span className="bg-blue-100 text-blue-800 text-lg px-2.5 py-0.5 rounded">{book.book.author_name}</span>
-                    <span className="text-2xl text-gray-600 font-semibold">رقم الطبعة:</span>
-                    <span className="bg-blue-100 text-blue-800 text-lg px-2.5 py-0.5 rounded">{book.book.edition_number}</span>
-                    <span className="text-2xl text-gray-600 font-semibold">رقم المجلد:</span>
-                    <span className="bg-blue-100 text-blue-800 text-lg px-2.5 py-0.5 rounded">{book.book.volume_number}</span>
+                <div className="flex flex-col sm:flex-row flex-wrap gap-2 py-6">
+                    <span className="text-xl sm:text-2xl text-gray-600 font-semibold">الكاتب:</span>
+                    <span className="bg-blue-100 text-blue-800 text-xl sm:text-2xl px-2.5 py-0.5 rounded">{book.book.author_name}</span>
+                    <span className="text-xl sm:text-2xl text-gray-600 font-semibold">رقم الطبعة:</span>
+                    <span className="bg-blue-100 text-blue-800 text-lg sm:text-2xl px-2.5 py-0.5 rounded">{book.book.edition_number}</span>
+                    <span className="text-xl sm:text-2xl text-gray-600 font-semibold">رقم المجلد:</span>
+                    <span className="bg-blue-100 text-blue-800 text-lg sm:text-2xl px-2.5 py-0.5 rounded">{book.book.volume_number}</span>
                 </div>
                 {book.offer && (
-                    <div className="max-w-sm mt-3 p-4 border rounded shadow-sm bg-red-100">
-                        <h3 className="text-2xl text-red-500 font-semibold mb-1">عرض إضافي</h3>
-                        <span className="text-2xl text-justify">{book.offer}</span>
+                    <div className="max-w-sm mt-3 p-4 border rounded shadow-sm bg-indigo-100">
+                        <h3 className="text-xl sm:text-2xl text-indigo-500 font-semibold mb-1">عرض إضافي</h3>
+                        <span className="text-xl sm:text-2xl text-justify">{book.offer}</span>
                     </div>
                 )}
-                <div className="flex flex-wrap gap-1 pt-4">
-                    <span className="text-2xl text-gray-600 font-semibold">المكتبة:</span>
-                    <span className="bg-gray-100 text-gray-800 text-lg px-2.5 py-0.5 rounded">{book.branch.name}</span>
-                    <span className="text-2xl text-gray-600 font-semibold">المدينة:</span>
-                    <span className="bg-gray-100 text-gray-800 text-lg px-2.5 py-0.5 rounded">{book.branch.city}</span>
-                    <span className="text-2xl text-gray-600 font-semibold">الحي:</span>
-                    <span className="bg-gray-100 text-gray-800 text-lg px-2.5 py-0.5 rounded">{book.branch.district}</span>
+                <div className="flex flex-col sm:flex-row flex-wrap gap-2 py-6">
+                    <span className="text-xl sm:text-2xl text-gray-600 font-semibold">المكتبة:</span>
+                    <span className="bg-gray-100 text-gray-800 text-lg px-2.5 py-0.5 rounded">{book.branch?.name}</span>
+                    <span className="text-xl sm:text-2xl text-gray-600 font-semibold">المدينة:</span>
+                    <span className="bg-gray-100 text-gray-800 text-xl sm:text-2xl px-2.5 py-0.5 rounded">{book.branch?.city}</span>
+                    <span className="text-xl sm:text-2xl text-gray-600 font-semibold">الحي:</span>
+                    <span className="bg-gray-100 text-gray-800 text-xl sm:text-2xl px-2.5 py-0.5 rounded">{book.branch?.district}</span>
                 </div>
                 <div className="flex items-center justify-between mt-6">
                     <h1 className="text-blue-500 font-bold text-2xl">{book.price} ريال</h1>

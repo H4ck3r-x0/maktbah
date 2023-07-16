@@ -18,6 +18,7 @@ class UserController extends Controller
     public function index()
     {
         $query = User::query()
+            ->with('user_profile:major,level,user_id')
             ->when(request()->search ?? false, function ($query, $search) {
                 $query->where('name', 'like', "%{$search}%");
             })
@@ -54,8 +55,8 @@ class UserController extends Controller
             'account_type' => 'required|string|max:255',
             'gender' => 'required|string|max:255',
             'name' => 'required|string|max:255',
-            'phone' => 'required|string|unique:'.User::class,
-            'username' => 'required|string|alpha_dash|max:255|unique:'.User::class,
+            'phone' => 'required|string|unique:' . User::class,
+            'username' => 'required|string|alpha_dash|max:255|unique:' . User::class,
             'password' => ['required', Rules\Password::defaults()],
         ]);
 
@@ -67,7 +68,7 @@ class UserController extends Controller
             'password' => Hash::make($request->password),
         ]);
 
-        if (! $request->has('account_type') && $request->account_type !== 'admin') {
+        if (!$request->has('account_type') && $request->account_type !== 'admin') {
             $user->assignRole('user');
         }
 

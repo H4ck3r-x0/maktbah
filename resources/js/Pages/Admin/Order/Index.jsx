@@ -52,8 +52,7 @@ export default function Index({ auth, orders }) {
                                 id="search"
                                 name="search"
                                 className=" w-80"
-                                value={data.search ? data.search : ''}
-                                autoComplete="search"
+                                value={data.search || ''}
                                 onChange={search}
                                 placeholder="رقم الطلب ، صاحب الطلب ،اسم المكتبة"
                             />

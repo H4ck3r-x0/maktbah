@@ -102,12 +102,17 @@ export default function AuthenticatedBranchHeader({ user }) {
                     <ResponsiveNavLink href={route('dashboard')} active={route().current('dashboard')}>
                         الرئيسية
                     </ResponsiveNavLink>
+                    <ResponsiveNavLink href={route('branch.book.create')} active={route().current('branch.book.create')}>
+                        إضافة كتب
+                    </ResponsiveNavLink>
+                    <ResponsiveNavLink href={route('branch.order.index')} active={route().current('branch.order.index')}>
+                        الطلبات
+                    </ResponsiveNavLink>
                 </div>
 
                 <div className="pt-4 pb-1 border-t border-gray-200">
                     <div className="px-4">
                         <div className="font-medium text-base text-gray-800">{user.name}</div>
-                        <div className="font-medium text-sm text-gray-500">{user.email}</div>
                     </div>
 
                     <div className="mt-3 space-y-1">

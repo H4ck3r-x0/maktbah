@@ -10,7 +10,7 @@ export default function Index({ auth, users }) {
     const filters = usePage().props.filters;
     const currentPage = usePage().props.currentPage;
 
-    const { data, setData, get, reset } = useForm({
+    const { data, setData, get } = useForm({
         search: filters.search,
         account_type: filters.account_type,
     });
@@ -60,16 +60,16 @@ export default function Index({ auth, users }) {
         >
             <Head title="جميع اعضاء الموقع" />
 
-            <div className="">
-                <div className="max-w-7xl mx-auto sm:px-6 lg:px-8">
-                    <div className='py-3'>
-                        <div className='flex items-center gap-4'>
+            <div className="py-6">
+                <div className='w-full  gap-3 px-6'>
+                    <div className='pb-3'>
+                        <div className='flex flex-col  sm:flex-row gap-4'>
                             <TextInput
+                                className='w-full sm:w-1/3'
                                 type="text"
                                 id="search"
                                 name="search"
-                                value={data.search ? data.search : ''}
-                                autoComplete="search"
+                                value={data.search || ''}
                                 onChange={search}
                                 placeholder="أبحث بالاسم .."
                             />
@@ -77,7 +77,6 @@ export default function Index({ auth, users }) {
                             <div className='mb-2'>
                                 <select
                                     onChange={accountType}
-                                    value={data.account_type}
                                     name="account_type"
                                     id="account_type"
                                     className='mt-2 block w-full border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm'>
@@ -88,12 +87,6 @@ export default function Index({ auth, users }) {
                                     <option value="stationery">قرطاسية</option>
                                 </select>
                             </div>
-
-                            {data.search !== '' || data.account_type !== '' ?
-                                <PrimaryButton onClick={() => reset()}>
-                                    إعادة تعيين
-                                </PrimaryButton> : null
-                            }
 
                         </div>
                     </div>
@@ -119,6 +112,12 @@ export default function Index({ auth, users }) {
                                                 الفئة
                                             </th>
                                             <th scope="col" className="px-6 py-3 tracking-wider">
+                                                التخصص
+                                            </th>
+                                            <th scope="col" className="px-6 py-3 tracking-wider">
+                                                المستوى
+                                            </th>
+                                            <th scope="col" className="px-6 py-3 tracking-wider">
                                                 العمليات
                                             </th>
                                         </tr>
@@ -138,8 +137,15 @@ export default function Index({ auth, users }) {
                                                 <td className="px-6 py-4">
                                                     {user.city}
                                                 </td>
+
                                                 <td className="px-6 py-4">
                                                     {user.role_name}
+                                                </td>
+                                                <td className="px-6 py-4">
+                                                    {user.user_profile ? user.user_profile.major : 'لايوجد'}
+                                                </td>
+                                                <td className="px-6 py-4">
+                                                    {user.user_profile ? user.user_profile.level : 'لايوجد'}
                                                 </td>
                                                 <td className="px-0 py-4">
                                                     <div className='flex items-center gap-2'>

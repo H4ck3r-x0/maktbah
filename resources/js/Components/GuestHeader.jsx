@@ -19,9 +19,6 @@ export default function GuestHeader() {
                         </div>
 
                         <div className="hidden  sm:-my-px sm:ml-10 sm:flex">
-                            <NavLink href={route('welcome')} active={route().current('welcome')}>
-                                الرئيسية
-                            </NavLink>
                         </div>
                     </div>
 
@@ -29,12 +26,12 @@ export default function GuestHeader() {
                         <div className='flex items-center gap-3'>
                             <Link href={route('register')}>
                                 <button className='bg-indigo-600 px-8 py-2 text-white font-semibold rounded-2xl hover:bg-indigo-700 shadow-lg transition-all'>
-                                    تسجيل جديد
+                                    إنضم إلينا الأن
                                 </button>
                             </Link>
                             <Link href={route('login')}>
                                 <button className='bg-white px-8 py-2 text-gray-800 border font-semibold rounded-2xl hover:bg-gray-100 shadow-sm transition-all'>
-                                    الدخول
+                                    تسجيل الدخول
                                 </button>
                             </Link>
                         </div>
@@ -67,23 +64,17 @@ export default function GuestHeader() {
             </div>
 
             <div className={(showingNavigationDropdown ? 'block' : 'hidden') + ' sm:hidden'}>
-                <div className="pt-2 pb-3 space-y-1">
-                    <ResponsiveNavLink href={route('dashboard')} active={route().current('dashboard')}>
-                        الرئيسية
-                    </ResponsiveNavLink>
-                </div>
-
                 <div className="pt-4 pb-1 border-t border-gray-200">
                     <div className="flex items-center justify-between gap-2 px-4 mt-3 space-y-1">
                         <ResponsiveNavLink
                             className='bg-indigo-600 px-8 py-2 text-white font-semibold rounded-2xl  shadow-lg transition-all'
                             href={route('register')}>
-                            تسجيل جديد
+                            إنضم إلينا الأن
                         </ResponsiveNavLink>
                         <ResponsiveNavLink
                             className='bg-white  px-8 py-2 text-gray-700 font-semibold rounded-2xl shadow-md transition-all'
                             href={route('login')}>
-                            تسجيل دخول
+                            تسجيل الدخول
                         </ResponsiveNavLink>
                     </div>
                 </div>

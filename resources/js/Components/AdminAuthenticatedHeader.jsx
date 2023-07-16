@@ -255,19 +255,34 @@ export default function AdminAuthenticatedHeader({ user }) {
 
             <div className={(showingNavigationDropdown ? 'block' : 'hidden') + ' sm:hidden'}>
                 <div className="pt-2 pb-3 space-y-1">
-                    {/* <ResponsiveNavLink href={route('admin.dashboard')} active={route().current('admin.dashboard')}>
+                    <ResponsiveNavLink href={route('admin.dashboard')} active={route().current('admin.dashboard')}>
                         الرئيسية
-                    </ResponsiveNavLink> */}
+                    </ResponsiveNavLink>
+
+                    <ResponsiveNavLink href={route('admin.order.index')} active={route().current('admin.order.index')}>
+                        جميع الطلبات
+                    </ResponsiveNavLink>
+                    <ResponsiveNavLink href={route('admin.user.index')} active={route().current('admin.user.index')}>
+                        جميع العملاء
+                    </ResponsiveNavLink>
+                    <ResponsiveNavLink href={route('admin.user.create')} active={route().current('admin.user.create')}>
+                        إضافة عميل
+                    </ResponsiveNavLink>
+                    <ResponsiveNavLink href={route('admin.book.index')} active={route().current('admin.book.index')}>
+                        جميع الكتب
+                    </ResponsiveNavLink>
+                    <ResponsiveNavLink href={route('admin.book.create')} active={route().current('admin.book.create')}>
+                        إضافة كتب
+                    </ResponsiveNavLink>
                 </div>
 
                 <div className="pt-4 pb-1 border-t border-gray-200">
                     <div className="px-4">
                         <div className="font-medium text-base text-gray-800">{user.name}</div>
-                        <div className="font-medium text-sm text-gray-500">{user.email}</div>
                     </div>
 
                     <div className="mt-3 space-y-1">
-                        {/* <ResponsiveNavLink href={route('admin.profile.edit')}>الملف الشخصي</ResponsiveNavLink> */}
+                        <ResponsiveNavLink href={route('admin.profile.edit')}>الملف الشخصي</ResponsiveNavLink>
                         <ResponsiveNavLink method="post" href={route('logout')} as="button">
                             تسجيل الخروج
                         </ResponsiveNavLink>

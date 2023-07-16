@@ -23,7 +23,7 @@ class BranchBookController extends Controller
                     ->orWhere('author_name', 'like', "%{$search}%");
             })
             ->orderBy('id', 'DESC')
-            ->paginate(15)
+            ->paginate(10)
             ->withQueryString();
 
         $library = LibraryBranch::where('user_id', request()->user()->id)

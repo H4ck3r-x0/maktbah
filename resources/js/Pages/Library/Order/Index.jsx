@@ -58,12 +58,13 @@ export default function Index({ auth, orders }) {
                                 placeholder="رقم الطلب،  صاحب الطلب"
 
                             />
-
-                            {data.search !== '' ?
-                                <PrimaryButton onClick={() => setData('search', '')}>
-                                    إعادة تعيين
-                                </PrimaryButton> : null
-                            }
+                            <div className=' hidden sm:block'>
+                                {data.search !== '' ?
+                                    <PrimaryButton onClick={() => setData('search', '')}>
+                                        إعادة تعيين
+                                    </PrimaryButton> : null
+                                }
+                            </div>
                         </div>
                     </div>
                     <div className="relative overflow-x-auto">

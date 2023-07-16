@@ -23,7 +23,7 @@ class LibraryBookController extends Controller
                     ->orWhere('author_name', 'like', "%{$search}%");
             })
             ->orderBy('id', 'DESC')
-            ->paginate(15)
+            ->paginate(10)
             ->withQueryString();
 
         $library = Library::where('user_id', request()->user()->id)

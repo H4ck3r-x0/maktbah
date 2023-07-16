@@ -8,7 +8,7 @@ import Pagination from '@/Pages/Components/Pagination';
 export default function Index({ auth, books }) {
     const filters = usePage().props.filters;
     const currentPage = usePage().props.currentPage;
-    const { data, setData, get, processing } = useForm({
+    const { data, setData, get } = useForm({
         search: filters.search,
         orderd: filters.orderd,
     });
@@ -56,15 +56,15 @@ export default function Index({ auth, books }) {
         >
             <Head title="جميع الكتب" />
 
-            <div className="">
-                <div className="max-w-7xl mx-auto sm:px-6 lg:px-8">
-                    <div className='py-3'>
-                        <div className='flex items-center gap-4'>
+            <div className="py-6">
+                <div className='w-full  gap-3 px-6'>
+                    <div className='pb-3'>
+                        <div className='flex flex-col  sm:flex-row gap-4'>
                             <TextInput
                                 type="text"
                                 id="search"
                                 name="search"
-                                value={data.search ? data.search : ''}
+                                value={data.search || ''}
                                 autoComplete="search"
                                 onChange={search}
                                 placeholder="أبحث بالاسم .."

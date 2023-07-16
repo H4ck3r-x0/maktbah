@@ -134,6 +134,15 @@ export default function AuthenticatedLibraryHeader({ user }) {
                     <ResponsiveNavLink href={route('dashboard')} active={route().current('dashboard')}>
                         الرئيسية
                     </ResponsiveNavLink>
+                    <ResponsiveNavLink href={route('book.create')} active={route().current('book.create')}>
+                        اضافة كتب
+                    </ResponsiveNavLink>
+                    <ResponsiveNavLink href={route('library.order.index')} active={route().current('library.order.index')}>
+                        الطلبات
+                    </ResponsiveNavLink>
+                    <ResponsiveNavLink href={route('branch.create')} active={route().current('branch.create')}>
+                        أنشاء فرع
+                    </ResponsiveNavLink>
                 </div>
 
                 <div className="pt-4 pb-1 border-t border-gray-200">
