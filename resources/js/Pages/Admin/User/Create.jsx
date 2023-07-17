@@ -9,7 +9,7 @@ import { Transition } from '@headlessui/react';
 
 export default function Create({ auth }) {
     const { data, setData, post, errors, processing, recentlySuccessful } = useForm({
-        name: '',
+        // name: '',
         phone: '',
         username: '',
         gender: '',
@@ -81,7 +81,7 @@ export default function Create({ auth }) {
                                     <InputError message={errors.gender} className="mt-2" />
                                 </div>
 
-                                <div>
+                                {/* <div>
                                     <InputLabel htmlFor="name" value="الاسم" />
 
                                     <TextInput
@@ -94,7 +94,7 @@ export default function Create({ auth }) {
                                     />
 
                                     <InputError className="mt-2" message={errors.name} />
-                                </div>
+                                </div> */}
 
                                 <div>
                                     <InputLabel htmlFor="phone" value="رقم الجوال" />

@@ -16,10 +16,13 @@ class OrderController extends Controller
     {
         $orders = Order::query()
             ->where('library_id', request()->user()->library->id)
-            ->with(['details.book.library', 'user:id,name,phone'])
+            ->with([
+                'details.book.library',
+                'user:id,username,phone'
+            ])
             ->when(request()->search, function ($query, $search) {
                 $query->whereHas('user', function ($query) use ($search) {
-                    $query->where('name', 'like', "%{$search}%");
+                    $query->where('username', 'like', "%{$search}%");
                 })->orWhere('id', $search);
             })
             ->latest()
@@ -58,7 +61,7 @@ class OrderController extends Controller
                 [
                     'details.book.library',
                     'details.book.book',
-                    'user:id,name,phone,city,district',
+                    'user:id,username,phone,city,district',
                 ]
             )
             ->findOrFail($id);

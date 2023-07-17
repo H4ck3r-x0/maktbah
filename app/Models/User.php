@@ -50,6 +50,11 @@ class User extends Authenticatable
         'password' => 'hashed',
     ];
 
+    public function stationery()
+    {
+        return $this->hasOne(Stationery::class);
+    }
+
     public function teacher()
     {
         return $this->hasOne(Teacher::class);
@@ -111,6 +116,7 @@ class User extends Authenticatable
             'library' => '/library/dashboard',
             'branch' => '/branch/dashboard',
             'teacher' => '/teacher/dashboard',
+            'stationery' => 'stationery/dashboard',
         ];
 
         return $redirectRoutes[$this->role] ?? '/dashboard';

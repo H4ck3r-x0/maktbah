@@ -151,7 +151,6 @@ export default function Create({ auth, books, addedBooks }) {
             ));
         }
     }
-    console.log(libBooks)
     return (
         <Authenticated
             user={auth.user}

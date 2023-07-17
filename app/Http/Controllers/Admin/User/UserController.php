@@ -20,7 +20,7 @@ class UserController extends Controller
         $query = User::query()
             ->with('user_profile:major,level,user_id')
             ->when(request()->search ?? false, function ($query, $search) {
-                $query->where('name', 'like', "%{$search}%");
+                $query->where('username', 'like', "%{$search}%");
             })
             ->when(request()->account_type ?? false, function ($query, $account_type) {
                 $query->whereHas('roles', function ($query) use ($account_type) {
@@ -54,14 +54,14 @@ class UserController extends Controller
         $request->validate([
             'account_type' => 'required|string|max:255',
             'gender' => 'required|string|max:255',
-            'name' => 'required|string|max:255',
+            // 'name' => 'required|string|max:255',
             'phone' => 'required|string|unique:' . User::class,
             'username' => 'required|string|alpha_dash|max:255|unique:' . User::class,
             'password' => ['required', Rules\Password::defaults()],
         ]);
 
         $user = User::create([
-            'name' => $request->name,
+            // 'name' => $request->name,
             'phone' => $request->phone,
             'username' => $request->username,
             'gender' => $request->gender,
@@ -101,13 +101,13 @@ class UserController extends Controller
     public function update(Request $request, string $id)
     {
         $request->validate([
-            'name' => 'required|string|max:255',
+            // 'name' => 'required|string|max:255',
             'phone' => ['required', 'string', 'max:255', Rule::unique(User::class)->ignore($id)],
             'username' => ['required', 'string', 'alpha_dash', 'max:255', Rule::unique(User::class)->ignore($id)],
         ]);
 
         $user = User::findOrFail($id);
-        $user->name = $request->name;
+        // $user->name = $request->name;
         $user->phone = $request->phone;
         $user->username = $request->username;
 

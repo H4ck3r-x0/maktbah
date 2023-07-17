@@ -18,7 +18,7 @@ export default function Create({ auth, cities, districts }) {
         phone: '',
         CR: '',
         city: '',
-        selectedCityId: selectedCityId ? selectedCityId : '',
+        selectedCityId: selectedCityId || '',
         district: '',
         google_maps: ''
     });

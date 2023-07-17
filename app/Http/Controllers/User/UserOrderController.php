@@ -55,7 +55,7 @@ class UserOrderController extends Controller
                     'details.book.library',
                     'details.book.branch',
                     'details.book.book',
-                    'user:id,name,phone,city,district',
+                    'user:id,username,phone,city,district',
                 ]
             )
             ->findOrFail($id);

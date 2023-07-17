@@ -26,7 +26,7 @@ class LibraryController extends Controller
             ->when(request()->search, function ($query, $search) {
                 $query->where('name', 'like', "%{$search}%")
                     ->orWhereHas('user', function ($query) use ($search) {
-                        $query->where('name', 'like', "%{$search}%");
+                        $query->where('username', 'like', "%{$search}%");
                     });
             })
             ->when(request()->city, function ($query, $city) {
@@ -72,9 +72,9 @@ class LibraryController extends Controller
     public function store()
     {
         request()->validate([
-            'libraryOwnerName' => 'required|string|max:255|unique:users,name,'.User::class,
-            'username' => 'required|string|alpha_dash|max:255|unique:'.User::class,
-            'phone' => 'required|string|max:255|unique:'.Library::class,
+            'libraryOwnerName' => 'required|string|max:255|unique:users,name,' . User::class,
+            'username' => 'required|string|alpha_dash|max:255|unique:' . User::class,
+            'phone' => 'required|string|max:255|unique:' . Library::class,
             'password' => ['required', Rules\Password::defaults()],
         ]);
 

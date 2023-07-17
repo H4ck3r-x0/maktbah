@@ -25,7 +25,7 @@ export default function TeacherInfoForm({ user }) {
                         <div className="pb-6">
                             <p className="text-md sm:text-lg text-gray-700">
                                 مرحبا بك الأستاذ/ة <span className="px-1">{user?.username}</span>
-                                نرجو منك تزويدنا ببيانك الجامعية.
+                                نرجو منك تزويدنا ببياناتك الجامعية.
                             </p>
                         </div>
                         <form onSubmit={submit}>
