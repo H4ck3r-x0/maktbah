@@ -6,8 +6,10 @@ namespace App\Providers;
 
 use App\Models\Library;
 use App\Models\LibraryBranch;
+use App\Models\Note;
 use App\Models\Order;
 use App\Policies\Branch\BranchPolicy;
+use App\Policies\Note\NotePolicy;
 use App\Policies\UserLibrary\UserLibraryPolicy;
 use App\Policies\UserOrderPolicy;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
@@ -23,6 +25,7 @@ class AuthServiceProvider extends ServiceProvider
         Library::class => UserLibraryPolicy::class,
         LibraryBranch::class => BranchPolicy::class,
         Order::class => UserOrderPolicy::class,
+        Note::class => NotePolicy::class,
     ];
 
     /**

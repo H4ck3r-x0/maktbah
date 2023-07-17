@@ -22,6 +22,7 @@ class NoteController extends Controller
      */
     public function create()
     {
+        $this->authorize('create', Note::class);
         return Inertia::render('Teacher/Notes/Create');
     }
 
@@ -72,8 +73,11 @@ class NoteController extends Controller
             'url' => 'required',
         ]);
 
-        Note::findOrFail($id)->update($request->all());
+        $note = Note::findOrFail($id);
 
+        $this->authorize('update', $note);
+
+        $note->update($request->all());
 
         return redirect()->route('teacher.dashboard');
     }
@@ -83,6 +87,13 @@ class NoteController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+
+        $note = Note::findOrFail($id);
+
+        $this->authorize('delete', $note);
+
+        $note->destroy($id);
+
+        return redirect()->route('teacher.dashboard');
     }
 }

@@ -3,7 +3,6 @@ import { Link, Head } from '@inertiajs/react';
 import Authenticated from '@/Layouts/AuthenticatedLayout';
 import moment from 'moment/min/moment-with-locales';
 export default function Notification({ auth, notifications }) {
-
     return (
         <Authenticated
             user={auth.user}
