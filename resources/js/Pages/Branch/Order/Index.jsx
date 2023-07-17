@@ -96,7 +96,7 @@ export default function Index({ auth, orders }) {
                                                 {order.id}
                                             </th>
                                             <th scope="row" className="px-6 py-4">
-                                                {order.user.name}
+                                                {order.user.usernam}
                                             </th>
                                             <td className="px-6 py-4">
                                                 {order.model_status[order.current_status]['message']['ar']}

@@ -209,7 +209,7 @@ export default function Index({ auth, libraries, cities, districts }) {
                                                     {library.district}
                                                 </td>
                                                 <td className="px-6 py-4">
-                                                    {library.user.name}
+                                                    {library.user.username}
                                                 </td>
                                                 <td className="px-6 py-4">
                                                     {library.phone}

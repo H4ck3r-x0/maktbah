@@ -8,10 +8,10 @@ export default function Dashboard({ auth, teacher, notes }) {
         <AuthenticatedLayout
             user={auth.user}
             header={<h2 className="font-semibold text-xl text-gray-800 leading-tight">
-                لوحة تحكم الأستاذ/ة {auth.user?.name}
+                لوحة تحكم الأستاذ/ة {auth.user?.username}
             </h2>}
         >
-            <Head title={`لوحة تحكم الأستاذ/ة ${auth.user?.name}`} />
+            <Head title={`لوحة تحكم الأستاذ/ة`} />
 
 
             {teacher === null ?

@@ -11,7 +11,7 @@ export default function Edit({ auth, branch, cities, districts }) {
     const [selectedCityId, setSelectedCityId] = useState('');
 
     const { data, setData, patch, errors, processing, recentlySuccessful } = useForm({
-        libraryOwnerName: branch.user.name,
+        libraryOwnerName: branch.user.username,
         username: branch.user.username,
         password: '',
         name: branch.name,

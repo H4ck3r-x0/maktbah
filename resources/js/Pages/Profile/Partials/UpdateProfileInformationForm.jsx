@@ -10,7 +10,7 @@ export default function UpdateProfileInformation({ className = '', cities, distr
     const user = usePage().props.auth.user;
     const [selectedCityId, setSelectedCityId] = useState('');
     const { data, setData, patch, errors, processing, recentlySuccessful } = useForm({
-        name: user.name,
+        // name: user.name,
         gender: user.gender ? user.gender : '',
         city: user.city,
         district: user.district,
@@ -42,7 +42,7 @@ export default function UpdateProfileInformation({ className = '', cities, distr
             </header>
 
             <form onSubmit={submit} className="mt-6 space-y-6">
-                <div>
+                {/* <div>
                     <InputLabel htmlFor="name" value="الأسم الكريم" />
 
                     <TextInput
@@ -56,7 +56,7 @@ export default function UpdateProfileInformation({ className = '', cities, distr
                     />
 
                     <InputError className="mt-2" message={errors.name} />
-                </div>
+                </div> */}
 
                 <div className='mb-2'>
                     <InputLabel htmlFor="gender" value="الجنس" />

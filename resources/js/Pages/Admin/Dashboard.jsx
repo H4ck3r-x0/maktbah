@@ -6,7 +6,7 @@ export default function Dashboard({ auth, booksCount, libraryCount, studentCount
     return (
         <AdminAuthenticatedLayout
             user={auth.user}
-            header={<h2 className="font-semibold text-xl text-gray-700 leading-tight">مرحبا بك {auth.user.name}، في لوحة التحكم</h2>}
+            header={<h2 className="font-semibold text-xl text-gray-700 leading-tight">مرحبا بك {auth.user.username}، في لوحة التحكم</h2>}
         >
             <Head title="لوحة التحكم" />
 

@@ -4,8 +4,6 @@ import AuthenticatedLibraryHeader from '@/Components/AuthenticatedLibraryHeader'
 import GuestHeader from '@/Components/GuestHeader';
 import { Head, Link } from '@inertiajs/react';
 
-
-
 export default function Welcome({ auth }) {
     const authHeader = () => {
         if (auth.user && auth.user.role === 'admin') {

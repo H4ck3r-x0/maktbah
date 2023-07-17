@@ -5,7 +5,7 @@ import TextInput from "@/Components/TextInput";
 import { useForm } from "@inertiajs/react";
 
 export default function TeacherInfoForm({ user }) {
-    const { data, setData, post, processing, errors, reset } = useForm({
+    const { data, setData, post, processing, errors } = useForm({
         specialty: '',
         university_name: ''
     });
@@ -24,7 +24,7 @@ export default function TeacherInfoForm({ user }) {
                     <div className="">
                         <div className="pb-6">
                             <p className="text-md sm:text-lg text-gray-700">
-                                مرحبا بك الأستاذ/ة <span className="px-1">{user?.name}</span>
+                                مرحبا بك الأستاذ/ة <span className="px-1">{user?.username}</span>
                                 نرجو منك تزويدنا ببيانك الجامعية.
                             </p>
                         </div>

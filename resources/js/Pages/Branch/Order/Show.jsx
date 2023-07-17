@@ -41,7 +41,7 @@ export default function Show({ auth, order }) {
                                 <h1 className='text-lg  text-gray-600'>تاريخ الإنشاء : {moment(order.created_at).locale('ar').format('MMMM Do YYYY')}</h1>
                             </div>
                             <div className='flex flex-col gap-3'>
-                                <h1 className='text-lg  text-gray-600'>{order.user.name}</h1>
+                                <h1 className='text-lg  text-gray-600'>{order.user.usernam}</h1>
                                 <h1 className='text-lg  text-gray-600'>{order.user.phone}</h1>
                                 {order.user.city && order.user.district &&
                                     <h1 className='text-lg  text-gray-600'>

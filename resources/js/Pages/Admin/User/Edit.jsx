@@ -9,7 +9,7 @@ import { Transition } from '@headlessui/react';
 
 export default function Edit({ auth, user }) {
     const { data, setData, patch, errors, processing, recentlySuccessful } = useForm({
-        name: user.name,
+        // name: user.name,
         phone: user.phone,
         username: user.username,
     });
@@ -43,7 +43,7 @@ export default function Edit({ auth, user }) {
                             <form onSubmit={submit} className="mt-6 space-y-6">
 
 
-                                <div>
+                                {/* <div>
                                     <InputLabel htmlFor="name" value="الاسم" />
 
                                     <TextInput
@@ -57,7 +57,7 @@ export default function Edit({ auth, user }) {
                                     />
 
                                     <InputError className="mt-2" message={errors.name} />
-                                </div>
+                                </div> */}
 
                                 <div>
                                     <InputLabel htmlFor="username" value="أسم المستخدم" />

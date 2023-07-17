@@ -17,7 +17,7 @@ export default function Dashboard({ auth, library }) {
                             <div className='flex items-center flex-wrap gap-2'>
 
                                 {/* Main Library */}
-                                <div className="max-w-sm  p-6 bg-white border border-gray-200 rounded-lg shadow">
+                                <div className="w-full sm:max-w-sm  p-6 bg-white border border-gray-200 rounded-lg shadow">
                                     <h5 className="mb-2 text-2xl font-bold tracking-tight text-gray-900 ">{library.name}</h5>
                                     <div className="mb-3 text-gray-700 ">
                                         <ul className='flex flex-col  justify-evenly gap-3 py-2'>
@@ -41,7 +41,7 @@ export default function Dashboard({ auth, library }) {
                                 {library.branches &&
                                     library.branches.map((branch) => {
                                         return (
-                                            <div key={branch.id} className="max-w-sm p-6 bg-white border border-gray-200 rounded-lg shadow">
+                                            <div key={branch.id} className="w-full sm:max-w-sm  p-6 bg-white border border-gray-200 rounded-lg shadow">
                                                 <h5 className="mb-2 text-2xl font-bold tracking-tight text-gray-900 ">{branch.name}</h5>
                                                 <div className="mb-3 text-gray-700 ">
                                                     <ul className='flex flex-col  justify-evenly gap-3 py-2'>

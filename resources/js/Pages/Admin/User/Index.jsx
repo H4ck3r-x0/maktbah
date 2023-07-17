@@ -100,7 +100,7 @@ export default function Index({ auth, users }) {
                                                 #
                                             </th>
                                             <th scope="col" className="px-6 py-3 tracking-wider">
-                                                الاسم
+                                                اسم المستخدم
                                             </th>
                                             <th scope="col" className="px-6 py-3 tracking-wider">
                                                 الجوال
@@ -129,7 +129,7 @@ export default function Index({ auth, users }) {
                                                     {user.id}
                                                 </th>
                                                 <td className="px-6 py-4">
-                                                    {user.name}
+                                                    {user.username}
                                                 </td>
                                                 <td className="px-6 py-4">
                                                     {user.phone}
