@@ -48,9 +48,9 @@ class LibraryBranchController extends Controller
     public function store()
     {
         request()->validate([
-            'libraryOwnerName' => 'required|string|max:255|unique:users,name,'.User::class,
-            'username' => 'required|string|alpha_dash|max:255|unique:'.User::class,
-            'phone' => 'required|string|max:255|unique:'.LibraryBranch::class,
+            'libraryOwnerName' => 'required|string|max:255|unique:users,name,' . User::class,
+            'username' => 'required|string|alpha_dash|max:255|unique:' . User::class,
+            'phone' => 'required|string|max:255|unique:' . LibraryBranch::class,
             'password' => ['required', Rules\Password::defaults()],
         ]);
 
@@ -65,7 +65,6 @@ class LibraryBranchController extends Controller
         $user->LibraryBranch()->create([
             'name' => request()->name,
             'phone' => request()->phone,
-            'CR' => request()->CR,
             'city' => request()->city,
             'district' => request()->district,
             'google_maps' => request()->google_maps,

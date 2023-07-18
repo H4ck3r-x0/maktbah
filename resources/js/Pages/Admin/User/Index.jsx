@@ -13,6 +13,7 @@ export default function Index({ auth, users }) {
     const { data, setData, get } = useForm({
         search: filters.search,
         account_type: filters.account_type,
+        gender: filters.gender,
     });
 
 
@@ -24,8 +25,12 @@ export default function Index({ auth, users }) {
         setData('account_type', e.target.value);
     }
 
+    const genderChanged = (e) => {
+        setData('gender', e.target.value);
+    }
+
     const searchUsers = () => {
-        get(route('admin.user.index', { search: data.search, account_type: data.account_type, page: currentPage }), {
+        get(route('admin.user.index', { search: data.search, account_type: data.account_type, gender: data.gender, page: currentPage }), {
             preserveScroll: true,
             preserveState: true,
             replace: true
@@ -35,13 +40,13 @@ export default function Index({ auth, users }) {
     const delayedSearch = useCallback(
         debounce(searchUsers, 500),
 
-        [data.search, data.account_type, currentPage]
+        [data.search, data.account_type, data.gender, currentPage]
     );
 
     useEffect(() => {
         delayedSearch();
         return delayedSearch.cancel;
-    }, [data.search, data.account_type, delayedSearch])
+    }, [data.search, data.account_type, data.gender, delayedSearch])
 
 
 
@@ -77,8 +82,8 @@ export default function Index({ auth, users }) {
                             <div className='mb-2'>
                                 <select
                                     onChange={accountType}
-                                    name="account_type"
-                                    id="account_type"
+                                    name="gender"
+                                    id="gender"
                                     className='mt-2 block w-full border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm'>
                                     <option value="">أختر نوع الحساب</option>
                                     <option value="user">طالب / طالبة</option>
@@ -87,7 +92,18 @@ export default function Index({ auth, users }) {
                                     <option value="stationery">قرطاسية</option>
                                 </select>
                             </div>
+                            <div className=''>
+                                <select
+                                    onChange={genderChanged}
+                                    name="gender"
+                                    id="account_type"
+                                    className='mt-2 block w-full border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm'>
+                                    <option value="">أختر نوع الجنس</option>
+                                    <option value="male">ذكر</option>
+                                    <option value="female">أنثى</option>
 
+                                </select>
+                            </div>
                         </div>
                     </div>
                     <div className="bg-white overflow-hidden shadow-sm sm:rounded-lg">
@@ -104,6 +120,9 @@ export default function Index({ auth, users }) {
                                             </th>
                                             <th scope="col" className="px-6 py-3 tracking-wider">
                                                 الجوال
+                                            </th>
+                                            <th scope="col" className="px-6 py-3 tracking-wider">
+                                                الجنس
                                             </th>
                                             <th scope="col" className="px-6 py-3 tracking-wider">
                                                 المدينة
@@ -133,6 +152,11 @@ export default function Index({ auth, users }) {
                                                 </td>
                                                 <td className="px-6 py-4">
                                                     {user.phone}
+                                                </td>
+                                                <td className="px-6 py-4">
+                                                    {user.gender == 'male' && 'ذكر'}
+                                                    {user.gender == 'female' && 'إنثى'}
+                                                    {user.gender == null && 'لا يوجد'}
                                                 </td>
                                                 <td className="px-6 py-4">
                                                     {user.city}

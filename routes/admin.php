@@ -5,6 +5,7 @@ use App\Http\Controllers\Admin\Common\BookController;
 use App\Http\Controllers\Admin\Common\CityController;
 use App\Http\Controllers\Admin\Common\DistrictController;
 use App\Http\Controllers\Admin\Common\MajorController;
+use App\Http\Controllers\Admin\Common\UniversityController;
 use App\Http\Controllers\Admin\Library\LibraryController;
 use App\Http\Controllers\Admin\Order\OrderController;
 use App\Http\Controllers\Admin\User\UserController;
@@ -54,6 +55,12 @@ Route::middleware('auth')->group(function () {
     Route::get('majors/edit/{id}', [MajorController::class, 'edit'])->name('major.edit');
     Route::patch('majors/update/{id}', [MajorController::class, 'update'])->name('major.update');
     Route::delete('majors/destroy/{id}', [MajorController::class, 'destroy'])->name('major.destroy');
+
+    // Settings Universities
+    Route::get('universities/create', [UniversityController::class, 'create'])->name('university.create');
+    Route::post('universities/store', [UniversityController::class, 'store'])->name('university.store');
+    Route::get('universities/edit/{id}', [UniversityController::class, 'edit'])->name('university.edit');
+
 
     // Books
     Route::get('books', [BookController::class, 'index'])->name('book.index');

@@ -19,13 +19,16 @@ class UserController extends Controller
     {
         $query = User::query()
             ->with('user_profile:major,level,user_id')
-            ->when(request()->search ?? false, function ($query, $search) {
+            ->when(request()->search, function ($query, $search) {
                 $query->where('username', 'like', "%{$search}%");
             })
-            ->when(request()->account_type ?? false, function ($query, $account_type) {
+            ->when(request()->account_type, function ($query, $account_type) {
                 $query->whereHas('roles', function ($query) use ($account_type) {
                     return $query->where('name', $account_type);
                 });
+            })
+            ->when(request()->gender, function ($query, $gender) {
+                $query->where('gender', 'like', "%{$gender}%");
             })
             ->orderBy('id', 'DESC')
             ->paginate(5)
@@ -33,7 +36,7 @@ class UserController extends Controller
 
         return Inertia::render('Admin/User/Index', [
             'users' => $query,
-            'filters' => request()->only(['search', 'account_type']),
+            'filters' => request()->only(['search', 'account_type', 'gender']),
             'currentPage' => request()->page,
         ]);
     }

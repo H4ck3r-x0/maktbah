@@ -17,7 +17,6 @@ class LibraryBranch extends Model
     protected $fillable = [
         'name',
         'phone',
-        'CR',
         'google_maps',
         'district',
         'city',

@@ -58,7 +58,7 @@ class LibraryController extends Controller
     public function store(Request $request)
     {
         request()->validate([
-            'phone' => 'required|string|max:255|unique:'.Library::class,
+            'phone' => 'required|string|max:255|unique:' . Library::class,
         ]);
 
         $request->user()->library()->create([

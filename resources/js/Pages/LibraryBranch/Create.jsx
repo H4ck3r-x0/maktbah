@@ -16,7 +16,6 @@ export default function Create({ auth, cities, districts }) {
         password: '',
         name: '',
         phone: '',
-        CR: '',
         city: '',
         selectedCityId: selectedCityId ? selectedCityId : '',
         district: '',
@@ -182,20 +181,6 @@ export default function Create({ auth, cities, districts }) {
                                     <InputError className="mt-2" message={errors.phone} />
                                 </div>
 
-                                <div>
-                                    <InputLabel htmlFor="CR" value="السجل التجاري" />
-
-                                    <TextInput
-                                        id="CR"
-                                        className="mt-2 block w-full"
-                                        value={data.CR}
-                                        onChange={(e) => setData('CR', e.target.value)}
-                                        required
-                                        autoComplete="CR"
-                                    />
-
-                                    <InputError className="mt-2" message={errors.CR} />
-                                </div>
 
                                 <div className="flex items-center gap-4">
                                     <PrimaryButton disabled={processing}>حفظ</PrimaryButton>

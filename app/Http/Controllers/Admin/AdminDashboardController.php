@@ -19,6 +19,8 @@ class AdminDashboardController extends Controller
                 'booksCount' => Book::count(),
                 'libraryCount' => Library::count(),
                 'studentCount' => User::role('user')->count(),
+                'maleGenderCount' => User::where('gender', 'male')->count(),
+                'femaleGenderCount' => User::where('gender', 'female')->count(),
                 'ordersCount' => Order::count(),
                 'orderTotalPyments' => Order::sum('total_payment'),
             ]

@@ -274,6 +274,12 @@ export default function AdminAuthenticatedHeader({ user }) {
                     <ResponsiveNavLink href={route('admin.book.create')} active={route().current('admin.book.create')}>
                         إضافة كتب
                     </ResponsiveNavLink>
+                    <ResponsiveNavLink href={route('admin.major.create')} active={route().current('admin.major.create')}>
+                        إضافة تخصصات
+                    </ResponsiveNavLink>
+                    <ResponsiveNavLink href={route('admin.university.create')} active={route().current('admin.university.create')}>
+                        إضافة جامعات
+                    </ResponsiveNavLink>
                 </div>
 
                 <div className="pt-4 pb-1 border-t border-gray-200">
