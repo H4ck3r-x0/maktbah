@@ -11,7 +11,7 @@ class Order extends Model
     use HasFactory;
     use HasStatuses;
 
-    const  SERVICE_FEE = 4;
+    const  SERVICE_FEE = 0.04;
 
     const STATUS = [
         'sent_to_library' => [
