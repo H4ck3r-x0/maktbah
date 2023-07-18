@@ -21,8 +21,11 @@ class AdminDashboardController extends Controller
                 'studentCount' => User::role('user')->count(),
                 'maleGenderCount' => User::where('gender', 'male')->count(),
                 'femaleGenderCount' => User::where('gender', 'female')->count(),
-                'ordersCount' => Order::count(),
                 'orderTotalPyments' => Order::sum('total_payment'),
+                'ordersCount' => Order::count(),
+                'ordersCanceledByLibrary' => Order::currentStatus('canceled_by_library')->count(),
+                'ordersCanceledByUser' => Order::currentStatus('canceled_by_user')->count(),
+                'confiremdOrders' => Order::currentStatus('confirmed')->count(),
             ]
         );
     }

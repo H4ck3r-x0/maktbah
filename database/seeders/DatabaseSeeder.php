@@ -21,7 +21,7 @@ class DatabaseSeeder extends Seeder
             LibrarySeeder::class,
             BookSeeder::class,
             MajorSeeder::class,
-            BookLibrarySeeder::class,
+            // BookLibrarySeeder::class,
         ]);
     }
 }

@@ -11,6 +11,8 @@ class Order extends Model
     use HasFactory;
     use HasStatuses;
 
+    const  SERVICE_FEE = 4;
+
     const STATUS = [
         'sent_to_library' => [
             'key' => 'sent_to_library',
@@ -55,6 +57,8 @@ class Order extends Model
      */
     protected $fillable = [
         'total_payment',
+        'total',
+        'service_fee',
         'book_id',
         'library_id',
         'branch_id',

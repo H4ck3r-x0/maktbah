@@ -57,6 +57,8 @@ class UserCartController extends Controller
                         if (!isset($libraries[$libraryId])) {
                             $libraries[$libraryId] = Order::create([
                                 'total_payment' => 0,
+                                'total' => 0,
+                                'service_fee' => 0,
                                 'user_id' => $request->user()->id,
                                 'library_id' => $libraryId,
                                 'branch_id' => null,
@@ -70,6 +72,8 @@ class UserCartController extends Controller
                         if (!isset($branches[$branchId])) {
                             $branches[$branchId] = Order::create([
                                 'total_payment' => 0,
+                                'total' => 0,
+                                'service_fee' => 0,
                                 'user_id' => $request->user()->id,
                                 'library_id' => null,
                                 'branch_id' => $branchId,
@@ -92,6 +96,15 @@ class UserCartController extends Controller
 
                         BookLibrary::findOrFail($detail->book_library_id)->decrement('qty');
                     }
+
+                    // Calculate and update the service fee
+                    $order->total = $order->total_payment;
+                    $serviceFee = $order->total_payment * Order::SERVICE_FEE;
+                    // Deduct the service fee from the total payment
+                    $order->total -= $serviceFee;
+                    // Save the service fee in the 'service_fee' column
+                    $order->service_fee = $serviceFee;
+                    $order->save();
 
                     if (!$order->latestStatus(Order::STATUS['sent_to_library']['key'])) {
                         $order->setStatus(Order::STATUS['sent_to_library']['key']);

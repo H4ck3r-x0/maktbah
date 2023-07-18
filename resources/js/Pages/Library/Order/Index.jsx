@@ -99,7 +99,12 @@ export default function Index({ auth, orders }) {
                                     <th scope="col" className="px-6 py-3 whitespace-nowrap">
                                         إجمالي الطلب
                                     </th>
-
+                                    <th scope="col" className="px-6 py-3 whitespace-nowrap">
+                                        رسوم الخدمة
+                                    </th>
+                                    <th scope="col" className="px-6 py-3 whitespace-nowrap">
+                                        الصافي
+                                    </th>
                                     <th scope="col" className="px-6 py-3 whitespace-nowrap ">العمليات</th>
                                 </tr>
                             </thead>
@@ -107,7 +112,7 @@ export default function Index({ auth, orders }) {
                                 {orders.map(((order) => {
                                     return (
                                         <tr key={order.id} className="bg-white ">
-                                            <th scope="row" className="px-6 py-4  text-gray-900 whitespace-nowrap">
+                                            <th scope="row" className="px-6 py-4 text-gray-900 whitespace-nowrap">
                                                 {order.id}
                                             </th>
                                             <th scope="row" className="px-6 py-4 whitespace-nowrap">
@@ -120,6 +125,12 @@ export default function Index({ auth, orders }) {
                                                 {order.total_payment} ريال
                                             </td>
 
+                                            <td className="px-6 py-4 whitespace-nowrap">
+                                                4%
+                                            </td>
+                                            <td className="px-6 py-4 whitespace-nowrap">
+                                                {order.total} ريال
+                                            </td>
                                             <td className="flex items-center gap-2 px-3 py-4 w-full">
                                                 <Link href={route('library.order.show', order.id)}>
                                                     <PrimaryButton className='text-xs sm:text-sm'>
@@ -132,7 +143,7 @@ export default function Index({ auth, orders }) {
                                                         إستعادة الطلب
                                                     </SecondaryButton> :
                                                     <div className='flex items-center gap-2 w-full'>
-                                                        {order.current_status !== 'confirmed' || order.current_status !== 'canceled_by_user' &&
+                                                        {order.current_status !== 'confirmed' && order.current_status !== 'canceled_by_user' &&
                                                             <SecondaryButton className='text-xs sm:text-sm whitespace-nowrap' onClick={(e) => confirmOrder(e, order.id)}>
                                                                 تأكيد الطلب
                                                             </SecondaryButton>
