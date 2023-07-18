@@ -84,7 +84,7 @@ export default function Index({ auth, libraries, cities, districts }) {
 
 
             <div className="">
-                <div className="max-w-7xl mx-auto sm:px-6 lg:px-8">
+                <div className="max-w-7xl mx-auto sm:px-2 lg:px-8">
                     <div className='py-3'>
                         <div className='flex items-center gap-4'>
                             <TextInput
@@ -158,29 +158,29 @@ export default function Index({ auth, libraries, cities, districts }) {
                                 <table className={`w-full text-sm text-right text-gray-500 border`}>
                                     <thead className="text-sm text-gray-700 uppercase bg-gray-100 rounded-md border">
                                         <tr>
-                                            <th scope="col" className="px-6 py-3">
+                                            <th scope="col" className="px-2 py-3">
                                                 #
                                             </th>
-                                            <th scope="col" className="px-6 py-3 tracking-wider">
+                                            <th scope="col" className="px-2 py-3 tracking-wider">
                                                 أسم المكتبة
                                             </th>
 
-                                            <th scope="col" className="px-6 py-3 tracking-wider">
+                                            <th scope="col" className="px-2 py-3 tracking-wider">
                                                 المبيعات
                                             </th>
-                                            <th scope="col" className="px-6 py-3 tracking-wider">
+                                            <th scope="col" className="px-2 py-3 tracking-wider">
                                                 المدينة
                                             </th>
-                                            <th scope="col" className="px-6 py-3 tracking-wider">
+                                            <th scope="col" className="px-2 py-3 tracking-wider">
                                                 الحي
                                             </th>
-                                            <th scope="col" className="px-6 py-3 tracking-wider">
+                                            <th scope="col" className="px-2 py-3 tracking-wider">
                                                 صاحب المكتبة
                                             </th>
-                                            <th scope="col" className="px-6 py-3 tracking-wider">
+                                            <th scope="col" className="px-2 py-3 tracking-wider">
                                                 رقم التواصل
                                             </th>
-                                            <th scope="col" className="px-6 py-3 tracking-wider">
+                                            <th scope="col" className="px-2 py-3 tracking-wider">
                                                 العمليات
                                             </th>
                                         </tr>
@@ -188,30 +188,30 @@ export default function Index({ auth, libraries, cities, districts }) {
                                     <tbody>
                                         {libraries.data.map(library => (
                                             <tr className="bg-white border-b hover:bg-gray-100 hover:transition-all" key={library.id}>
-                                                <th scope="row" className="px-6 py-4 font-medium text-gray-900 ">
+                                                <th scope="row" className="px-2 py-4 font-medium text-gray-900 ">
                                                     {library.id}
                                                 </th>
-                                                <td className="px-6 py-4">
+                                                <td className="px-2 py-4">
                                                     {library.name}
                                                 </td>
 
-                                                <td className="px-6 py-4 w-fit">
+                                                <td className="px-2 py-4 w-fit">
                                                     {library.orders_sum_total_payment ?
                                                         <span className='text-green-500 text-sm  font-semibold'>
                                                             {library.orders_sum_total_payment} ريال
                                                         </span> :
                                                         'لايوجد'}
                                                 </td>
-                                                <td className="px-6 py-4">
+                                                <td className="px-2 py-4">
                                                     {library.city}
                                                 </td>
-                                                <td className="px-6 py-4">
+                                                <td className="px-2 py-4">
                                                     {library.district}
                                                 </td>
-                                                <td className="px-6 py-4">
+                                                <td className="px-2 py-4">
                                                     {library.user.username}
                                                 </td>
-                                                <td className="px-6 py-4">
+                                                <td className="px-2 py-4">
                                                     {library.phone}
                                                 </td>
                                                 <td className="px-0 py-4" id='here'>

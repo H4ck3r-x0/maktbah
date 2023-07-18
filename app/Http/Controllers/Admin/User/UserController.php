@@ -18,7 +18,7 @@ class UserController extends Controller
     public function index()
     {
         $query = User::query()
-            ->with('user_profile:major,level,user_id')
+            ->with('user_profile:university,major,level,user_id')
             ->when(request()->search, function ($query, $search) {
                 $query->where('username', 'like', "%{$search}%");
             })
@@ -57,14 +57,12 @@ class UserController extends Controller
         $request->validate([
             'account_type' => 'required|string|max:255',
             'gender' => 'required|string|max:255',
-            // 'name' => 'required|string|max:255',
             'phone' => 'required|string|unique:' . User::class,
             'username' => 'required|string|alpha_dash|max:255|unique:' . User::class,
             'password' => ['required', Rules\Password::defaults()],
         ]);
 
         $user = User::create([
-            // 'name' => $request->name,
             'phone' => $request->phone,
             'username' => $request->username,
             'gender' => $request->gender,

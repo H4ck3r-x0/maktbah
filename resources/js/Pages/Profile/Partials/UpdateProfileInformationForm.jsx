@@ -42,22 +42,6 @@ export default function UpdateProfileInformation({ className = '', cities, distr
             </header>
 
             <form onSubmit={submit} className="mt-6 space-y-6">
-                {/* <div>
-                    <InputLabel htmlFor="name" value="الأسم الكريم" />
-
-                    <TextInput
-                        id="name"
-                        className="mt-2 block w-full"
-                        value={data.name}
-                        onChange={(e) => setData('name', e.target.value)}
-                        required
-                        isFocused
-                        autoComplete="name"
-                    />
-
-                    <InputError className="mt-2" message={errors.name} />
-                </div> */}
-
                 <div className='mb-2'>
                     <InputLabel htmlFor="gender" value="الجنس" />
                     <select

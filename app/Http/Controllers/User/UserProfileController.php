@@ -56,7 +56,7 @@ class UserProfileController extends Controller
     {
         $userProfile->updateOrCreate(
             ['user_id' => auth()->user()->id],
-            ['major' => $request->major, 'level' => $request->level]
+            ['major' => $request->major, 'level' => $request->level, 'university' => $request->university]
         );
     }
 

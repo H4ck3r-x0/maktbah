@@ -66,7 +66,7 @@ export default function Index({ auth, users }) {
             <Head title="جميع اعضاء الموقع" />
 
             <div className="py-6">
-                <div className='w-full  gap-3 px-6'>
+                <div className='w-full  gap-3 px-2'>
                     <div className='pb-3'>
                         <div className='flex flex-col  sm:flex-row gap-4'>
                             <TextInput
@@ -112,31 +112,34 @@ export default function Index({ auth, users }) {
                                 <table className={`w-full text-sm text-right text-gray-500 border `}>
                                     <thead className="text-sm text-gray-700 uppercase bg-gray-100 rounded-md border">
                                         <tr>
-                                            <th scope="col" className="px-6 py-3">
+                                            <th scope="col" className="px-2 py-3">
                                                 #
                                             </th>
-                                            <th scope="col" className="px-6 py-3 tracking-wider">
+                                            <th scope="col" className="px-2 py-3 tracking-wider">
                                                 اسم المستخدم
                                             </th>
-                                            <th scope="col" className="px-6 py-3 tracking-wider">
+                                            <th scope="col" className="px-2 py-3 tracking-wider">
                                                 الجوال
                                             </th>
-                                            <th scope="col" className="px-6 py-3 tracking-wider">
+                                            <th scope="col" className="px-2 py-3 tracking-wider">
                                                 الجنس
                                             </th>
-                                            <th scope="col" className="px-6 py-3 tracking-wider">
+                                            <th scope="col" className="px-2 py-3 tracking-wider">
                                                 المدينة
                                             </th>
-                                            <th scope="col" className="px-6 py-3 tracking-wider">
+                                            <th scope="col" className="px-2 py-3 tracking-wider">
                                                 الفئة
                                             </th>
-                                            <th scope="col" className="px-6 py-3 tracking-wider">
+                                            <th scope="col" className="px-2 py-3 tracking-wider">
+                                                الجامعة
+                                            </th>
+                                            <th scope="col" className="px-2 py-3 tracking-wider">
                                                 التخصص
                                             </th>
-                                            <th scope="col" className="px-6 py-3 tracking-wider">
+                                            <th scope="col" className="px-2 py-3 tracking-wider">
                                                 المستوى
                                             </th>
-                                            <th scope="col" className="px-6 py-3 tracking-wider">
+                                            <th scope="col" className="px-2 py-3 tracking-wider">
                                                 العمليات
                                             </th>
                                         </tr>
@@ -144,31 +147,34 @@ export default function Index({ auth, users }) {
                                     <tbody>
                                         {users.data.map(user => (
                                             <tr className="bg-white border-b hover:bg-gray-100 hover:transition-all" key={user.id}>
-                                                <th scope="row" className="px-6 py-4 font-medium text-gray-900 ">
+                                                <th scope="row" className="px-2 py-4 font-medium text-gray-900 ">
                                                     {user.id}
                                                 </th>
-                                                <td className="px-6 py-4">
+                                                <td className="px-2 py-4">
                                                     {user.username}
                                                 </td>
-                                                <td className="px-6 py-4">
-                                                    {user.phone}
+                                                <td className="px-2 py-4">
+                                                    {user.phone ? user.phone : 'لا يوجد'}
                                                 </td>
-                                                <td className="px-6 py-4">
+                                                <td className="px-2 py-4">
                                                     {user.gender == 'male' && 'ذكر'}
                                                     {user.gender == 'female' && 'إنثى'}
                                                     {user.gender == null && 'لا يوجد'}
                                                 </td>
-                                                <td className="px-6 py-4">
-                                                    {user.city}
+                                                <td className="px-2 py-4">
+                                                    {user.city ? user.city : 'لا يوجد'}
                                                 </td>
 
-                                                <td className="px-6 py-4">
+                                                <td className="px-2 py-4">
                                                     {user.role_name}
                                                 </td>
-                                                <td className="px-6 py-4">
+                                                <td className="px-2 py-4">
+                                                    {user.user_profile ? user.user_profile.university : 'لايوجد'}
+                                                </td>
+                                                <td className="px-2 py-4">
                                                     {user.user_profile ? user.user_profile.major : 'لايوجد'}
                                                 </td>
-                                                <td className="px-6 py-4">
+                                                <td className="px-2 py-4">
                                                     {user.user_profile ? user.user_profile.level : 'لايوجد'}
                                                 </td>
                                                 <td className="px-0 py-4">

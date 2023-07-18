@@ -5,11 +5,12 @@ import { Transition } from '@headlessui/react';
 import { useState } from 'react';
 import Select from 'react-select'
 
-export default function UpdateMajorForm({ className = '', majors }) {
+export default function UpdateMajorForm({ className = '', majors, universities }) {
     const user = usePage().props.auth.user;
     const [levels, setLevels] = useState(null);
 
     const { data, setData, patch, errors, processing, recentlySuccessful } = useForm({
+        university: '',
         major: '',
         level: '',
     });
@@ -27,17 +28,33 @@ export default function UpdateMajorForm({ className = '', majors }) {
         setLevels(e.levels);
     }
 
+    const universityChanged = (e) => {
+        setData('university', e.name);
+    }
+
     return (
         <section className={className}>
             <header>
-                <h2 className="text-lg font-medium text-gray-900">معلومات التخصص</h2>
+                <h2 className="text-lg font-medium text-gray-900">معلومات الجامعة والتخصص</h2>
 
                 <p className="mt-1 text-sm text-gray-600">
-                    قم بتحديث معلومات التخصص الجامعي الخاصة بك.
+                    قم بتحديث معلومات الجامعة والتخصص الخاصة بك.
                 </p>
             </header>
 
             <form onSubmit={submit} className="mt-6 space-y-6">
+                <div className='mb-2'>
+                    <Select options={universities}
+                        isSearchable
+                        defaultValue={universities.filter(option => option.name == user.user_profile?.university)}
+                        onChange={universityChanged}
+                        getOptionLabel={(option) => option.name}
+                        getOptionValue={(option) => option.id}
+                        placeholder="أختر الجامعة"
+                    />
+
+                    <InputError className="mt-2" message={errors.name} />
+                </div>
                 <div>
                     <Select options={majors}
                         isSearchable

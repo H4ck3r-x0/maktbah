@@ -44,7 +44,7 @@ export default function Index({ auth, orders }) {
         >
             <Head title="الطلبات" />
             <div className="py-6">
-                <div className='w-full items-center gap-3 px-6'>
+                <div className='w-full items-center gap-3 px-2'>
                     <div className='pb-3'>
                         <div className='flex items-center gap-4'>
                             <TextInput
@@ -62,52 +62,52 @@ export default function Index({ auth, orders }) {
                         <table className="w-full text-xs sm:text-lg text-right text-gray-500 shadow border">
                             <thead className="text-xs sm:text-lg text-gray-700  border ">
                                 <tr>
-                                    <th scope="col" className="px-6 py-3">
+                                    <th scope="col" className="px-2 py-3">
                                         رقم الطلب
                                     </th>
-                                    <th scope="col" className="px-6 py-3">
+                                    <th scope="col" className="px-2 py-3">
                                         صاحب الطلب
                                     </th>
-                                    <th scope="col" className="px-6 py-3">
+                                    <th scope="col" className="px-2 py-3">
                                         أسم المكتبة
                                     </th>
-                                    <th scope="col" className="px-6 py-3">
+                                    <th scope="col" className="px-2 py-3">
                                         حالة الطلب
                                     </th>
-                                    <th scope="col" className="px-6 py-3">
+                                    <th scope="col" className="px-2 py-3">
                                         إجمالي الطلب
                                     </th>
-                                    <th scope="col" className="px-6 py-3">
+                                    <th scope="col" className="px-2 py-3">
                                         تاريخ الانشاء
                                     </th>
-                                    <th scope="col" className="px-6 py-3">العمليات</th>
+                                    <th scope="col" className="px-2 py-3">العمليات</th>
                                 </tr>
                             </thead>
                             <tbody className={`${processing ? 'opacity-50' : ''}`}>
                                 {orders.map(((order) => {
                                     return (
                                         <tr key={order.id} className="bg-white ">
-                                            <th scope="row" className="px-6 py-4  text-gray-900 whitespace-nowrap ">
+                                            <th scope="row" className="px-2 py-4  text-gray-900 whitespace-nowrap ">
                                                 {order.id}
                                             </th>
-                                            <th scope="row" className="px-6 py-4">
+                                            <th scope="row" className="px-2 py-4">
                                                 {order.user.username}
                                             </th>
-                                            <th scope="row" className="px-6 py-4">
+                                            <th scope="row" className="px-2 py-4">
                                                 {order.details[0]?.book.library ?
                                                     order.details[0]?.book.library.name :
                                                     order.details[0]?.book.branch.name}
                                             </th>
-                                            <td className="px-6 py-4">
+                                            <td className="px-2 py-4">
                                                 {order.model_status[order.current_status]['message']['ar']}
                                             </td>
-                                            <td className="px-6 py-4">
+                                            <td className="px-2 py-4">
                                                 {order.total_payment} ريال
                                             </td>
-                                            <td className="px-6 py-4">
+                                            <td className="px-2 py-4">
                                                 {moment(order.created_at).locale('ar').format('MMMM Do YYYY')}
                                             </td>
-                                            <td className="px-6 py-4">
+                                            <td className="px-2 py-4">
                                                 <Link href={route('admin.order.show', order.id)}>
                                                     <PrimaryButton className='text-xs sm:text-sm'>
                                                         التفاصيل

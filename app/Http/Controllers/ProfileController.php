@@ -6,6 +6,7 @@ use App\Http\Requests\ProfileUpdateRequest;
 use App\Models\City;
 use App\Models\District;
 use App\Models\Major;
+use App\Models\University;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -18,9 +19,10 @@ class ProfileController extends Controller
     /**
      * Display the user's profile form.
      */
-    public function edit(Request $request): Response
+    public function edit(): Response
     {
         $majors = Auth::user()->hasRole('user') ? Major::all() : null;
+        $universities = Auth::user()->hasRole('user') ? University::all() : null;
 
         if (Auth::user()->hasRole('user')) {
             Auth::user()->load('user_profile');
@@ -31,6 +33,7 @@ class ProfileController extends Controller
             'majors' => $majors,
             'cities' => City::all(),
             'districts' => District::all(),
+            'universities' => University::all()
         ]);
     }
 

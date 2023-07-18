@@ -181,6 +181,7 @@ export default function AdminAuthenticatedHeader({ user }) {
                                     <Dropdown.Content>
                                         <Dropdown.Link href={route('admin.city.create')}>اضافة مدن</Dropdown.Link>
                                         <Dropdown.Link href={route('admin.district.create')}>اضافة أحياء</Dropdown.Link>
+                                        <Dropdown.Link href={route('admin.university.create')}>اضافة جامعات</Dropdown.Link>
                                         <Dropdown.Link href={route('admin.major.create')}>اضافة تخصصات</Dropdown.Link>
                                     </Dropdown.Content>
                                 </Dropdown>
