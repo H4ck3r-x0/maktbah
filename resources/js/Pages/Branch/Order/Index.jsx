@@ -1,10 +1,11 @@
 import PrimaryButton from '@/Components/PrimaryButton';
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
-import { Head, Link, useForm, usePage } from '@inertiajs/react';
-import moment from 'moment/min/moment-with-locales';
+import { Head, Link, router, useForm, usePage } from '@inertiajs/react';
 import { useCallback, useEffect } from 'react';
 import debounce from "lodash/debounce";
 import TextInput from '@/Components/TextInput';
+import SecondaryButton from '@/Components/SecondaryButton';
+import DangerButton from '@/Components/DangerButton';
 
 export default function Index({ auth, orders }) {
     const filters = usePage().props.filters;
@@ -35,7 +36,23 @@ export default function Index({ auth, orders }) {
         delayedSearch();
 
         return delayedSearch.cancel;
-    }, [data.search, delayedSearch])
+    }, [data.search, delayedSearch]);
+
+
+    const cancelOrder = (e, id) => {
+        e.preventDefault();
+        router.post(route('branch.order.cancel', id));
+    }
+
+    const restoreOrder = (e, id) => {
+        e.preventDefault();
+        router.post(route('branch.order.restore', id));
+    }
+
+    const confirmOrder = (e, id) => {
+        e.preventDefault();
+        router.post(route('branch.order.confirm', id));
+    }
 
     return (
         <AuthenticatedLayout
@@ -70,22 +87,20 @@ export default function Index({ auth, orders }) {
                         <table className="w-full text-xs sm:text-lg text-right text-gray-500 shadow border">
                             <thead className="text-xs sm:text-lg text-gray-700  border ">
                                 <tr>
-                                    <th scope="col" className="px-6 py-3">
+                                    <th scope="col" className="w-20 px-6 py-3 whitespace-nowrap">
                                         رقم الطلب
                                     </th>
-                                    <th scope="col" className="px-6 py-3">
+                                    <th scope="col" className="px-6 py-3 whitespace-nowrap">
                                         صاحب الطلب
                                     </th>
-                                    <th scope="col" className="px-6 py-3">
+                                    <th scope="col" className="px-6 py-3 whitespace-nowrap">
                                         حالة الطلب
                                     </th>
-                                    <th scope="col" className="px-6 py-3">
+                                    <th scope="col" className="px-6 py-3 whitespace-nowrap">
                                         إجمالي الطلب
                                     </th>
-                                    <th scope="col" className="px-6 py-3">
-                                        تاريخ الانشاء
-                                    </th>
-                                    <th scope="col" className="px-6 py-3">العمليات</th>
+
+                                    <th scope="col" className="px-6 py-3 whitespace-nowrap">العمليات</th>
                                 </tr>
                             </thead>
                             <tbody className={`${processing ? 'opacity-50' : ''}`}>
@@ -95,24 +110,41 @@ export default function Index({ auth, orders }) {
                                             <th scope="row" className="px-6 py-4  text-gray-900 whitespace-nowrap ">
                                                 {order.id}
                                             </th>
-                                            <th scope="row" className="px-6 py-4">
-                                                {order.user.usernam}
+                                            <th scope="row" className="px-6 py-4 whitespace-nowrap">
+                                                {order.user.username}
                                             </th>
-                                            <td className="px-6 py-4">
+                                            <td className="px-6 py-4 whitespace-nowrap" style={{ color: `${order.current_status && order.model_status[order.current_status]['color']}` }}>
                                                 {order.model_status[order.current_status]['message']['ar']}
                                             </td>
-                                            <td className="px-6 py-4">
+                                            <td className="px-6 py-4 whitespace-nowrap">
                                                 {order.total_payment} ريال
                                             </td>
-                                            <td className="px-6 py-4">
-                                                {moment(order.created_at).locale('ar').format('MMMM Do YYYY')}
-                                            </td>
-                                            <td className="px-6 py-4">
+
+                                            <td className="flex items-center gap-2 px-3 py-4 w-full">
                                                 <Link href={route('branch.order.show', order.id)}>
                                                     <PrimaryButton className='text-xs sm:text-sm'>
                                                         التفاصيل
                                                     </PrimaryButton>
                                                 </Link>
+                                                {order.current_status === 'canceled_by_library' ?
+                                                    order.current_status !== 'canceled_by_user' &&
+                                                    <SecondaryButton className='text-xs sm:text-sm whitespace-nowrap' onClick={(e) => restoreOrder(e, order.id)}>
+                                                        إستعادة الطلب
+                                                    </SecondaryButton> :
+                                                    <div className='flex items-center gap-2 w-full'>
+                                                        {order.current_status !== 'confirmed' || order.current_status !== 'canceled_by_user' &&
+                                                            <SecondaryButton className='text-xs sm:text-sm whitespace-nowrap' onClick={(e) => confirmOrder(e, order.id)}>
+                                                                تأكيد الطلب
+                                                            </SecondaryButton>
+                                                        }
+                                                        {order.current_status !== 'canceled_by_user' &&
+                                                            <DangerButton className='text-xs sm:text-sm whitespace-nowrap' onClick={(e) => cancelOrder(e, order.id)}>
+                                                                إلغاء الطلب
+                                                            </DangerButton>
+                                                        }
+
+                                                    </div>
+                                                }
                                             </td>
                                         </tr>
                                     )

@@ -40,4 +40,14 @@ Route::middleware('auth')->group(function () {
 
     Route::get('/orders/{id}', [BranchOrderController::class, 'show'])
         ->name('order.show');
+
+
+    Route::post('/orders/{id}/cancel', [BranchOrderController::class, 'cancel'])
+        ->name('order.cancel');
+
+    Route::post('/orders/{id}/restore', [BranchOrderController::class, 'restore'])
+        ->name('order.restore');
+
+    Route::post('/orders/{id}/confirm', [BranchOrderController::class, 'confirm'])
+        ->name('order.confirm');
 });

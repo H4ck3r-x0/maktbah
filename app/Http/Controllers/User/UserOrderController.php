@@ -2,10 +2,15 @@
 
 namespace App\Http\Controllers\User;
 
-use App\Http\Controllers\Controller;
-use App\Models\Order;
-use Illuminate\Http\Request;
+use App\Models\User;
 use Inertia\Inertia;
+use App\Models\Order;
+use App\Models\Library;
+use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
+use App\Models\LibraryBranch;
+use Illuminate\Support\Facades\Notification;
+use App\Notifications\Order\OrderCreatedNotification;
 
 class UserOrderController extends Controller
 {
@@ -65,6 +70,56 @@ class UserOrderController extends Controller
         return Inertia::render('User/Order/Show', [
             'order' => $order,
         ]);
+    }
+
+    /**
+     * Cancel order for user.
+     */
+    public function cancel(string $id)
+    {
+        $order = Order::query()->findOrFail($id);
+        $this->authorize('update', $order);
+
+        if ($order->status == 'sent_to_library') {
+            $order->setStatus('canceled_by_user');
+            return redirect()->back();
+        }
+    }
+
+    /**
+     * Restore order for user.
+     */
+    public function restore(string $id)
+    {
+        $order = Order::query()
+            ->with(['library', 'branch'])
+            ->findOrFail($id);
+
+        $this->authorize('update', $order);
+
+        if ($order->status == 'canceled_by_user') {
+            $order->setStatus('sent_to_library');
+
+            if ($order->library !== null) {
+                $library = Library::find($order->library_id);
+                $user = User::find($library->user_id);
+                Notification::send(
+                    $user,
+                    (new OrderCreatedNotification($order))
+                );
+            }
+
+            if ($order->branch !== null) {
+                $library = LibraryBranch::find($order->branch_id);
+                $user = User::find($library->user_id);
+                Notification::send(
+                    $user,
+                    (new OrderCreatedNotification($order))
+                );
+            }
+
+            return redirect()->back();
+        }
     }
 
     /**

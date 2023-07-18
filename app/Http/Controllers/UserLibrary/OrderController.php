@@ -80,6 +80,46 @@ class OrderController extends Controller
     }
 
     /**
+     * Cancel order for user.
+     */
+    public function cancel(string $id)
+    {
+        $order = Order::query()->findOrFail($id);
+
+        if ($order->status == 'sent_to_library' || $order->status == 'confirmed') {
+            $order->setStatus('canceled_by_library');
+            return redirect()->back();
+        }
+    }
+
+    /**
+     * Confirm order for user.
+     */
+    public function confirm(string $id)
+    {
+        $order = Order::query()->findOrFail($id);
+
+        if ($order->status == 'sent_to_library') {
+            $order->setStatus('confirmed');
+            return redirect()->back();
+        }
+    }
+
+    /**
+     * Restore order for user.
+     */
+    public function restore(string $id)
+    {
+        $order = Order::query()->findOrFail($id);
+
+        if ($order->status == 'canceled_by_library') {
+            $order->setStatus('sent_to_library');
+
+            return redirect()->back();
+        }
+    }
+
+    /**
      * Update the specified resource in storage.
      */
     public function update(Request $request, string $id)

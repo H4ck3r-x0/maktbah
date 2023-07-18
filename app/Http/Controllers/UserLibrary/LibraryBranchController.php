@@ -115,7 +115,6 @@ class LibraryBranchController extends Controller
         $branch->user->name = $request->libraryOwnerName;
         $branch->name = $request->name;
         $branch->phone = $request->phone;
-        $branch->CR = $request->CR;
         $branch->city = $request->city;
         $branch->district = $request->district;
         $branch->google_maps = $request->google_maps;

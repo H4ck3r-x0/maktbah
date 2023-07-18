@@ -62,25 +62,25 @@ export default function Index({ auth, orders }) {
                         <table className="w-full text-xs sm:text-lg text-right text-gray-500 shadow border">
                             <thead className="text-xs sm:text-lg text-gray-700  border ">
                                 <tr>
-                                    <th scope="col" className="px-2 py-3">
+                                    <th scope="col" className="w-20 px-2 py-3 whitespace-nowrap">
                                         رقم الطلب
                                     </th>
-                                    <th scope="col" className="px-2 py-3">
+                                    <th scope="col" className="px-2 py-3 whitespace-nowrap">
                                         صاحب الطلب
                                     </th>
-                                    <th scope="col" className="px-2 py-3">
+                                    <th scope="col" className="px-2 py-3 whitespace-nowrap">
                                         أسم المكتبة
                                     </th>
-                                    <th scope="col" className="px-2 py-3">
+                                    <th scope="col" className="px-2 py-3 whitespace-nowrap">
                                         حالة الطلب
                                     </th>
-                                    <th scope="col" className="px-2 py-3">
+                                    <th scope="col" className="px-2 py-3 whitespace-nowrap">
                                         إجمالي الطلب
                                     </th>
-                                    <th scope="col" className="px-2 py-3">
+                                    <th scope="col" className="px-2 py-3 whitespace-nowrap">
                                         تاريخ الانشاء
                                     </th>
-                                    <th scope="col" className="px-2 py-3">العمليات</th>
+                                    <th scope="col" className="px-2 py-3 whitespace-nowrap">العمليات</th>
                                 </tr>
                             </thead>
                             <tbody className={`${processing ? 'opacity-50' : ''}`}>
@@ -90,24 +90,24 @@ export default function Index({ auth, orders }) {
                                             <th scope="row" className="px-2 py-4  text-gray-900 whitespace-nowrap ">
                                                 {order.id}
                                             </th>
-                                            <th scope="row" className="px-2 py-4">
+                                            <th scope="row" className="px-2 py-4 whitespace-nowrap">
                                                 {order.user.username}
                                             </th>
-                                            <th scope="row" className="px-2 py-4">
+                                            <th scope="row" className="px-2 py-4 whitespace-nowrap">
                                                 {order.details[0]?.book.library ?
                                                     order.details[0]?.book.library.name :
                                                     order.details[0]?.book.branch.name}
                                             </th>
-                                            <td className="px-2 py-4">
+                                            <td className="px-2 py-4 whitespace-nowrap" style={{ color: `${order.current_status && order.model_status[order.current_status]['color']}` }}>
                                                 {order.model_status[order.current_status]['message']['ar']}
                                             </td>
-                                            <td className="px-2 py-4">
+                                            <td className="px-2 py-4 whitespace-nowrap">
                                                 {order.total_payment} ريال
                                             </td>
-                                            <td className="px-2 py-4">
+                                            <td className="px-2 py-4 whitespace-nowrap">
                                                 {moment(order.created_at).locale('ar').format('MMMM Do YYYY')}
                                             </td>
-                                            <td className="px-2 py-4">
+                                            <td className="px-2 py-4 whitespace-nowrap">
                                                 <Link href={route('admin.order.show', order.id)}>
                                                     <PrimaryButton className='text-xs sm:text-sm'>
                                                         التفاصيل

@@ -18,7 +18,7 @@ class OrderController extends Controller
             ->with([
                 'details.book.library',
                 'details.book.branch',
-                'user:id,name,phone', 'library:id,name',
+                'user:id,username,phone', 'library:id,name',
             ])
             ->when(request()->search, function ($query, $search) {
                 $query->whereHas('user', function ($query) use ($search) {

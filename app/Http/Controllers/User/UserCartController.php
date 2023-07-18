@@ -54,7 +54,7 @@ class UserCartController extends Controller
                     $branchId = $cart['branch_id'];
 
                     if (isset($libraryId)) {
-                        if (! isset($libraries[$libraryId])) {
+                        if (!isset($libraries[$libraryId])) {
                             $libraries[$libraryId] = Order::create([
                                 'total_payment' => 0,
                                 'user_id' => $request->user()->id,
@@ -67,7 +67,7 @@ class UserCartController extends Controller
                     }
 
                     if (isset($branchId)) {
-                        if (! isset($branches[$branchId])) {
+                        if (!isset($branches[$branchId])) {
                             $branches[$branchId] = Order::create([
                                 'total_payment' => 0,
                                 'user_id' => $request->user()->id,
@@ -93,7 +93,7 @@ class UserCartController extends Controller
                         BookLibrary::findOrFail($detail->book_library_id)->decrement('qty');
                     }
 
-                    if (! $order->latestStatus(Order::STATUS['sent_to_library']['key'])) {
+                    if (!$order->latestStatus(Order::STATUS['sent_to_library']['key'])) {
                         $order->setStatus(Order::STATUS['sent_to_library']['key']);
                     }
                 }
@@ -102,15 +102,19 @@ class UserCartController extends Controller
                 foreach ($libraries as $libraryId => $order) {
                     $library = Library::find($libraryId);
                     $user = User::find($library->user_id);
-                    Notification::send($user, (new OrderCreatedNotification($order))
-                        ->onQueue('notifications'));
+                    Notification::send(
+                        $user,
+                        (new OrderCreatedNotification($order))
+                    );
                 }
 
                 foreach ($branches as $branchId => $order) {
                     $branch = LibraryBranch::find($branchId);
                     $user = User::find($branch->user_id);
-                    Notification::send($user, (new OrderCreatedNotification($order))
-                        ->onQueue('notifications'));
+                    Notification::send(
+                        $user,
+                        (new OrderCreatedNotification($order))
+                    );
                 }
 
                 $request->user()->carts()->delete();

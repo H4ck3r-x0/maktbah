@@ -64,4 +64,14 @@ Route::middleware('auth')->group(function () {
 
     Route::get('/orders/{id}', [OrderController::class, 'show'])
         ->name('library.order.show');
+
+
+    Route::post('/orders/{id}/cancel', [OrderController::class, 'cancel'])
+        ->name('library.order.cancel');
+
+    Route::post('/orders/{id}/restore', [OrderController::class, 'restore'])
+        ->name('library.order.restore');
+
+    Route::post('/orders/{id}/confirm', [OrderController::class, 'confirm'])
+        ->name('library.order.confirm');
 });

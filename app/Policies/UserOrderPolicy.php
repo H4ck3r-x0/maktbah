@@ -17,4 +17,15 @@ class UserOrderPolicy
             ? Response::allow()
             : Response::denyAsNotFound();
     }
+
+
+    /**
+     * Determine whether the user can update the model.
+     */
+    public function update(User $user, Order $order): Response
+    {
+        return $user->id === $order->user_id || $user->role == 'admin'
+            ? Response::allow()
+            : Response::denyAsNotFound();
+    }
 }

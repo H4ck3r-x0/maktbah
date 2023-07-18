@@ -34,12 +34,26 @@ Route::middleware('auth')->group(function () {
 
     // Books - Search for books, adding books to user cart and remove.
     Route::middleware([IsUser::class])->group(function () {
+        // User
         Route::get('/books', [SearchBooksController::class, 'index'])
             ->name('search.books.index');
         Route::post('/books/store', [SearchBooksController::class, 'store'])
             ->name('search.books.store');
         Route::post('/books/destroy', [SearchBooksController::class, 'destroy'])
             ->name('search.books.destroy');
+
+        // User Order
+        Route::get('/orders', [UserOrderController::class, 'index'])
+            ->name('user.order.index');
+
+        Route::get('/orders/{id}', [UserOrderController::class, 'show'])
+            ->name('user.order.show');
+
+        Route::post('/orders/{id}/cancel', [UserOrderController::class, 'cancel'])
+            ->name('user.order.cancel');
+
+        Route::post('/orders/{id}/restore', [UserOrderController::class, 'restore'])
+            ->name('user.order.restore');
     });
 
     // Books - Search for books, adding books to user cart and remove.
@@ -52,13 +66,6 @@ Route::middleware('auth')->group(function () {
         ->name('user.cart.store');
 
     // User Cart
-
-    // User Order
-    Route::get('/orders', [UserOrderController::class, 'index'])
-        ->name('user.order.index');
-
-    Route::get('/orders/{id}', [UserOrderController::class, 'show'])
-        ->name('user.order.show');
 });
 
 require __DIR__ . '/auth.php';

@@ -16,7 +16,7 @@ class BranchOrderController extends Controller
     {
         $orders = Order::query()
             ->where('branch_id', request()->user()->branch->id)
-            ->with(['details.book.branch', 'user:id,name,phone'])
+            ->with(['details.book.branch', 'user:id,username,phone'])
             ->when(request()->search, function ($query, $search) {
                 $query->whereHas('user', function ($query) use ($search) {
                     $query->where('name', 'like', "%{$search}%");
@@ -74,6 +74,46 @@ class BranchOrderController extends Controller
     public function edit(string $id)
     {
         //
+    }
+
+    /**
+     * Cancel order for user.
+     */
+    public function cancel(string $id)
+    {
+        $order = Order::query()->findOrFail($id);
+
+        if ($order->status == 'sent_to_library' || $order->status == 'confirmed') {
+            $order->setStatus('canceled_by_library');
+            return redirect()->back();
+        }
+    }
+
+    /**
+     * Confirm order for user.
+     */
+    public function confirm(string $id)
+    {
+        $order = Order::query()->findOrFail($id);
+
+        if ($order->status == 'sent_to_library') {
+            $order->setStatus('confirmed');
+            return redirect()->back();
+        }
+    }
+
+    /**
+     * Restore order for user.
+     */
+    public function restore(string $id)
+    {
+        $order = Order::query()->findOrFail($id);
+
+        if ($order->status == 'canceled_by_library') {
+            $order->setStatus('sent_to_library');
+
+            return redirect()->back();
+        }
     }
 
     /**

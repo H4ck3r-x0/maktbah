@@ -14,9 +14,36 @@ class Order extends Model
     const STATUS = [
         'sent_to_library' => [
             'key' => 'sent_to_library',
+            'color' => 'green',
             'message' => [
                 'ar' => 'تم الإرسال للمكتبة',
                 'en' => 'Sent To Library',
+            ],
+        ],
+        'canceled_by_library' => [
+            'key' => 'canceled_by_library',
+            'color' => 'red',
+            'message' => [
+                'ar' => 'تم الإلغاء من قبل المكتبة',
+                'en' => 'Canceled by Library',
+            ],
+        ],
+        'canceled_by_user' => [
+            'key' => 'canceled_by_user',
+            'color' => 'red',
+            'message' => [
+                'ar' => 'تم الإلغاء من قبل الطالب',
+                'en' => 'Canceled by User',
+                'color' => 'text-red-400'
+            ],
+        ],
+
+        'confirmed' => [
+            'key' => 'confirmed',
+            'color' => 'blue',
+            'message' => [
+                'ar' => 'تم تأكيد الطلب',
+                'en' => 'Confirmed',
             ],
         ],
     ];

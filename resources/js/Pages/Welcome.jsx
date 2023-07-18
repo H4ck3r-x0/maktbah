@@ -29,8 +29,9 @@ export default function Welcome({ auth }) {
 
                 <div className='max-w-7xl justify-center items-center flex flex-col mx-auto sm:px-6 lg:px-8 mt-16 px-6 '>
                     <h1 className='text-3xl sm:text-4xl text-indigo-600 font-semibold'>مرحبا بكم في موقع راحة</h1>
-                    <p className='mt-4 text-lg tracking-wide leading-8 text-center'>
-                        هذا الموقع مخصص للطلاب والطالبات والمعلمين والمعلمات
+                    <p className='mt-4 text-lg tracking-wide leading-9 text-center'>
+                        راحة هو المكان المثالي للطلاب والمكتبات والمعلمين للحصول على الكتب والمذكرات.
+                        يمكنك العثور على كل ما تحتاجه في مكان واحد، ويمكنك التأكد من أنك تحصل على أفضل الأسعار. ونأمل أن يساعدك موقع راحة على تحقيق أقصى استفادة من تعليمك، وتوفير الراحة التي تحتاجها
                     </p>
 
                     <div className="mt-8 sm:flex sm:items-center justify-center sm:hidden sm:mt-3 sm:ml-6">
