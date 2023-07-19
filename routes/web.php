@@ -9,6 +9,8 @@ use App\Http\Controllers\User\UserOrderController;
 use App\Http\Controllers\Book\SearchBooksController;
 use App\Http\Controllers\User\UserProfileController;
 use App\Http\Controllers\Dashboard\DashboardController;
+use App\Http\Controllers\User\UserNoteController;
+use App\Http\Controllers\User\UserStationeryController;
 
 Route::get('/', function () {
     return Inertia::render('Welcome', [
@@ -54,6 +56,15 @@ Route::middleware('auth')->group(function () {
 
         Route::post('/orders/{id}/restore', [UserOrderController::class, 'restore'])
             ->name('user.order.restore');
+
+
+        // Notes
+        Route::get('/notes', [UserNoteController::class, 'index'])
+            ->name('search.notes.index');
+
+        // Stationeries
+        Route::get('/stationeries/{note}', [UserStationeryController::class, 'index'])
+            ->name('search.stationeries.index');
     });
 
     // Books - Search for books, adding books to user cart and remove.

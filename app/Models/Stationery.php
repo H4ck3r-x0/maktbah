@@ -21,11 +21,17 @@ class Stationery extends Model
         'google_maps',
         'city',
         'print_price',
-        'user_id'
+        'user_id',
+        'printing_option_id'
     ];
 
     public function user()
     {
         return $this->belongsTo(User::class);
+    }
+
+    public function printingOptions()
+    {
+        return $this->hasMany(PrintingOption::class);
     }
 }

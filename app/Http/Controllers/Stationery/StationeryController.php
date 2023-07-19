@@ -28,7 +28,15 @@ class StationeryController extends Controller
      */
     public function create()
     {
-        //
+        $stationery = Stationery::where('user_id', request()->user()->id)->first();
+        $printingOptions = $stationery->printingOptions;
+
+        return Inertia::render('Stationery/Options/Create', [
+            'stationery' => Stationery::where('user_id', request()->user()->id)->first(),
+            'printingOptions' => $printingOptions,
+            'cities' => City::all(),
+            'districts' => District::all(),
+        ]);
     }
 
     /**
@@ -56,6 +64,31 @@ class StationeryController extends Controller
                 'google_maps' => request()->google_maps,
             ]
         );
+        return redirect()->back();
+    }
+
+    public function storeOptions(Request $request)
+    {
+        $validatedData = $request->validate([
+            'print_price' => 'required|string',
+            'single_face_printing' => 'required|string',
+            'double_sided_printing' => 'required|string',
+            'colored_printing' => 'required|string',
+            'ribbon_print' => 'required|string',
+        ]);
+
+        $stationery = $request->user()->stationery;
+
+        $existingOptions = $stationery->printingOptions->keyBy('option');
+
+        foreach ($validatedData as $key => $option) {
+            if ($existingOptions->has($key)) {
+                $existingOptions->get($key)->update(['price' => $option]);
+            } else {
+                $stationery->printingOptions()->create(['option' => $key, 'price' => $option]);
+            }
+        }
+
         return redirect()->back();
     }
 

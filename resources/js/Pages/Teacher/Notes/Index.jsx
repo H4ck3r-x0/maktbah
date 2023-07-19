@@ -6,8 +6,6 @@ import moment from 'moment/min/moment-with-locales';
 
 export default function Notes({ notes }) {
 
-
-
     const destroy = (e, id) => {
         e.preventDefault();
 

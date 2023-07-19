@@ -20,9 +20,9 @@ export default function AuthenticatedStationeryHeader({ user }) {
                         </div>
 
                         <div className="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
-                            {/* <NavLink href={route('teacher.note.create')} active={route().current('teacher.note.create')}>
-                                إنشاء مذكرة جديدة
-                            </NavLink> */}
+                            <NavLink href={route('stationery.options.create')} active={route().current('stationery.options.create')}>
+                                اسعار وخيارات الطباعة
+                            </NavLink>
                         </div>
                     </div>
 

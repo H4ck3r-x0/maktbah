@@ -28,6 +28,9 @@ export default function AuthenticatedHeader({ user }) {
                             <NavLink href={route('search.books.index')} active={route().current('search.books.index')}>
                                 الكتب
                             </NavLink>
+                            <NavLink href={route('search.notes.index')} active={route().current('search.notes.index')}>
+                                المذكرات
+                            </NavLink>
                             <NavLink href={route('user.order.index')} active={route().current('user.order.index')}>
                                 الطلبات
                             </NavLink>
@@ -109,6 +112,9 @@ export default function AuthenticatedHeader({ user }) {
                     </ResponsiveNavLink>
                     <ResponsiveNavLink href={route('search.books.index')} active={route().current('search.books.index')}>
                         الكتب
+                    </ResponsiveNavLink>
+                    <ResponsiveNavLink href={route('search.notes.index')} active={route().current('search.notes.index')}>
+                        المذكرات
                     </ResponsiveNavLink>
                     <ResponsiveNavLink href={route('user.order.index')} active={route().current('user.order.index')}>
                         الطلبات

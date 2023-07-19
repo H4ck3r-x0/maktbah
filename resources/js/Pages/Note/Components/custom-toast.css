@@ -1,0 +1,5 @@
+/* Change the font family */
+.Toastify__toast-body {
+    font-family: 'AvenirRegular', sans-serif;
+    font-size: 16px;
+}
