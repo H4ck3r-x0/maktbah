@@ -64,6 +64,7 @@ class LibraryBookController extends Controller
 
     public function store(Request $request)
     {
+        // dd($request->all());
         $request->validate([
             'qty' => 'required',
             'price' => 'required',

@@ -204,6 +204,7 @@ export default function Create({ auth, books, addedBooks }) {
             <Head title="إضافة كتاب جديد" />
 
             <div className="py-4">
+                <Toaster />
                 <div className="max-w-7xl mx-auto sm:px-6 lg:px-8">
                     <div className=' max-w-full  px-6 '>
                         <div className='flex-1'>
