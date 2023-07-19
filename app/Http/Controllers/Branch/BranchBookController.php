@@ -60,6 +60,12 @@ class BranchBookController extends Controller
      */
     public function store(Request $request)
     {
+        $request->validate([
+            'qty' => 'required',
+            'price' => 'required',
+            'ad_image' => 'nullable|mimes:jpg,png,jpeg|max:1024',
+        ]);
+
         $user = $request->user()->load('branch');
 
         $user->branch->books()->sync([
@@ -105,6 +111,11 @@ class BranchBookController extends Controller
      */
     public function update(Request $request, string $id)
     {
+        $request->validate([
+            'qty' => 'required',
+            'price' => 'required',
+        ]);
+
         $branch = LibraryBranch::where('user_id', request()->user()->id)
             ->with('books')
             ->first();
@@ -113,6 +124,7 @@ class BranchBookController extends Controller
             'book_id' => $request->book_id,
             'qty' => $request->qty,
             'price' => $request->price,
+            'offer' => $request->offer,
         ]);
 
         // Get all the books from the pivot table.

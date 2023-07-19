@@ -9,6 +9,7 @@ import { useState } from 'react';
 import { useCallback } from 'react';
 import debounce from "lodash/debounce";
 import Pagination from '@/Pages/Components/Pagination';
+import toast, { Toaster } from 'react-hot-toast';
 
 export default function Create({ auth, books, addedBooks }) {
     const filters = usePage().props.filters;
@@ -55,21 +56,68 @@ export default function Create({ auth, books, addedBooks }) {
 
     const updateBook = (e, bookId) => {
         e.preventDefault();
-        const { book_id, qty, price, ad_image, offer } = LibraryBooks.filter(book => book.book_id === bookId)[0];
+        const { book_id, qty, price, offer } = LibraryBooks.filter(book => book.book_id === bookId)[0];
 
-        router.post(route('branch.book.update', bookId), { book_id, qty, price, offer, ad_image }, {
+        router.post(route('branch.book.update', bookId), { book_id, qty, price, offer }, {
             preserveScroll: true,
+            onError: (error) => {
+                let message = '';
+                if (error.price) {
+                    message = error.price;
+                }
+                if (error.qty) {
+                    message = error.qty;
+                }
+                toast.error(message, {
+                    duration: 4000,
+                    position: 'top-center',
+                    className: '',
+                    ariaProps: {
+                        role: 'status',
+                        'aria-live': 'polite',
+                    },
+                });
+            }
         });
     }
 
     const addNewBook = (bookID) => {
         if (price === '' || qty === '') {
-            alert('الرجاء اضافه اكمال جميع بيانات الكتاب');
+            toast.error('الرجاء اكمال جميع بيانات الكتاب', {
+                duration: 4000,
+                position: 'top-center',
+                className: '',
+                ariaProps: {
+                    role: 'status',
+                    'aria-live': 'polite',
+                },
+            });
             return;
         }
 
         router.post(route('branch.book.store'), { book_id: bookID, qty, price, offer, ad_image: adImage }, {
             preserveScroll: true,
+            onError: (error) => {
+                let message = '';
+                if (error.ad_image) {
+                    message = error.ad_image;
+                }
+                if (error.price) {
+                    message = error.price;
+                }
+                if (error.qty) {
+                    message = error.qty;
+                }
+                toast.error(message, {
+                    duration: 4000,
+                    position: 'top-center',
+                    className: '',
+                    ariaProps: {
+                        role: 'status',
+                        'aria-live': 'polite',
+                    },
+                });
+            }
         });
     }
 
@@ -155,6 +203,7 @@ export default function Create({ auth, books, addedBooks }) {
             <Head title="إضافة كتاب جديد" />
 
             <div className="py-4">
+                <Toaster />
                 <div className="max-w-7xl mx-auto sm:px-6 lg:px-8">
                     <div className=' max-w-full  px-6 '>
                         <div className='flex-1'>

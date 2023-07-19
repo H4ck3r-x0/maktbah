@@ -142,6 +142,7 @@ return [
     'url' => 'صيغة الرابط :attribute غير صحيحة',
     'uuid' => 'الحقل :attribute يجب ان ايكون رقم UUID صحيح.',
 
+
     /*
     |--------------------------------------------------------------------------
     | Custom Validation Language Lines
@@ -159,18 +160,12 @@ return [
         ],
     ],
 
-    /*
-    |--------------------------------------------------------------------------
-    | Custom Validation Attributes
-    |--------------------------------------------------------------------------
-    |
-    | The following language lines are used to swap our attribute placeholder
-    | with something more reader friendly such as "E-Mail Address" instead
-    | of "email". This simply helps us make our message more expressive.
-    |
-    */
 
     'attributes' => [
+        'ad_image' => 'صورة الإعلان',
+        'qty' => 'الكمية',
+        'price' => 'السعر',
+        'offer' => 'العرض',
         'name'                  => 'الاسم',
         'username'              => 'اسم المُستخدم',
         'email'                 => 'البريد الالكتروني',

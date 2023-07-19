@@ -64,6 +64,12 @@ class LibraryBookController extends Controller
 
     public function store(Request $request)
     {
+        $request->validate([
+            'qty' => 'required',
+            'price' => 'required',
+            'ad_image' => 'nullable|mimes:jpg,png,jpeg|max:1024',
+        ]);
+
         $user = $request->user()->load('library');
 
         $user->library->books()->sync([
@@ -93,6 +99,11 @@ class LibraryBookController extends Controller
      */
     public function update(Request $request, string $id)
     {
+        $request->validate([
+            'qty' => 'required',
+            'price' => 'required',
+        ]);
+
         $library = Library::where('user_id', request()->user()->id)
             ->with('books')
             ->first();
