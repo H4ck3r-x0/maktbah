@@ -62,24 +62,23 @@ class BranchBookController extends Controller
     {
         $user = $request->user()->load('branch');
 
-        foreach ($request->libBooks as $book) {
-            $user->branch->books()->syncWithoutDetaching([
-                $book['book_id'] => [
-                    'qty' => $book['qty'],
-                    'price' => $book['price'],
-                    'offer' => $book['offer'],
-                ],
-            ]);
+        $user->branch->books()->sync([
+            $request->book_id => [
+                'qty' => $request->qty,
+                'price' => $request->price,
+                'offer' => $request->offer,
+            ],
+        ], false);
 
-            if (isset($book['ad_image']) && gettype($book['ad_image']) === 'object') {
-                $attachedBook = $user->branch->books()
-                    ->wherePivot('book_id', $book['book_id'])
-                    ->first()
-                    ->pivot;
 
-                $attachedBook->addMedia($book['ad_image'])
-                    ->toMediaCollection('bookAdImage');
-            }
+        if (gettype($request->ad_image) === 'object') {
+            $attachedBook = $user->branch->books()
+                ->wherePivot('book_id', $request->book_id)
+                ->first()
+                ->pivot;
+
+            $attachedBook->addMedia($request->ad_image)
+                ->toMediaCollection('bookAdImage');
         }
 
         return redirect()->back();

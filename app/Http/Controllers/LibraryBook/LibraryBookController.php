@@ -61,31 +61,28 @@ class LibraryBookController extends Controller
         ]);
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
+
     public function store(Request $request)
     {
         $user = $request->user()->load('library');
 
-        foreach ($request->libBooks as $book) {
-            $user->library->books()->sync([
-                $book['book_id'] => [
-                    'qty' => $book['qty'],
-                    'price' => $book['price'],
-                    'offer' => $book['offer'],
-                ],
-            ], false);
+        $user->library->books()->sync([
+            $request->book_id => [
+                'qty' => $request->qty,
+                'price' => $request->price,
+                'offer' => $request->offer,
+            ],
+        ], false);
 
-            if (gettype($book['ad_image']) === 'object') {
-                $attachedBook = $user->library->books()
-                    ->wherePivot('book_id', $book['book_id'])
-                    ->first()
-                    ->pivot;
 
-                $attachedBook->addMedia($book['ad_image'])
-                    ->toMediaCollection('bookAdImage');
-            }
+        if (gettype($request->ad_image) === 'object') {
+            $attachedBook = $user->library->books()
+                ->wherePivot('book_id', $request->book_id)
+                ->first()
+                ->pivot;
+
+            $attachedBook->addMedia($request->ad_image)
+                ->toMediaCollection('bookAdImage');
         }
 
         return redirect()->back();
@@ -104,6 +101,7 @@ class LibraryBookController extends Controller
             'book_id' => $request->book_id,
             'qty' => $request->qty,
             'price' => $request->price,
+            'offer' => $request->offer,
         ]);
 
         // Get all the books from the pivot table.

@@ -17,7 +17,7 @@ export default function Create({ auth, books, addedBooks }) {
         search: filters.search,
     });
 
-    const [libBooks, setLibBooks] = useState([]);
+    const [LibraryBooks, setLibraryBooks] = useState([]);
     const [qty, setQty] = useState("");
     const [price, setPrice] = useState("");
     const [offer, setOffer] = useState("");
@@ -25,7 +25,7 @@ export default function Create({ auth, books, addedBooks }) {
 
     useEffect(() => {
         if (addedBooks.length > 0) {
-            setLibBooks(addedBooks);
+            setLibraryBooks(addedBooks);
         }
     }, [addedBooks])
 
@@ -52,39 +52,25 @@ export default function Create({ auth, books, addedBooks }) {
         return delayedSearch.cancel;
     }, [data.search, delayedSearch])
 
-    const submit = (e) => {
-        e.preventDefault();
-        router.post(route('branch.book.store'), { libBooks });
-    };
 
     const updateBook = (e, bookId) => {
         e.preventDefault();
-        const { book_id, qty, price, ad_image, offer } = libBooks.filter(book => book.book_id === bookId)[0];
+        const { book_id, qty, price, ad_image, offer } = LibraryBooks.filter(book => book.book_id === bookId)[0];
 
-        router.post(route('branch.book.update', bookId), { book_id, qty, price, ad_image }, {
+        router.post(route('branch.book.update', bookId), { book_id, qty, price, offer, ad_image }, {
             preserveScroll: true,
         });
     }
 
-
-    const addBooks = (bookID) => {
+    const addNewBook = (bookID) => {
         if (price === '' || qty === '') {
             alert('الرجاء اضافه اكمال جميع بيانات الكتاب');
             return;
         }
 
-        const addedBook = addedBooks.find((value) => value.book_id === bookID);
-        const deletedAt = addedBook ? addedBook.deleted_at : null;
-
-        setLibBooks(currentLibBooks => [
-            ...currentLibBooks,
-            { book_id: bookID, qty: qty, price: price, offer: offer, ad_image: adImage, deleted_at: deletedAt }
-        ]);
-
-        setQty('');
-        setPrice('');
-        setOffer('');
-        setAdImage(null);
+        router.post(route('branch.book.store'), { book_id: bookID, qty, price, offer, ad_image: adImage }, {
+            preserveScroll: true,
+        });
     }
 
 
@@ -93,8 +79,8 @@ export default function Create({ auth, books, addedBooks }) {
         router.delete(route('branch.book.destroy', bookID), {
             preserveScroll: true,
             onSuccess: () => {
-                setLibBooks(currentLibBooks => {
-                    return currentLibBooks.filter(book => book.book_id !== bookID);
+                setLibraryBooks(currentLibraryBooks => {
+                    return currentLibraryBooks.filter(book => book.book_id !== bookID);
                 })
             }
         });
@@ -105,8 +91,8 @@ export default function Create({ auth, books, addedBooks }) {
         router.post(route('branch.book.restore', bookID), {
             preserveScroll: true,
             onSuccess: () => {
-                setLibBooks(currentLibBooks => {
-                    return currentLibBooks.filter(book => book.book_id !== bookID);
+                setLibraryBooks(currentLibraryBooks => {
+                    return currentLibraryBooks.filter(book => book.book_id !== bookID);
                 })
             }
         });
@@ -115,9 +101,8 @@ export default function Create({ auth, books, addedBooks }) {
     const qtyChanged = (e, bookId) => {
         const { value } = e.target;
         setQty(value)
-
         if (value !== '') {
-            setLibBooks(currentLibBooks => currentLibBooks.map(
+            setLibraryBooks(currentLibraryBooks => currentLibraryBooks.map(
                 (book) => book.book_id === bookId ? { ...book, qty: value } : book
             ));
         }
@@ -127,7 +112,7 @@ export default function Create({ auth, books, addedBooks }) {
         const { value } = e.target;
         setPrice(value)
         if (value !== '') {
-            setLibBooks(currentLibBooks => currentLibBooks.map(
+            setLibraryBooks(currentLibraryBooks => currentLibraryBooks.map(
                 (book) => book.book_id === bookId ? { ...book, price: value } : book
             ));
         }
@@ -137,7 +122,7 @@ export default function Create({ auth, books, addedBooks }) {
         const { value } = e.target;
         setOffer(value)
         if (value !== '') {
-            setLibBooks(currentLibBooks => currentLibBooks.map(
+            setLibraryBooks(currentLibraryBooks => currentLibraryBooks.map(
                 (book) => book.book_id === bookId ? { ...book, offer: value } : book
             ));
         }
@@ -147,12 +132,11 @@ export default function Create({ auth, books, addedBooks }) {
         setAdImage(e.target.files[0]);
 
         if (e.target.files[0]) {
-            setLibBooks(currentLibBooks => currentLibBooks.map(
+            setLibraryBooks(currentLibraryBooks => currentLibraryBooks.map(
                 (book) => book.book_id === bookId ? { ...book, ad_image: e.target.files[0] } : book
             ));
         }
     }
-
     return (
         <Authenticated
             user={auth.user}
@@ -161,6 +145,7 @@ export default function Create({ auth, books, addedBooks }) {
                     <h2 className="flex flex-col gap-2 font-semibold text-xl text-gray-800 leading-tight">
                         <span>إضافة كتاب جديد</span>
                     </h2>
+
                     <Link href={route('library.dashboard')}>
                         <PrimaryButton>العودة</PrimaryButton>
                     </Link>
@@ -171,24 +156,20 @@ export default function Create({ auth, books, addedBooks }) {
 
             <div className="py-4">
                 <div className="max-w-7xl mx-auto sm:px-6 lg:px-8">
-                    <div className=' max-w-2xl  px-6 flex items-center gap-3'>
+                    <div className=' max-w-full  px-6 '>
                         <div className='flex-1'>
                             <input
-                                className=' w-full border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm'
+                                className=' w-full p-3 border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm'
                                 type="text"
                                 id="search"
                                 name="search"
-                                value={data.search ? data.search : ''}
-                                autoComplete="search"
+                                value={data.search || ''}
                                 onChange={search}
+                                autoFocus
                                 placeholder='ابحث بإسم الكتاب او الكاتب ...'
                             />
                         </div>
-                        <form onSubmit={submit}>
-                            <PrimaryButton >
-                                إضافة الكتب
-                            </PrimaryButton>
-                        </form>
+
                     </div>
 
                     <div className=" overflow-hidden sm:rounded-lg">
@@ -221,7 +202,7 @@ export default function Create({ auth, books, addedBooks }) {
                                                         type='number'
                                                         className='w-full border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm'
                                                         min={1}
-                                                        defaultValue={libBooks.find((value) => value.book_id === book.id)?.qty || ''}
+                                                        defaultValue={LibraryBooks.find((value) => value.book_id === book.id)?.qty || ''}
                                                         placeholder='الكمية'
                                                     />
                                                     <input
@@ -229,7 +210,7 @@ export default function Create({ auth, books, addedBooks }) {
                                                         type='number'
                                                         className='w-full border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm'
                                                         min={1}
-                                                        defaultValue={libBooks.find((value) => value.book_id === book.id)?.price || ''}
+                                                        defaultValue={LibraryBooks.find((value) => value.book_id === book.id)?.price || ''}
                                                         placeholder='السعر'
                                                     />
                                                     <input
@@ -237,7 +218,7 @@ export default function Create({ auth, books, addedBooks }) {
                                                         type='text'
                                                         className='w-full border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm'
                                                         min={1}
-                                                        defaultValue={libBooks.find((value) => value.book_id === book.id)?.offer || ''}
+                                                        defaultValue={LibraryBooks.find((value) => value.book_id === book.id)?.offer || ''}
                                                         placeholder='عرض إضافي'
                                                     />
                                                     <div className='py-4 w-full'>
@@ -255,16 +236,16 @@ export default function Create({ auth, books, addedBooks }) {
                                                 <div className='flex pt-2'>
                                                     <div className='flex-1'>
                                                         {!addedBooks.some(value => value.book_id == book.id) &&
-                                                            <PrimaryButton onClick={() => addBooks(book.id)}>أضف</PrimaryButton>
+                                                            <PrimaryButton onClick={() => addNewBook(book.id)}>أضف</PrimaryButton>
                                                         }
 
                                                         {addedBooks.some(value => value.book_id == book.id) &&
                                                             <SecondaryButton onClick={(e) => updateBook(e, book.id)}>تحديث</SecondaryButton>
                                                         }
                                                     </div>
-                                                    {libBooks.some(value => value.book_id === book.id) && (
+                                                    {LibraryBooks.some(value => value.book_id === book.id) && (
                                                         <div>
-                                                            {libBooks.some(value => value.book_id === book.id && value.deleted_at === null) ? (
+                                                            {LibraryBooks.some(value => value.book_id === book.id && value.deleted_at === null) ? (
                                                                 <DangerButton onClick={(e) => removeBook(e, book.id)}>
                                                                     حذف
                                                                 </DangerButton>
