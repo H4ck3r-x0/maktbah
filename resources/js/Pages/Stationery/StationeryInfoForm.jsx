@@ -14,7 +14,6 @@ export default function StationeryInfoForm({ user, cities, districts }) {
         district: '',
         google_maps: '',
         city: '',
-        print_price: '',
         user_id: user.id,
         selectedCityId: selectedCityId || '',
     });
@@ -124,21 +123,6 @@ export default function StationeryInfoForm({ user, cities, districts }) {
                                 />
 
                                 <InputError className="mt-2" message={errors.google_maps} />
-                            </div>
-
-                            <div className="mt-4">
-                                <InputLabel htmlFor="print_price" value="سعر الطباعة الأساسي" />
-
-                                <TextInput
-                                    id="print_price"
-                                    type="text"
-                                    name="print_price"
-                                    value={data.print_price}
-                                    className="mt-2 block w-full"
-                                    onChange={(e) => setData('print_price', e.target.value)}
-                                />
-
-                                <InputError message={errors.print_price} className="mt-2" />
                             </div>
 
                             <div className="flex items-center  mt-4">

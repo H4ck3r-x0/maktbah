@@ -20,7 +20,6 @@ class Stationery extends Model
         'district',
         'google_maps',
         'city',
-        'print_price',
         'user_id',
         'printing_option_id'
     ];

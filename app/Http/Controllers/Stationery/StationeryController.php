@@ -47,7 +47,6 @@ class StationeryController extends Controller
         request()->validate([
             'phone' => 'required|string|max:255|unique:' . Stationery::class,
             'name' => 'required|string|max:255|unique:' . Stationery::class,
-            'print_price' => 'required|max:255',
             'city' => 'required|string|max:255',
             'district' => 'required|string|max:255',
             'google_maps' => 'required|string|max:255',
@@ -58,7 +57,6 @@ class StationeryController extends Controller
             [
                 'name' => request()->name,
                 'phone' => request()->phone,
-                'print_price' => request()->print_price,
                 'city' => request()->city,
                 'district' => request()->district,
                 'google_maps' => request()->google_maps,
@@ -70,27 +68,46 @@ class StationeryController extends Controller
     public function storeOptions(Request $request)
     {
         $validatedData = $request->validate([
-            'print_price' => 'required|string',
             'single_face_printing' => 'required|string',
+            'single_face_printing_per_page' => 'required|integer',
             'double_sided_printing' => 'required|string',
+            'double_sided_printing_per_page' => 'required|integer',
             'colored_printing' => 'required|string',
+            'colored_printing_per_page' => 'required|integer',
             'ribbon_print' => 'required|string',
+            'ribbon_print_per_page' => 'required|integer',
         ]);
 
         $stationery = $request->user()->stationery;
 
-        $existingOptions = $stationery->printingOptions->keyBy('option');
+        // Store the options along with their per_page values
+        $options = [
+            'single_face_printing' => $validatedData['single_face_printing'],
+            'double_sided_printing' => $validatedData['double_sided_printing'],
+            'colored_printing' => $validatedData['colored_printing'],
+            'ribbon_print' => $validatedData['ribbon_print'],
+        ];
 
-        foreach ($validatedData as $key => $option) {
-            if ($existingOptions->has($key)) {
-                $existingOptions->get($key)->update(['price' => $option]);
-            } else {
-                $stationery->printingOptions()->create(['option' => $key, 'price' => $option]);
-            }
+        $perPageOptions = [
+            'single_face_printing' => $validatedData['single_face_printing_per_page'],
+            'double_sided_printing' => $validatedData['double_sided_printing_per_page'],
+            'colored_printing' => $validatedData['colored_printing_per_page'],
+            'ribbon_print' => $validatedData['ribbon_print_per_page'],
+        ];
+
+        foreach ($options as $key => $price) {
+            $existingOption = $stationery->printingOptions()->updateOrCreate(
+                ['option' => $key],
+                ['price' => $price, 'per_page' => $perPageOptions[$key]]
+            );
         }
 
         return redirect()->back();
     }
+
+
+
+
 
     /**
      * Display the specified resource.

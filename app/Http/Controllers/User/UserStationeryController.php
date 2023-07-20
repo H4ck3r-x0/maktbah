@@ -17,8 +17,7 @@ class UserStationeryController extends Controller
      */
     public function index(Note $note)
     {
-
-        $query = Stationery::query();
+        $query = Stationery::query()->with('printingOptions');
 
         if (request()->has('search')) {
             $search = request()->input('search');

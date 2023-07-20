@@ -17,6 +17,26 @@ class PrintingOption extends Model
     protected $fillable = [
         'option',
         'price',
+        'per_page',
         'stationery_id'
     ];
+    protected $appends = ['display_name'];
+
+    public static function getOptionDisplayName($option)
+    {
+        $optionNames = [
+            // 'print_price' => 'سعر الطباعة الأساسي',
+            'single_face_printing' => 'طباعة وجه واحد',
+            'double_sided_printing' => 'طباعة وجهيين',
+            'colored_printing' => 'طباعة ملونة',
+            'ribbon_print' => 'طباعة بشريط',
+        ];
+
+        return $optionNames[$option] ?? $option;
+    }
+
+    public function getDisplayNameAttribute()
+    {
+        return self::getOptionDisplayName($this->option);
+    }
 }

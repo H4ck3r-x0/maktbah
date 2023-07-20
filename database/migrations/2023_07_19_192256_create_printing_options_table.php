@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('option');
             $table->decimal('price', 18, 2);
+            $table->integer('per_page');
             $table->foreignId('stationery_id')
                 ->constrained('stationeries')
                 ->onDelete('cascade');

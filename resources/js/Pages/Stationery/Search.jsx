@@ -4,17 +4,57 @@ import { useCallback, useEffect, useState } from 'react';
 import debounce from "lodash/debounce";
 import Pagination from '@/Pages/Components/Pagination';
 import moment from 'moment/min/moment-with-locales';
+import InputLabel from '@/Components/InputLabel';
 
 export default function Search({ auth, note, stationeries, cities, districts }) {
     const filters = usePage().props.filters;
     const currentPage = usePage().props.currentPage;
     const [selectedCityId, setSelectedCityId] = useState('');
-
+    const [selectedOptions, setSelectedOptions] = useState([]);
+    const [selectedPages, setSelectedPages] = useState(0);
+    const [stationeries, setStationeries] = useState([]); // Initialize with your stationery data
     const { data, setData, get } = useForm({
         search: filters.search,
         city: filters.city,
         district: filters.district,
     });
+
+
+    const handleOptionSelect = (option) => {
+        const isOptionSelected = selectedOptions.some((selectedOption) => selectedOption.id === option.id);
+
+        if (isOptionSelected) {
+            const updatedOptions = selectedOptions.filter((selectedOption) => selectedOption.id !== option.id);
+            setSelectedOptions(updatedOptions);
+        } else {
+            const updatedOptions = [...selectedOptions, option];
+            setSelectedOptions(updatedOptions);
+        }
+    };
+
+    const handlePagesChange = (event, itemId) => {
+        const updatedStationeries = stationeries.data.map((item) => {
+            if (item.id === itemId) {
+                return {
+                    ...item,
+                    selectedPages: parseInt(event.target.value)
+                };
+            }
+            return item;
+        });
+        // setStationeries(updatedStationeries);
+    };
+
+    const calculateTotalPrice = () => {
+        const totalPrice = selectedOptions.reduce((total, option) => {
+            const optionPrice = option.price * Math.ceil(selectedPages / option.per_page);
+            return total + optionPrice;
+        }, 0);
+
+        return totalPrice;
+    };
+
+
 
     const searchStationeries = () => {
         get(route('search.stationeries.index',
@@ -154,11 +194,34 @@ export default function Search({ auth, note, stationeries, cities, districts }) 
                                                     <span className='font-semibold text-gray-700'>الحي </span>
                                                     <span>{item.district}</span>
                                                 </h1>
-                                                <h1 className='text-xl text-gray-800'>
-                                                    <span className='font-semibold text-gray-700'>سعر الطباعة </span>
-                                                    <span>{item.print_price} ريال</span>
-                                                </h1>
                                             </div>
+                                            <div className='pt-10 flex flex-col gap-4'>
+                                                <div className=''>
+                                                    <InputLabel htmlFor="pagesInput" value={'عدد الصفحات:'} />
+                                                    <input
+                                                        className='mt-2 w-full sm:max-w-sm  border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm'
+                                                        type="number" id="pagesInput" value={selectedPages || ''} onChange={(e) => handlePagesChange(e, item.id)} />
+                                                </div>
+
+                                                {item.printing_options.map((option) => (
+                                                    <div key={option.id} className={`flex items-center gap-3 text-xl text-gray-800 
+                                                    ${selectedOptions.some((selectedOption) => selectedOption.id === option.id) ? 'bg-blue-200' : ''}`}>
+                                                        <div className=' w-96 flex items-center gap-3 '>
+                                                            <span className='font-semibold text-gray-700'>{
+                                                                option.display_name} - ( {option.per_page}  صفحات )
+                                                            </span>
+                                                            <span>{option.price} ريال</span>
+                                                        </div>
+                                                        <div className='w-36 flex itmes-center '>
+                                                            <button onClick={() => handleOptionSelect(option)} className='px-2 py-1 bg-blue-500 text-white rounded'>
+                                                                {selectedOptions.some((selectedOption) => selectedOption.id === option.id) ? 'تم الإختيار' : 'إختيار'}
+                                                            </button>
+                                                        </div>
+                                                    </div>
+                                                ))}
+                                                <div className='text-xl text-gray-800'>إجمالي السعر: {calculateTotalPrice()} ريال</div>
+                                            </div>
+
                                         </div>
                                     )
                                 })}

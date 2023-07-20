@@ -19,7 +19,6 @@ return new class extends Migration
             $table->string('district')->nullable();
             $table->string('city')->nullable();
             $table->string('google_maps')->nullable();
-            $table->decimal('print_price', 18, 2)->nullable();
 
             $table->foreignIdFor(User::class, 'user_id')
                 ->constrained('users', 'id')

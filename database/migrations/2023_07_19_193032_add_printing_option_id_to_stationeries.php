@@ -26,9 +26,7 @@ return new class extends Migration
     public function down(): void
     {
         Schema::table('stationeries', function (Blueprint $table) {
-            Schema::table('stationeries', function (Blueprint $table) {
-                $table->dropColumn('printing_option_id');
-            });
+            $table->dropColumn('printing_option_id');
         });
     }
 };
