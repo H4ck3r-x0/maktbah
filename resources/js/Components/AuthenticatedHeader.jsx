@@ -22,9 +22,6 @@ export default function AuthenticatedHeader({ user }) {
                         </div>
 
                         <div className="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
-                            <NavLink href={'/'} >
-                                الرئيسية
-                            </NavLink>
                             <NavLink href={route('search.books.index')} active={route().current('search.books.index')}>
                                 الكتب
                             </NavLink>
@@ -110,9 +107,7 @@ export default function AuthenticatedHeader({ user }) {
 
             <div className={(showingNavigationDropdown ? 'block' : 'hidden') + ' sm:hidden'}>
                 <div className="pt-2 pb-3 space-y-1">
-                    <ResponsiveNavLink href={route('dashboard')} active={route().current('dashboard')}>
-                        الرئيسية
-                    </ResponsiveNavLink>
+
                     <ResponsiveNavLink href={route('search.books.index')} active={route().current('search.books.index')}>
                         الكتب
                     </ResponsiveNavLink>

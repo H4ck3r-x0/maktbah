@@ -12,7 +12,8 @@ class DashboardController extends Controller
      */
     public function index()
     {
-        return Inertia('Dashboard');
+
+        return redirect()->route('search.books.index');
     }
 
     /**
