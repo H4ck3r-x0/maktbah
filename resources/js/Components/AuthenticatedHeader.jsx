@@ -28,11 +28,14 @@ export default function AuthenticatedHeader({ user }) {
                             <NavLink href={route('search.books.index')} active={route().current('search.books.index')}>
                                 الكتب
                             </NavLink>
+                            <NavLink href={route('user.order.index')} active={route().current('user.order.index')}>
+                                طلبات الكتب
+                            </NavLink>
                             <NavLink href={route('search.notes.index')} active={route().current('search.notes.index')}>
                                 المذكرات
                             </NavLink>
-                            <NavLink href={route('user.order.index')} active={route().current('user.order.index')}>
-                                الطلبات
+                            <NavLink href={route('order.stationery.index')} active={route().current('order.stationery.index')}>
+                                طلبات المذكرات
                             </NavLink>
 
                         </div>
@@ -113,11 +116,14 @@ export default function AuthenticatedHeader({ user }) {
                     <ResponsiveNavLink href={route('search.books.index')} active={route().current('search.books.index')}>
                         الكتب
                     </ResponsiveNavLink>
+                    <ResponsiveNavLink href={route('user.order.index')} active={route().current('user.order.index')}>
+                        طلبات الكتب
+                    </ResponsiveNavLink>
                     <ResponsiveNavLink href={route('search.notes.index')} active={route().current('search.notes.index')}>
                         المذكرات
                     </ResponsiveNavLink>
-                    <ResponsiveNavLink href={route('user.order.index')} active={route().current('user.order.index')}>
-                        الطلبات
+                    <ResponsiveNavLink href={route('order.stationery.index')} active={route().current('order.stationery.index')}>
+                        طلبات المذكرات
                     </ResponsiveNavLink>
                     <ResponsiveNavLink href={route('user.cart.index')} active={route().current('user.cart.index')}>
                         <div className='flex items-center justify-between w-full'>

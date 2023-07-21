@@ -5,12 +5,14 @@ use App\Http\Middleware\IsUser;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\User\UserCartController;
+use App\Http\Controllers\User\UserNoteController;
 use App\Http\Controllers\User\UserOrderController;
 use App\Http\Controllers\Book\SearchBooksController;
 use App\Http\Controllers\User\UserProfileController;
 use App\Http\Controllers\Dashboard\DashboardController;
-use App\Http\Controllers\User\UserNoteController;
 use App\Http\Controllers\User\UserStationeryController;
+use App\Http\Controllers\Stationery\StationeryOrderController;
+use App\Http\Controllers\User\UserStationeryOrderController;
 
 Route::get('/', function () {
     return Inertia::render('Welcome', [
@@ -65,6 +67,22 @@ Route::middleware('auth')->group(function () {
         // Stationeries
         Route::get('/stationeries/{note}', [UserStationeryController::class, 'index'])
             ->name('search.stationeries.index');
+
+        // Stationery orders
+        Route::get('stationery/orders', [UserStationeryOrderController::class, 'index'])
+            ->name('order.stationery.index');
+
+        Route::get('stationery/orders/{id}', [UserStationeryOrderController::class, 'show'])
+            ->name('order.stationery.show');
+
+        Route::post('/stationery/orders/{id}/cancel', [UserStationeryOrderController::class, 'cancel'])
+            ->name('order.stationery.cancel');
+
+        Route::post('/stationery/orders/{id}/restore', [UserStationeryOrderController::class, 'restore'])
+            ->name('order.stationery.restore');
+
+        Route::post('order/create/note/{note}/stationery/{stationery}', [StationeryOrderController::class, 'store'])
+            ->name('stationery.order.store');
     });
 
     // Books - Search for books, adding books to user cart and remove.

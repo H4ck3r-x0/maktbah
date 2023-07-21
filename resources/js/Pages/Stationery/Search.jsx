@@ -1,12 +1,11 @@
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
-import { Head, useForm, usePage } from '@inertiajs/react';
+import { Head, router, useForm, usePage } from '@inertiajs/react';
 import { useCallback, useEffect, useState } from 'react';
 import debounce from "lodash/debounce";
 import Pagination from '@/Pages/Components/Pagination';
 import moment from 'moment/min/moment-with-locales';
 import InputLabel from '@/Components/InputLabel';
-import SecondaryButton from '@/Components/SecondaryButton';
-import PrimaryButton from '@/Components/PrimaryButton';
+
 
 export default function Search({ auth, note, stationeries, cities, districts }) {
     const { props: { filters, currentPage } } = usePage();
@@ -55,6 +54,12 @@ export default function Search({ auth, note, stationeries, cities, districts }) 
 
         return totalPrice;
     };
+
+    const createOrder = (note, stationery, totalPrice, selectedPages, selectedOptions) => {
+        router.post(route('stationery.order.store',
+            { note, stationery, totalPrice, selectedPages, selectedOptions })
+        );
+    }
 
     const searchStationeries = () => {
         get(route('search.stationeries.index',
@@ -226,7 +231,9 @@ export default function Search({ auth, note, stationeries, cities, districts }) 
                                                     <span className='text-xl font-semibold text-gray-600'>إجمالي السعر</span>
                                                     <span className='text-indigo-500'> {totalPrice} ريال</span>
                                                 </div>
-                                                <button className={`px-2 py-1 bg-blue-500 text-white rounded disabled:bg-gray-400 ${selectedPages[item.id] && selectedOptions[item.id] ? 'w-fit' : 'bg-gray-500 cursor-not-allowed w-fit'}`} disabled={totalPrice === 0 || !(selectedPages[item.id] && selectedOptions[item.id])}> إرسال الطلب </button>
+                                                <button
+                                                    onClick={() => createOrder(note.id, item.id, totalPrice, selectedPages[item.id], selectedOptions[item.id])}
+                                                    className={`px-2 py-1 bg-blue-500 text-white rounded disabled:bg-gray-400 ${selectedPages[item.id] && selectedOptions[item.id] ? 'w-fit' : 'bg-gray-500 cursor-not-allowed w-fit'}`} disabled={totalPrice === 0 || !(selectedPages[item.id] && selectedOptions[item.id])}> إرسال الطلب </button>
                                             </div>
                                         </div>
                                     )

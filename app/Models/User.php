@@ -51,6 +51,11 @@ class User extends Authenticatable
         'password' => 'hashed',
     ];
 
+    public function stationeryOrders()
+    {
+        return $this->hasMany(StationeryOrder::class);
+    }
+
     public function stationery()
     {
         return $this->hasOne(Stationery::class);

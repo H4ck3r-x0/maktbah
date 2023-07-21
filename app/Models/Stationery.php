@@ -24,6 +24,11 @@ class Stationery extends Model
         'printing_option_id'
     ];
 
+    public function stationeryOrders()
+    {
+        return $this->hasMany(StationeryOrder::class);
+    }
+
     public function user()
     {
         return $this->belongsTo(User::class);

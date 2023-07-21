@@ -5,8 +5,17 @@ import moment from 'moment/min/moment-with-locales';
 import ApplicationLogo from '@/Components/ApplicationLogo';
 import { jsPDF } from "jspdf";
 import html2canvas from 'html2canvas';
+import { useEffect } from 'react';
+import { useState } from 'react';
 
 export default function Show({ auth, order }) {
+    const [options, setOptions] = useState(null);
+    useEffect(() => {
+        const decodedOptions = JSON.parse(order.options);
+
+        setOptions(decodedOptions);
+    }, [order.options])
+
     const printInvoice = () => {
         const divToPrint = document.getElementById('divToPrint');
         html2canvas(divToPrint, {
@@ -34,7 +43,7 @@ export default function Show({ auth, order }) {
                     <Link href="/">
                         <ApplicationLogo className=" w-20 h-20 fill-current text-gray-500" />
                     </Link>
-                    <Link href={route('library.order.index')} id='goBack' data-html2canvas-ignore>
+                    <Link href={route('order.stationery.index')} id='goBack' data-html2canvas-ignore>
                         <PrimaryButton>
                             العودة
                         </PrimaryButton>
@@ -63,52 +72,50 @@ export default function Show({ auth, order }) {
                                 <thead className="text-xs sm:text-lg text-gray-700  border ">
                                     <tr>
                                         <th scope="col" className="px-3 py-3">
-                                            المكتبة
+                                            القرطاسية
                                         </th>
                                         <th scope="col" className="px-3 py-3">
-                                            الكتاب
+                                            المذكرة
                                         </th>
                                         <th scope="col" className="px-3 py-3">
-                                            العرض
+                                            عدد الصفحات
                                         </th>
                                         <th scope="col" className="px-3 py-3">
-                                            الإجمالي
+                                            خيارات الطباعة
                                         </th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    {order.details.map(detail => {
-                                        return (
-                                            <tr key={detail.id} className="bg-white border">
-                                                <th scope="row" className="px-3 py-4 text-gray-600 whitespace-nowrap ">
-                                                    <div>
-                                                        <h1> {detail.book.library.name}</h1>
-                                                        {detail.book.library.city && detail.book.library.district &&
-                                                            <h1 className='text-sm text-gray-400'>
-                                                                {detail.book.library.city + ' - ' + detail.book.library.district}
-                                                            </h1>
-                                                        }
+                                    <tr className="bg-white border">
+                                        <th scope="row" className="px-3 py-4 text-gray-600 whitespace-nowrap ">
+                                            {order.stationery.name}
+                                            {order.stationery.city && order.stationery.district &&
+                                                <h1 className='text-sm text-gray-400'>
+                                                    {order.stationery.city + ' - ' + order.stationery.district}
+                                                </h1>
+                                            }
+                                        </th>
+                                        <th scope="row" className="px-3 py-4 text-gray-600 whitespace-nowrap ">
+                                            <Link href={order.note.url} target='blank'>
+                                                <PrimaryButton>مشاهدة</PrimaryButton>
+                                            </Link>
+                                        </th>
+                                        <th scope="row" className="px-3 py-4 text-gray-600 whitespace-nowrap ">
+                                            {order.selected_pages} صفحة
+                                        </th>
+                                        <th scope="row" className="px-3 py-4  text-gray-600 whitespace-nowrap ">
+                                            {options?.map((option) => {
+                                                return (
+                                                    <div key={option.id} className='flex flex-col items-center gap-3'>
+                                                        <h3 className='text-md'>
+                                                            {option.display_name}
+                                                        </h3>
                                                     </div>
-                                                </th>
-                                                <th scope="row" className="px-3py-4  text-gray-600 whitespace-nowrap ">
-                                                    <div>
-                                                        <h1>
-                                                            {detail.book.book.book_name}
-                                                        </h1>
-                                                        <span className='text-sm text-gray-400'>
-                                                            {detail.book.book.author_name + ' - ' + detail.book.book.edition_number + ' - ' + detail.book.book.volume_number}
-                                                        </span>
-                                                    </div>
-                                                </th>
-                                                <th scope="row" className="px-3 py-4  text-gray-600 whitespace-nowrap ">
-                                                    {detail.book.offer ? detail.book.offer : 'لايوجد'}
-                                                </th>
-                                                <th scope="row" className="px-3 py-4  text-gray-600 whitespace-nowrap ">
-                                                    {detail.book.price} ريال
-                                                </th>
-                                            </tr>
-                                        )
-                                    })}
+                                                )
+                                            })}
+                                        </th>
+
+                                    </tr>
                                 </tbody>
                             </table>
                         </div>
@@ -117,7 +124,7 @@ export default function Show({ auth, order }) {
                             <div>
                                 <h1 className='flex flex-col items-center gap-3 text-lg font-semibold text-gray-700'>
                                     <span>إجمالي قيمة المشتريات</span>
-                                    <span>{order.total_payment} ريال</span>
+                                    <span>{order.total} ريال</span>
                                 </h1>
                             </div>
                             <div className='mt-3'>
@@ -127,7 +134,7 @@ export default function Show({ auth, order }) {
                     </div>
                 </div>
             </div>
-            <div className='flex items-center justify-center mt-4'>
+            <div className='flex items-center justify-center mt-10'>
                 <PrimaryButton onClick={printInvoice}>
                     تحميل الفاتورة
                 </PrimaryButton>
