@@ -13,7 +13,7 @@ export default function Dashboard({ auth, stationery, cities, districts }) {
             <Head title="لوحة تحكم القرطاسية" />
             {stationery === null ?
                 <StationeryInfoForm user={auth.user} cities={cities} districts={districts} /> :
-                <p>bla</p>
+                <p></p>
             }
         </AuthenticatedLayout>
     );

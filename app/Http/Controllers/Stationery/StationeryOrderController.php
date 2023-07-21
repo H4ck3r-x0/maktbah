@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Stationery;
 
 use App\Models\Note;
+use Inertia\Inertia;
 use App\Models\Stationery;
 use Illuminate\Http\Request;
 use App\Models\StationeryOrder;
@@ -17,6 +18,20 @@ class StationeryOrderController extends Controller
      */
     public function index()
     {
+        $user = request()->user()->load('stationery');
+        $orders = StationeryOrder::query()
+            ->where('stationery_id', $user->stationery->id)
+            ->with([
+                'stationery',
+                'user',
+                'note',
+            ])
+            ->latest()
+            ->get();
+
+        return Inertia::render('Stationery/Order/Index', [
+            'orders' => $orders,
+        ]);
     }
 
     /**
@@ -32,7 +47,6 @@ class StationeryOrderController extends Controller
      */
     public function store(Request $request, Note $note, Stationery $stationery)
     {
-        // dd($request->all());
         try {
             DB::transaction(function () use ($request, $stationery, $note) {
                 $order = new StationeryOrder();
@@ -64,7 +78,18 @@ class StationeryOrderController extends Controller
      */
     public function show(string $id)
     {
-        //
+        $order = StationeryOrder::query()
+            ->with([
+                'stationery',
+                'user',
+                'note',
+            ])
+            ->findOrFail($id);
+
+
+        return Inertia::render('Stationery/Order/Show', [
+            'order' => $order,
+        ]);
     }
 
     /**

@@ -23,6 +23,10 @@ export default function AuthenticatedStationeryHeader({ user }) {
                             <NavLink href={route('stationery.options.create')} active={route().current('stationery.options.create')}>
                                 اسعار وخيارات الطباعة
                             </NavLink>
+
+                            <NavLink href={route('stationery.main.orders')} active={route().current('stationery.main.orders')}>
+                                الطلبات
+                            </NavLink>
                         </div>
                     </div>
 
