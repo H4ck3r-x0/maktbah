@@ -11,6 +11,7 @@ export default function Edit({ auth, note }) {
         name: note.name,
         url: note.url,
         description: note.description,
+        number_of_pages: note.number_of_pages,
         user_id: auth.user.id,
     });
 
@@ -60,7 +61,20 @@ export default function Edit({ auth, note }) {
 
                                 <InputError message={errors.description} className="mt-2" />
                             </div>
+                            <div className="mt-4">
+                                <InputLabel htmlFor="number_of_pages" value="عدد صفحات المذكرة" />
 
+                                <TextInput
+                                    id="number_of_pages"
+                                    type="number"
+                                    name="number_of_pages"
+                                    value={data.number_of_pages}
+                                    className="mt-2 block w-full"
+                                    onChange={(e) => setData('number_of_pages', e.target.value)}
+                                />
+
+                                <InputError message={errors.number_of_pages} className="mt-2" />
+                            </div>
                             <div className="mt-4">
                                 <InputLabel htmlFor="url" value="رابط المذكرة" />
 

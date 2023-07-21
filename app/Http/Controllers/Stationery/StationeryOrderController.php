@@ -38,7 +38,7 @@ class StationeryOrderController extends Controller
                 $order = new StationeryOrder();
                 $order->note_id = $note->id;
                 $order->stationery_id = $stationery->id;
-                $order->selected_pages = $request->selectedPages;
+                $order->selected_pages = $note->number_of_pages;
                 $order->options = json_encode($request->selectedOptions);
                 $order->user_id = $request->user()->id;
 

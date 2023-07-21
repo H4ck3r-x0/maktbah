@@ -96,9 +96,9 @@ export default function Show({ auth, order }) {
                                             }
                                         </th>
                                         <th scope="row" className="px-3 py-4 text-gray-600 whitespace-nowrap ">
-                                            <Link href={order.note.url} target='blank'>
+                                            <a href={order.note.url} target='blank'>
                                                 <PrimaryButton>مشاهدة</PrimaryButton>
-                                            </Link>
+                                            </a>
                                         </th>
                                         <th scope="row" className="px-3 py-4 text-gray-600 whitespace-nowrap ">
                                             {order.selected_pages} صفحة

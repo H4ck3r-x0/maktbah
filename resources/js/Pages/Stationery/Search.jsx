@@ -44,7 +44,7 @@ export default function Search({ auth, note, stationeries, cities, districts }) 
     };
 
     const calculateTotalPrice = (stationeryId) => {
-        const pages = selectedPages[stationeryId] || 0;
+        const pages = note.number_of_pages || 0;
         const options = selectedOptions[stationeryId] || [];
 
         const totalPrice = options.reduce((total, option) => {
@@ -156,12 +156,18 @@ export default function Search({ auth, note, stationeries, cities, districts }) 
                             <div className='container mx-auto grid grid-cols-1 sm:grid-cols-1  gap-4'>
                                 <div className='grid grid-cols-1 gap-4'>
                                     {/* Selected Note */}
-                                    <div className='bg-indigo-100 p-4 rounded-md '>
+                                    <div className='bg-indigo-50 border-2 border-indigo-300 p-4 rounded-md '>
                                         <div className='flex flex-col gap-2'>
-                                            <h1 className='text-xl text-indigo-800'>
-                                                <span className='font-semibold text-indigo-700'>المذكرة المراد طباعاتها :</span>
-                                                <span> {note.name} </span>
-                                            </h1>
+                                            <div className='flex flex-col gap-4 sm:flex-row items-center'>
+                                                <h1 className='text-xl text-indigo-800'>
+                                                    <span className='font-semibold text-indigo-700'>المذكرة المراد طباعاتها :</span>
+                                                    <span> {note.name} </span>
+                                                </h1>
+                                                <h1 className='text-xl text-indigo-800'>
+                                                    <span className='font-semibold text-indigo-700'>عدد صفحات المذكرة :</span>
+                                                    <span> {note.number_of_pages}  صفحة</span>
+                                                </h1>
+                                            </div>
                                             <h4>
                                                 <span className='text-sm text-indigo-500'>{moment(note.created_at).locale('ar').format('MMMM Do YYYY')}</span>
                                                 <span> - </span>
@@ -203,12 +209,12 @@ export default function Search({ auth, note, stationeries, cities, districts }) 
                                                 </h1>
                                             </div>
                                             <div className='pt-6 flex flex-col gap-4'>
-                                                <div className=''>
+                                                {/* <div className=''>
                                                     <InputLabel htmlFor="pagesInput" value={'عدد الصفحات:'} />
                                                     <input
                                                         className='mt-2 w-full md:max-w-md  border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm'
                                                         type="number" id="pagesInput" onChange={(e) => handlePagesChange(e, item.id)} />
-                                                </div>
+                                                </div> */}
                                                 {item.printing_options.map((option) => (
                                                     <div key={option.id} className='flex flex-col md:flex-row md:items-center gap-3 text-lg md:text-xl text-gray-800'>
                                                         <div className='w-full md:w-96 flex items-center gap-3 '>
@@ -219,8 +225,10 @@ export default function Search({ auth, note, stationeries, cities, districts }) 
                                                         </div>
                                                         <div className='w-full md:w-36 flex items-center '>
                                                             <div className='w-full md:w-36 flex items-center '>
-                                                                <button onClick={() => handleOptionSelect(option, item.id)} className='px-2 py-1 bg-blue-500 text-white rounded disabled:bg-gray-400' disabled={!selectedPages[item.id]}>
-                                                                    {selectedOptions[item.id] && Array.isArray(selectedOptions[item.id]) && selectedOptions[item.id].some((selectedOption) => selectedOption.id === option.id) ? 'تم الإختيار' : 'إختيار'}
+                                                                <button onClick={() => handleOptionSelect(option, item.id)} className='px-2 py-1 bg-blue-500 text-white rounded disabled:bg-gray-400' >
+                                                                    {selectedOptions[item.id] &&
+                                                                        Array.isArray(selectedOptions[item.id]) &&
+                                                                        selectedOptions[item.id].some((selectedOption) => selectedOption.id === option.id) ? 'تم الإختيار' : 'إختيار'}
                                                                 </button>
                                                             </div>
                                                         </div>
@@ -233,7 +241,7 @@ export default function Search({ auth, note, stationeries, cities, districts }) 
                                                 </div>
                                                 <button
                                                     onClick={() => createOrder(note.id, item.id, totalPrice, selectedPages[item.id], selectedOptions[item.id])}
-                                                    className={`px-2 py-1 bg-blue-500 text-white rounded disabled:bg-gray-400 ${selectedPages[item.id] && selectedOptions[item.id] ? 'w-fit' : 'bg-gray-500 cursor-not-allowed w-fit'}`} disabled={totalPrice === 0 || !(selectedPages[item.id] && selectedOptions[item.id])}> إرسال الطلب </button>
+                                                    className={`px-2 py-1 bg-blue-500 text-white rounded disabled:bg-gray-400 ${selectedOptions[item.id] ? 'w-fit' : 'bg-gray-500 cursor-not-allowed w-fit'}`} disabled={!(selectedOptions[item.id])}> إرسال الطلب </button>
                                             </div>
                                         </div>
                                     )

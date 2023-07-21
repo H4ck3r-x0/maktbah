@@ -20,6 +20,7 @@ class Note extends Model
         'description',
         'user_id',
         'teacher_id',
+        'number_of_pages',
     ];
 
     public function user()

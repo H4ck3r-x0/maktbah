@@ -18,7 +18,7 @@ return new class extends Migration
             $table->string('name')->nullable();
             $table->text('url')->nullable();
             $table->text('description')->nullable();
-
+            $table->integer('number_of_pages');
 
             $table->foreignIdFor(Teacher::class, 'teacher_id')
                 ->nullable()

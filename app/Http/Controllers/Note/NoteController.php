@@ -35,6 +35,7 @@ class NoteController extends Controller
             'name' => 'required',
             'description' => 'required|min:10',
             'url' => 'required|url',
+            'number_of_pages' => 'required|min:1',
         ]);
 
         $teacher = Teacher::where('user_id', $request->user()->id)->first();
@@ -70,7 +71,8 @@ class NoteController extends Controller
         $request->validate([
             'name' => 'required',
             'description' => 'required|min:10',
-            'url' => 'required',
+            'url' => 'required|url',
+            'number_of_pages' => 'required|min:1',
         ]);
 
         $note = Note::findOrFail($id);

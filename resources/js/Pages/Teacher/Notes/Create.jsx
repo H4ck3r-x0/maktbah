@@ -11,6 +11,7 @@ export default function Create({ auth }) {
         name: '',
         url: '',
         description: '',
+        number_of_pages: '',
         user_id: auth.user.id,
     });
 
@@ -57,6 +58,21 @@ export default function Create({ auth }) {
                                     name="description" id="description"></textarea>
 
                                 <InputError message={errors.description} className="mt-2" />
+                            </div>
+
+                            <div className="mt-4">
+                                <InputLabel htmlFor="number_of_pages" value="عدد صفحات المذكرة" />
+
+                                <TextInput
+                                    id="number_of_pages"
+                                    type="number"
+                                    name="number_of_pages"
+                                    value={data.number_of_pages}
+                                    className="mt-2 block w-full"
+                                    onChange={(e) => setData('number_of_pages', e.target.value)}
+                                />
+
+                                <InputError message={errors.number_of_pages} className="mt-2" />
                             </div>
 
                             <div className="mt-4">

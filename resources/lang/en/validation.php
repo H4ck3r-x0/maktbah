@@ -162,6 +162,7 @@ return [
 
 
     'attributes' => [
+        'number_of_pages' => 'عدد الصفحات',
         'ad_image' => 'صورة الإعلان',
         'qty' => 'الكمية',
         'price' => 'السعر',
