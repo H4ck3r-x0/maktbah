@@ -4,7 +4,7 @@ import AuthenticatedLibraryHeader from '@/Components/AuthenticatedLibraryHeader'
 import GuestHeader from '@/Components/GuestHeader';
 import { Head, Link } from '@inertiajs/react';
 
-export default function Welcome({ auth }) {
+export default function Contact({ auth }) {
     const authHeader = () => {
         if (auth.user && auth.user.role === 'admin') {
             return <AdminAuthenticatedHeader user={auth.user} />;
@@ -21,7 +21,7 @@ export default function Welcome({ auth }) {
     }
     return (
         <>
-            <Head title="الصفحة الرئيسية" />
+            <Head title="من نحن" />
             <div className=" bg-white">
                 <div className="">
                     {authHeader()}
@@ -30,14 +30,33 @@ export default function Welcome({ auth }) {
                 <div className='max-w-7xl justify-center items-center flex flex-col mx-auto sm:px-6 lg:px-8 mt-8 px-6 '>
                     <div className='flex flex-col sm:flex-row items-center justify-center gap-4'>
                         <div className='flex flex-col items-center justify-center'>
-                            <h1 className='text-3xl sm:text-4xl text-indigo-600 font-semibold'>مرحبا بكم في متجر راحة</h1>
+                            <h1 className='text-3xl sm:text-4xl text-indigo-600 font-semibold'>إتصل بنا</h1>
                             <p className='mt-4 text-lg tracking-wide font-semibold text-gray-500 leading-10 text-center'>
-                                راحة هو المكان المثالي للطلاب والمكتبات والمعلمين للحصول على الكتب والمذكرات.
-                                يمكنك العثور على كل ما تحتاجه في مكان واحد، ويمكنك التأكد من أنك تحصل على أفضل الأسعار. ونأمل أن يساعدك موقع راحة على تحقيق أقصى استفادة من تعليمك، وتوفير الراحة التي تحتاجها
-                            </p>
+                                نحن نقدر اهتمامك براحة! إذا كان لديك أي أسئلة أو طلبات، فلا تتردد في الاتصال بنا.</p>
                         </div>
-                        <img src="/images/welcomeImage.svg" alt="" className='pb-4 w-96 h-96' />
+                        <img src="/images/contact.svg" alt="" className='pb-4 w-96 h-96' />
                     </div>
+
+                    <div className='flex flex-col text-xl text-gray-700  gap-4'>
+                        <div className='flex flex-col items-center gap-4'>
+                            <h1>
+                                البريد الإلكتروني: [البريد الإلكتروني]
+                            </h1>
+                            <h1>
+                                الهاتف: [رقم الهاتف]
+                            </h1>
+                        </div>
+
+                        <div className='flex flex-col items-center gap-4'>
+                            <h1>
+                                ساعات العمل:
+                            </h1>
+                            <h1>
+                                من الاثنين إلى الجمعة، من الساعة 9 صباحًا حتى 5 مساءً
+                            </h1>
+                        </div>
+                    </div>
+
                     <div className="mt-6 mb-20 sm:items-center justify-center sm:hidden sm:mt-3 sm:ml-6">
                         <div className='flex items-center gap-3'>
                             <Link href={route('register')}>

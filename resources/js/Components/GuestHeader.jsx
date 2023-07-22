@@ -19,6 +19,12 @@ export default function GuestHeader() {
                         </div>
 
                         <div className="hidden  sm:-my-px sm:ml-10 sm:flex">
+                            <NavLink href={route('about')} active={route().current('about')}>
+                                من نحن؟
+                            </NavLink>
+                            <NavLink href={route('contact')} active={route().current('contact')}>
+                                أتصل بنا
+                            </NavLink>
                         </div>
                     </div>
 
