@@ -20,7 +20,10 @@ class UserController extends Controller
         $query = User::query()
             ->with('user_profile:university,major,level,user_id')
             ->when(request()->search, function ($query, $search) {
-                $query->where('username', 'like', "%{$search}%");
+                $query->where('username', 'like', "%{$search}%")
+                    ->orWhereHas('user_profile', function ($query) use ($search) {
+                        return $query->where('university', 'like', "%{$search}%");
+                    });
             })
             ->when(request()->account_type, function ($query, $account_type) {
                 $query->whereHas('roles', function ($query) use ($account_type) {

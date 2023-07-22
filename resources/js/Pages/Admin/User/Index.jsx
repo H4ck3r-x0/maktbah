@@ -76,7 +76,7 @@ export default function Index({ auth, users }) {
                                 name="search"
                                 value={data.search || ''}
                                 onChange={search}
-                                placeholder="أبحث بالاسم .."
+                                placeholder="أبحث بالإسم، إسم الجامعة .."
                             />
 
                             <div className='mb-2'>
