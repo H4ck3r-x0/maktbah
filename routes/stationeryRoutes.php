@@ -20,4 +20,13 @@ Route::middleware('auth')->group(function () {
 
     Route::get('main/orders/{id}', [StationeryOrderController::class, 'show'])
         ->name('main.order.show');
+
+    Route::post('main/orders/{id}/cancel', [StationeryOrderController::class, 'cancel'])
+        ->name('main.orders.cancel');
+
+    Route::post('main/orders/{id}/restore', [StationeryOrderController::class, 'restore'])
+        ->name('main.orders.restore');
+
+    Route::post('main/orders/{id}/confirm', [StationeryOrderController::class, 'confirm'])
+        ->name('main.orders.confirm');
 });

@@ -93,6 +93,46 @@ class StationeryOrderController extends Controller
     }
 
     /**
+     * Cancel order for user.
+     */
+    public function cancel(string $id)
+    {
+        $order = StationeryOrder::query()->findOrFail($id);
+
+        if ($order->status == 'sent_to_stationery' || $order->status == 'confirmed') {
+            $order->setStatus('canceled_by_stationery');
+            return redirect()->back();
+        }
+    }
+
+    /**
+     * Confirm order for user.
+     */
+    public function confirm(string $id)
+    {
+        $order = StationeryOrder::query()->findOrFail($id);
+
+        if ($order->status == 'sent_to_stationery') {
+            $order->setStatus('confirmed');
+            return redirect()->back();
+        }
+    }
+
+    /**
+     * Restore order for user.
+     */
+    public function restore(string $id)
+    {
+        $order = StationeryOrder::query()->findOrFail($id);
+
+        if ($order->status == 'canceled_by_stationery') {
+            $order->setStatus('sent_to_stationery');
+
+            return redirect()->back();
+        }
+    }
+
+    /**
      * Show the form for editing the specified resource.
      */
     public function edit(string $id)
