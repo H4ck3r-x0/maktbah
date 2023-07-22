@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Teacher;
 use App\Models\Note;
 use Inertia\Inertia;
 use App\Models\Teacher;
+use App\Models\University;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
@@ -17,7 +18,8 @@ class TeacherController extends Controller
     {
         return Inertia::render('Teacher/Dashboard', [
             'teacher' => Teacher::where('user_id', request()->user()->id)->first(),
-            'notes' => Note::where('user_id', request()->user()->id)->get()
+            'notes' => Note::where('user_id', request()->user()->id)->get(),
+            'universities' => University::all()
         ]);
     }
 
@@ -34,13 +36,18 @@ class TeacherController extends Controller
      */
     public function store(Request $request)
     {
+        $request->validate([
+            'specialty' => 'required',
+            'university_name' => 'required',
+        ]);
+
         $request->user()->teacher()->create(
             [
                 'specialty' => $request->specialty,
                 'university_name' => $request->university_name
             ]
         );
-        return redirect()->back();
+        // return redirect()->back();
     }
 
     /**

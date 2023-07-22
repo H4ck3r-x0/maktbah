@@ -3,7 +3,7 @@ import { Head } from '@inertiajs/react';
 import Notes from './Notes/Index';
 import TeacherInfoForm from './TeacherInfoForm';
 
-export default function Dashboard({ auth, teacher, notes }) {
+export default function Dashboard({ auth, teacher, notes, universities }) {
     return (
         <AuthenticatedLayout
             user={auth.user}
@@ -15,7 +15,7 @@ export default function Dashboard({ auth, teacher, notes }) {
 
 
             {teacher === null ?
-                <TeacherInfoForm user={auth.user} /> :
+                <TeacherInfoForm user={auth.user} universities={universities} /> :
                 <Notes notes={notes} />
             }
         </AuthenticatedLayout>
