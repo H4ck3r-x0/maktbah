@@ -2,13 +2,15 @@
 
 namespace App\Http\Controllers\Book;
 
-use App\Http\Controllers\Controller;
-use App\Models\BookLibrary;
+use App\Models\Book;
 use App\Models\City;
+use Inertia\Inertia;
 use App\Models\District;
 use App\Models\UserCart;
+use App\Models\BookLibrary;
 use Illuminate\Http\Request;
-use Inertia\Inertia;
+use Illuminate\Support\Facades\DB;
+use App\Http\Controllers\Controller;
 
 class SearchBooksController extends Controller
 {
@@ -57,11 +59,38 @@ class SearchBooksController extends Controller
 
         return Inertia::render('Book/Search', [
             'books' => $books,
+            'topSilingBooks' => $this->topSilingBooks(),
             'currentPage' => request()->page,
             'cities' => City::all(),
             'districts' => District::all(),
             'filters' => request()->only(['search', 'city', 'district', 'page']),
         ]);
+    }
+
+    public function topSilingBooks()
+    {
+        $topSellingBooks = DB::table('order_details')
+            ->join('orders', 'order_details.order_id', '=', 'orders.id')
+            ->join('statuses', 'orders.id', '=', 'statuses.model_id')
+            ->select('order_details.book_id', DB::raw('count(distinct orders.id) as total_orders'), DB::raw('SUM(order_details.total_price) as benefits'))
+            ->where('statuses.name', 'confirmed')
+            ->where('statuses.model_type', 'App\Models\Order')
+            ->groupBy('order_details.book_id')
+            ->orderBy('total_orders', 'desc')
+            ->take(3)
+            ->get();
+
+        $bookIds = $topSellingBooks->pluck('book_id')->toArray();
+
+        $books = Book::whereIn('id', $bookIds)->get();
+
+        $orderCounts = $topSellingBooks->pluck('total_orders', 'book_id'); // Get order counts with book_id as keys
+
+        $books = $books->sortByDesc(function ($book) use ($orderCounts) {
+            return $orderCounts[$book->id];
+        });
+
+        return $books->values();
     }
 
     /**

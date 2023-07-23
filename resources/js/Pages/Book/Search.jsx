@@ -6,7 +6,7 @@ import Pagination from '@/Pages/Components/Pagination';
 import BookCard from './Components/BookCard';
 import BookCardBranch from './Components/BookCardBranch';
 
-export default function Search({ auth, books, cities, districts }) {
+export default function Search({ auth, books, cities, districts, topSilingBooks }) {
     const filters = usePage().props.filters;
     const currentPage = usePage().props.currentPage;
     const [selectedCityId, setSelectedCityId] = useState('');
@@ -59,6 +59,26 @@ export default function Search({ auth, books, cities, districts }) {
             <Head title="البحث عن الكتب" />
 
             <div className="py-2">
+                <div className='py-6'>
+                    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                        <h1 className='text-xl mb-2 font-semibold text-gray-600'>
+                            الكتب الأكثر طلبا
+                        </h1>
+                        <div className="bg-white overflow-hidden shadow-sm sm:rounded-lg">
+                            <div className="mx-auto grid grid-cols-1 sm:max-w-full sm:mx-0 sm:grid-cols-1 p-6 gap-2 flex-wrap text-gray-900">
+                                {topSilingBooks.map((item) => {
+                                    return (
+                                        <div key={item.id} className='rounded-xl w-full shadow-lg border'>
+                                            <div className='flex w-full items-center justify-between bg-indigo-300 rounded-xl   '>
+                                                <h1 className='p-2 w-full text-white text-xl whitespace-nowrap'><span className='font-semibold'>أسم الكتاب :</span> {item.book_name} </h1>
+                                            </div>
+                                        </div>
+                                    )
+                                })}
+                            </div>
+                        </div>
+                    </div>
+                </div>
                 <div className="max-w-7xl mx-auto sm:px-6 lg:px-8">
                     <div className='w-full sm:inline-flex ml-4 items-center gap-3 px-6 '>
                         <input

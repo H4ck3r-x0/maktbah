@@ -2,7 +2,6 @@ import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
 import { Head, Link } from '@inertiajs/react';
 
 export default function Dashboard({ auth, library, topSellingBooks }) {
-    console.log(topSellingBooks)
     return (
         <AuthenticatedLayout
             user={auth.user}

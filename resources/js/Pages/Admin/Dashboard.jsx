@@ -191,7 +191,7 @@ export default function Dashboard({
                         <div className="mx-auto grid grid-cols-1 sm:max-w-full sm:mx-0 sm:grid-cols-3 p-6 gap-2 flex-wrap text-gray-900">
                             {topSellingBooks.map((item) => {
                                 return (
-                                    <div className='rounded-lg shadow-lg border'>
+                                    <div key={item.id} className='rounded-lg shadow-lg border'>
                                         <div className='flex items-center justify-between bg-indigo-300'>
                                             <h1 className='p-2 text-white text-xl whitespace-nowrap'>{item.book_name}</h1>
                                         </div>

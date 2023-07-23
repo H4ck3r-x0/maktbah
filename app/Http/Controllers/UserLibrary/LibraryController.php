@@ -29,16 +29,15 @@ class LibraryController extends Controller
                 ->with('createNewLibrary', 'الرجاء إنشاء مكتبتك الأساسية');
         }
 
-
         $topSellingBooks = DB::table('order_details')
             ->join('orders', 'order_details.order_id', '=', 'orders.id')
-            ->join('books', 'order_details.book_id', '=', 'books.id') // join books table
+            ->join('books', 'order_details.book_id', '=', 'books.id')
             ->join('statuses', 'orders.id', '=', 'statuses.model_id')
-            ->join('book_library', 'books.id', '=', 'book_library.book_id') // joined book_library table
+            ->join('book_library', 'books.id', '=', 'book_library.book_id')
             ->select('order_details.book_id', DB::raw('count(*) as total'), DB::raw('SUM(order_details.total_price) as benefits'))
             ->where('statuses.name', 'confirmed')
             ->where('statuses.model_type', 'App\Models\Order')
-            ->where('book_library.library_id', $user->library->id) // filter books from user's library
+            ->where('book_library.library_id', $user->library->id)
             ->groupBy('order_details.book_id')
             ->orderBy('total', 'desc')
             ->take(3)
@@ -48,16 +47,22 @@ class LibraryController extends Controller
         $totals = $topSellingBooks->pluck('total', 'book_id')->toArray();
         $benefits = $topSellingBooks->pluck('benefits', 'book_id')->toArray();
 
-        $bookDetails = Book::whereIn('id', $bookIds)->get();
+        $books = Book::whereIn('id', $bookIds)->get();
 
-        foreach ($bookDetails as $bookDetail) {
-            $bookDetail->total_sold = $totals[$bookDetail->id];
-            $bookDetail->benefits = $benefits[$bookDetail->id];
+        foreach ($books as $book) {
+            $book->total_sold = $totals[$book->id];
+            $book->benefits = $benefits[$book->id];
         }
+
+        $books = $books->sortByDesc(function ($book) use ($totals) {
+            return $totals[$book->id]; // Sort by total_sold count in descending order
+        });
+
+
 
         return Inertia::render('Library/Dashboard', [
             'library' => $user->library,
-            'topSellingBooks' => $bookDetails,
+            'topSellingBooks' => $books->values(),
         ]);
     }
 

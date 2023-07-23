@@ -16,7 +16,9 @@ class AdminDashboardController extends Controller
     {
         $topSellingBooks = DB::table('order_details')
             ->join('orders', 'order_details.order_id', '=', 'orders.id')
+            ->join('books', 'order_details.book_id', '=', 'books.id')
             ->join('statuses', 'orders.id', '=', 'statuses.model_id')
+            ->join('book_library', 'books.id', '=', 'book_library.book_id')
             ->select('order_details.book_id', DB::raw('count(*) as total'), DB::raw('SUM(order_details.total_price) as benefits'))
             ->where('statuses.name', 'confirmed')
             ->where('statuses.model_type', 'App\Models\Order')
@@ -29,12 +31,16 @@ class AdminDashboardController extends Controller
         $totals = $topSellingBooks->pluck('total', 'book_id')->toArray();
         $benefits = $topSellingBooks->pluck('benefits', 'book_id')->toArray();
 
-        $bookDetails = Book::whereIn('id', $bookIds)->get();
+        $books = Book::whereIn('id', $bookIds)->get();
 
-        foreach ($bookDetails as $bookDetail) {
-            $bookDetail->total_sold = $totals[$bookDetail->id];
-            $bookDetail->benefits = $benefits[$bookDetail->id];
+        foreach ($books as $book) {
+            $book->total_sold = $totals[$book->id];
+            $book->benefits = $benefits[$book->id];
         }
+
+        $books = $books->sortByDesc(function ($book) use ($totals) {
+            return $totals[$book->id]; // Sort by total_sold count in descending order
+        });
 
 
 
@@ -52,7 +58,7 @@ class AdminDashboardController extends Controller
                 'ordersCanceledByLibrary' => Order::currentStatus('canceled_by_library')->count(),
                 'ordersCanceledByUser' => Order::currentStatus('canceled_by_user')->count(),
                 'confiremdOrders' => Order::currentStatus('confirmed')->count(),
-                'topSellingBooks' => $bookDetails,
+                'topSellingBooks' => $books->values(),
             ]
         );
     }
