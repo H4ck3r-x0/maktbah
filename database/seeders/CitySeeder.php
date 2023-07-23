@@ -12,35 +12,33 @@ class CitySeeder extends Seeder
      */
     public function run(): void
     {
-        City::create([
-            'name' => 'مكة المكرمة',
-        ]);
-        City::create([
-            'name' => 'المدينة المنورة',
-        ]);
-        City::create([
-            'name' => 'جدة',
-        ]);
-        City::create([
-            'name' => 'الرياض',
-        ]);
-        City::create([
-            'name' => 'الدمام',
-        ]);
-        City::create([
-            'name' => 'الطائف',
-        ]);
-        City::create([
-            'name' => 'تبوك',
-        ]);
-        City::create([
-            'name' => 'بريدة',
-        ]);
-        City::create([
-            'name' => 'حائل',
-        ]);
-        City::create([
-            'name' => 'ابهاء',
-        ]);
+        $cities = [
+            'مكة المكرمة',
+            'المدينة المنورة',
+            'جدة',
+            'الرياض',
+            'الدمام',
+            'الطائف',
+            'تبوك',
+            'بريدة',
+            'حائل',
+            'ابهاء',
+            'الخرج',
+            'خميس مشيط',
+            'المدينة المنورة',
+            'القطيف',
+            'الجوف',
+            'جازان',
+            'العلا',
+            'عرعر',
+            'نجران',
+            'ينبع',
+        ];
+
+        foreach ($cities as $city) {
+            City::create([
+                'name' => $city,
+            ]);
+        }
     }
 }

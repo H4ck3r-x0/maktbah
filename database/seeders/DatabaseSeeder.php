@@ -21,6 +21,8 @@ class DatabaseSeeder extends Seeder
             LibrarySeeder::class,
             BookSeeder::class,
             MajorSeeder::class,
+            UniversitySeeder::class,
+            NoteSeeder::class,
             // BookLibrarySeeder::class,
         ]);
     }

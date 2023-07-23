@@ -61,6 +61,12 @@ class User extends Authenticatable
         return $this->hasOne(Stationery::class);
     }
 
+    public function stationeryBranche()
+    {
+        return $this->hasOne(StationeryBranche::class);
+    }
+
+
     public function teacher()
     {
         return $this->hasOne(Teacher::class);

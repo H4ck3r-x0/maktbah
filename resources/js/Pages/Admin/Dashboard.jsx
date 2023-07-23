@@ -13,6 +13,7 @@ export default function Dashboard({
     ordersCanceledByUser,
     confiremdOrders,
     totalEarnings,
+    topSellingBooks,
 }) {
 
     return (
@@ -29,7 +30,6 @@ export default function Dashboard({
                     </h1>
                     <div className="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                         <div className="mx-auto grid grid-cols-1 sm:max-w-full sm:mx-0 sm:grid-cols-3 p-6 gap-2 flex-wrap text-gray-900">
-
 
                             <div className='rounded-lg shadow-lg border'>
                                 <div className='flex items-center justify-between bg-indigo-300'>
@@ -177,6 +177,37 @@ export default function Dashboard({
                                     <span className='text-gray-500 font-semibold'>{ordersCanceledByUser || 0}</span>
                                 </div>
                             </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div className='py-6'>
+                <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                    <h1 className='text-xl mb-2 font-semibold text-gray-600'>
+                        الكتب أكثر طلبا
+                    </h1>
+                    <div className="bg-white overflow-hidden shadow-sm sm:rounded-lg">
+                        <div className="mx-auto grid grid-cols-1 sm:max-w-full sm:mx-0 sm:grid-cols-3 p-6 gap-2 flex-wrap text-gray-900">
+                            {topSellingBooks.map((item) => {
+                                return (
+                                    <div className='rounded-lg shadow-lg border'>
+                                        <div className='flex items-center justify-between bg-indigo-300'>
+                                            <h1 className='p-2 text-white text-xl whitespace-nowrap'>{item.book_name}</h1>
+                                        </div>
+                                        <div className='flex flex-row justify-between gap-3 p-3'>
+                                            <div className='flex flex-col items-center gap-3'>
+                                                <h1 className='text-lg text-gray-600'>إجمالي المبيعات</h1>
+                                                <span className='text-gray-500 font-semibold'>{item.benefits || 0} ريال</span>
+                                            </div>
+                                            <div className='flex flex-col items-center gap-3'>
+                                                <h1 className='text-lg text-gray-600'>عدد الطلبات</h1>
+                                                <span className='text-gray-500 font-semibold'>{item.total_sold || 0}</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                )
+                            })}
                         </div>
                     </div>
                 </div>

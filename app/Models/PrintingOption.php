@@ -25,7 +25,6 @@ class PrintingOption extends Model
     public static function getOptionDisplayName($option)
     {
         $optionNames = [
-            // 'print_price' => 'سعر الطباعة الأساسي',
             'single_face_printing' => 'طباعة وجه واحد',
             'double_sided_printing' => 'طباعة وجهيين',
             'colored_printing' => 'طباعة ملونة',
@@ -33,6 +32,11 @@ class PrintingOption extends Model
         ];
 
         return $optionNames[$option] ?? $option;
+    }
+
+    public function stationery()
+    {
+        return $this->belongsTo(Stationery::class);
     }
 
     public function getDisplayNameAttribute()

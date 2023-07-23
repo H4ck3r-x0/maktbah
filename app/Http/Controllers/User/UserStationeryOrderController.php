@@ -6,6 +6,7 @@ use Inertia\Inertia;
 use Illuminate\Http\Request;
 use App\Models\StationeryOrder;
 use App\Http\Controllers\Controller;
+use App\Models\StationeryBranchOrder;
 
 class UserStationeryOrderController extends Controller
 {
@@ -14,7 +15,7 @@ class UserStationeryOrderController extends Controller
      */
     public function index()
     {
-        $orders = StationeryOrder::query()
+        $stationeryOrders = StationeryOrder::query()
             ->where('user_id', request()->user()->id)
             ->with([
                 'stationery',
@@ -24,6 +25,18 @@ class UserStationeryOrderController extends Controller
             ->latest()
             ->get();
 
+        $stationeryBranchOrders = StationeryBranchOrder::query()
+            ->where('user_id', request()->user()->id)
+            ->with([
+                'stationery_branch',
+                'user',
+                'note',
+            ])
+            ->latest()
+            ->get();
+
+        $orders = $stationeryOrders->concat($stationeryBranchOrders);
+        // dd($orders);
         return Inertia::render('User/StationeryOrder/Index', [
             'orders' => $orders,
         ]);

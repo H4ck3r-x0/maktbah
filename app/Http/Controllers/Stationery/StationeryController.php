@@ -28,12 +28,13 @@ class StationeryController extends Controller
      */
     public function create()
     {
-        $stationery = Stationery::where('user_id', request()->user()->id)->first();
-        $printingOptions = $stationery->printingOptions;
+        $stationery = Stationery::with('printingOptions')
+            ->where('user_id', request()->user()->id)
+            ->first();;
 
         return Inertia::render('Stationery/Options/Create', [
             'stationery' => Stationery::where('user_id', request()->user()->id)->first(),
-            'printingOptions' => $printingOptions,
+            'printingOptions' => $stationery->printingOptions,
             'cities' => City::all(),
             'districts' => District::all(),
         ]);
@@ -77,10 +78,9 @@ class StationeryController extends Controller
             'ribbon_print' => 'required|string',
             'ribbon_print_per_page' => 'required|integer',
         ]);
-
+        request()->user()->load('stationery');
         $stationery = $request->user()->stationery;
 
-        // Store the options along with their per_page values
         $options = [
             'single_face_printing' => $validatedData['single_face_printing'],
             'double_sided_printing' => $validatedData['double_sided_printing'],

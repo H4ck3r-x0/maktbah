@@ -4,7 +4,6 @@ import { useCallback, useEffect, useState } from 'react';
 import debounce from "lodash/debounce";
 import Pagination from '@/Pages/Components/Pagination';
 import moment from 'moment/min/moment-with-locales';
-import InputLabel from '@/Components/InputLabel';
 
 
 export default function Search({ auth, note, stationeries, cities, districts }) {
@@ -16,6 +15,7 @@ export default function Search({ auth, note, stationeries, cities, districts }) 
         search: filters.search,
         city: filters.city,
         district: filters.district,
+        branchSelected: null,
     });
 
     const handleOptionSelect = (option, itemId) => {
@@ -57,7 +57,7 @@ export default function Search({ auth, note, stationeries, cities, districts }) 
 
     const createOrder = (note, stationery, totalPrice, selectedPages, selectedOptions) => {
         router.post(route('stationery.order.store',
-            { note, stationery, totalPrice, selectedPages, selectedOptions })
+            { note, stationery, totalPrice, selectedPages, selectedOptions, branch: data.branchSelected })
         );
     }
 
@@ -93,6 +93,10 @@ export default function Search({ auth, note, stationeries, cities, districts }) 
 
     const districtChanged = (e) => {
         setData('district', e.target.value);
+    }
+
+    const branchSelected = (e) => {
+        setData('branchSelected', e.target.value)
     }
 
     return (
@@ -191,7 +195,6 @@ export default function Search({ auth, note, stationeries, cities, districts }) 
                                 }
                                 {stationeries.data.map(item => {
                                     const totalPrice = calculateTotalPrice(item.id);
-
                                     return (
                                         <div key={item.id} className='bg-white p-4 md:p-8 rounded-md shadow-md'>
                                             <div className='flex flex-col md:flex-row md:items-center gap-4 md:gap-6'>
@@ -209,12 +212,17 @@ export default function Search({ auth, note, stationeries, cities, districts }) 
                                                 </h1>
                                             </div>
                                             <div className='pt-6 flex flex-col gap-4'>
-                                                {/* <div className=''>
-                                                    <InputLabel htmlFor="pagesInput" value={'عدد الصفحات:'} />
-                                                    <input
-                                                        className='mt-2 w-full md:max-w-md  border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm'
-                                                        type="number" id="pagesInput" onChange={(e) => handlePagesChange(e, item.id)} />
-                                                </div> */}
+                                                {item.branches.length > 0 &&
+                                                    <select
+                                                        onChange={branchSelected}
+                                                        className='block w-full border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm'
+                                                        name="branch" id="branch">
+                                                        <option value="">إختر فرع القرطاسية - أو الفرع الرئيسي</option>
+                                                        {item.branches.map((branch) => (
+                                                            <option key={branch.id} value={branch.id}>{branch.name + ' - ' + branch.city + ' - ' + branch.district}</option>
+                                                        ))}
+                                                    </select>
+                                                }
                                                 {item.printing_options.map((option) => (
                                                     <div key={option.id} className='flex flex-col md:flex-row md:items-center gap-3 text-lg md:text-xl text-gray-800'>
                                                         <div className='w-full md:w-96 flex items-center gap-3 '>

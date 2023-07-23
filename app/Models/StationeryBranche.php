@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Stationery extends Model
+class StationeryBranche extends Model
 {
     use HasFactory;
 
@@ -19,30 +19,20 @@ class Stationery extends Model
         'phone',
         'district',
         'google_maps',
-        'university',
         'city',
         'user_id',
-        'printing_option_id'
+        'printing_option_id',
+        'university',
+        'stationery_id'
     ];
-
-    public function branches()
-    {
-        return $this->hasMany(StationeryBranche::class);
-    }
-
-
-    public function stationeryOrders()
-    {
-        return $this->hasMany(StationeryOrder::class);
-    }
 
     public function user()
     {
         return $this->belongsTo(User::class);
     }
 
-    public function printingOptions()
+    public function stationery()
     {
-        return $this->hasMany(PrintingOption::class);
+        return $this->belongsTo(Stationery::class);
     }
 }

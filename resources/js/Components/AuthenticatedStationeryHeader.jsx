@@ -27,6 +27,9 @@ export default function AuthenticatedStationeryHeader({ user }) {
                             <NavLink href={route('stationery.main.orders')} active={route().current('stationery.main.orders')}>
                                 الطلبات
                             </NavLink>
+                            <NavLink href={route('stationery.main.branch.create')} active={route().current('stationery.main.branch.create')}>
+                                إنشاء فرع جديد
+                            </NavLink>
                         </div>
                     </div>
 

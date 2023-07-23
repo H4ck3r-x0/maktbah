@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Stationery\StationeryBranchController;
 use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\Stationery\StationeryController;
@@ -29,4 +30,9 @@ Route::middleware('auth')->group(function () {
 
     Route::post('main/orders/{id}/confirm', [StationeryOrderController::class, 'confirm'])
         ->name('main.orders.confirm');
+
+
+    // Branches
+    Route::get('main/branch/create', [StationeryBranchController::class, 'create'])->name('main.branch.create');
+    Route::post('main/branch/store', [StationeryBranchController::class, 'store'])->name('main.branch.store');
 });

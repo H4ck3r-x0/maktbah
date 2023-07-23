@@ -2,14 +2,16 @@
 
 namespace App\Http\Controllers\UserLibrary;
 
-use App\Http\Controllers\Controller;
+use App\Models\Book;
 use App\Models\City;
-use App\Models\District;
-use App\Models\Library;
 use App\Models\User;
+use Inertia\Inertia;
+use App\Models\Library;
+use App\Models\District;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
-use Inertia\Inertia;
+use Illuminate\Support\Facades\DB;
+use App\Http\Controllers\Controller;
 
 class LibraryController extends Controller
 {
@@ -27,8 +29,35 @@ class LibraryController extends Controller
                 ->with('createNewLibrary', 'الرجاء إنشاء مكتبتك الأساسية');
         }
 
+
+        $topSellingBooks = DB::table('order_details')
+            ->join('orders', 'order_details.order_id', '=', 'orders.id')
+            ->join('books', 'order_details.book_id', '=', 'books.id') // join books table
+            ->join('statuses', 'orders.id', '=', 'statuses.model_id')
+            ->join('book_library', 'books.id', '=', 'book_library.book_id') // joined book_library table
+            ->select('order_details.book_id', DB::raw('count(*) as total'), DB::raw('SUM(order_details.total_price) as benefits'))
+            ->where('statuses.name', 'confirmed')
+            ->where('statuses.model_type', 'App\Models\Order')
+            ->where('book_library.library_id', $user->library->id) // filter books from user's library
+            ->groupBy('order_details.book_id')
+            ->orderBy('total', 'desc')
+            ->take(3)
+            ->get();
+
+        $bookIds = $topSellingBooks->pluck('book_id')->toArray();
+        $totals = $topSellingBooks->pluck('total', 'book_id')->toArray();
+        $benefits = $topSellingBooks->pluck('benefits', 'book_id')->toArray();
+
+        $bookDetails = Book::whereIn('id', $bookIds)->get();
+
+        foreach ($bookDetails as $bookDetail) {
+            $bookDetail->total_sold = $totals[$bookDetail->id];
+            $bookDetail->benefits = $benefits[$bookDetail->id];
+        }
+
         return Inertia::render('Library/Dashboard', [
             'library' => $user->library,
+            'topSellingBooks' => $bookDetails,
         ]);
     }
 

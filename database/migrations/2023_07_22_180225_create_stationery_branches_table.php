@@ -1,9 +1,8 @@
 <?php
 
-use App\Models\User;
-use Illuminate\Support\Facades\Schema;
-use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
@@ -12,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('stationeries', function (Blueprint $table) {
+        Schema::create('stationery_branches', function (Blueprint $table) {
             $table->id();
             $table->string('name')->unique()->nullable();
             $table->string('phone')->unique()->nullable();
@@ -20,18 +19,29 @@ return new class extends Migration
             $table->string('city')->nullable();
             $table->string('google_maps')->nullable();
             $table->string('university')->nullable();
-            $table->foreignIdFor(User::class, 'user_id')
-                ->constrained('users', 'id')
-                ->cascadeOnDelete();
+
+            $table->unsignedBigInteger('stationery_id');
+            $table->unsignedBigInteger('user_id');
             $table->timestamps();
+
+            $table->foreign('user_id')
+                ->references('id')
+                ->on('users')
+                ->onDelete('cascade');
+
+            $table->foreign('stationery_id')
+                ->references('id')
+                ->on('stationeries')
+                ->onDelete('cascade');
         });
     }
+
 
     /**
      * Reverse the migrations.
      */
     public function down(): void
     {
-        Schema::dropIfExists('stationeries');
+        Schema::dropIfExists('stationery_branches');
     }
 };

@@ -47,13 +47,21 @@ export default function Index({ auth, orders }) {
                             </thead>
                             <tbody>
                                 {orders.map(((order) => {
+                                    // Check if the order is a StationeryBranchOrder
+                                    const isBranchOrder = order.hasOwnProperty('stationery_branch_id');
+
+                                    // Construct a unique key based on the order type
+                                    const key = isBranchOrder
+                                        ? `StationeryBranchOrder-${order.id}`
+                                        : `StationeryOrder-${order.id}`;
+
                                     return (
-                                        <tr key={order.id} className="bg-white ">
+                                        <tr key={key} className="bg-white ">
                                             <th scope="row" className="px-2 py-4   whitespace-nowrap ">
                                                 {order.id}
                                             </th>
                                             <th scope="row" className="px-2 py-4  whitespace-nowrap ">
-                                                {order.stationery.name}
+                                                {order.stationery?.name || order.stationery_branch?.name}
                                             </th>
                                             <td className="px-2 py-4" style={{ color: `${order.current_status && order.model_status[order.current_status]['color']}` }}>
                                                 {order.model_status[order.current_status]['message']['ar']}
