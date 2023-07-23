@@ -48,8 +48,6 @@ class StationeryOrderController extends Controller
      */
     public function store(Request $request, Note $note, Stationery $stationery)
     {
-        // Remmmber fix send order button.
-        // dd($request->all());
         try {
             DB::transaction(function () use ($request, $stationery, $note) {
                 $order = new StationeryOrder();

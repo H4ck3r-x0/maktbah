@@ -11,11 +11,11 @@ export default function Search({ auth, note, stationeries, cities, districts }) 
     const [selectedCityId, setSelectedCityId] = useState('');
     const [selectedPages, setSelectedPages] = useState({});
     const [selectedOptions, setSelectedOptions] = useState({});
+    const [branchSelected, setBranchSelected] = useState(null);
     const { data, setData, get } = useForm({
         search: filters.search,
         city: filters.city,
         district: filters.district,
-        branchSelected: null,
     });
 
     const handleOptionSelect = (option, itemId) => {
@@ -36,12 +36,6 @@ export default function Search({ auth, note, stationeries, cities, districts }) 
         });
     };
 
-    const handlePagesChange = (event, itemId) => {
-        setSelectedPages(prevState => ({
-            ...prevState,
-            [itemId]: parseInt(event.target.value)
-        }));
-    };
 
     const calculateTotalPrice = (stationeryId) => {
         const pages = note.number_of_pages || 0;
@@ -57,7 +51,7 @@ export default function Search({ auth, note, stationeries, cities, districts }) 
 
     const createOrder = (note, stationery, totalPrice, selectedPages, selectedOptions) => {
         router.post(route('stationery.order.store',
-            { note, stationery, totalPrice, selectedPages, selectedOptions, branch: data.branchSelected })
+            { note, stationery, totalPrice, selectedPages, selectedOptions, branch: branchSelected })
         );
     }
 
@@ -95,8 +89,8 @@ export default function Search({ auth, note, stationeries, cities, districts }) 
         setData('district', e.target.value);
     }
 
-    const branchSelected = (e) => {
-        setData('branchSelected', e.target.value)
+    const branchSelectedChanged = (e) => {
+        setBranchSelected(e.target.value)
     }
 
     return (
@@ -194,6 +188,7 @@ export default function Search({ auth, note, stationeries, cities, districts }) 
                                     </div>
                                 }
                                 {stationeries.data.map(item => {
+                                    const isStationeryCloseToUser = auth.user.city === item.city && auth.user.district === item.district;
                                     const totalPrice = calculateTotalPrice(item.id);
                                     return (
                                         <div key={item.id} className='bg-white p-4 md:p-8 rounded-md shadow-md'>
@@ -204,17 +199,16 @@ export default function Search({ auth, note, stationeries, cities, districts }) 
                                                 </h1>
                                                 <h1 className='text-xl text-gray-800'>
                                                     <span className='font-semibold text-gray-700'>المدينة </span>
-                                                    <span>{item.city}</span>
+                                                    <span>{item.city} {isStationeryCloseToUser && <span className='inline-block bg-green-200 text-green-800 px-2 py-1 text-xs font-bold rounded-full'>في مدينتك</span>}</span>
                                                 </h1>
                                                 <h1 className='text-xl text-gray-800'>
                                                     <span className='font-semibold text-gray-700'>الحي </span>
-                                                    <span>{item.district}</span>
-                                                </h1>
+                                                    <span>{item.district}{isStationeryCloseToUser && <span className='inline-block bg-green-200 text-green-800 px-2 py-1 text-xs font-bold rounded-full'>في الحي</span>}</span>                                                </h1>
                                             </div>
                                             <div className='pt-6 flex flex-col gap-4'>
                                                 {item.branches.length > 0 &&
                                                     <select
-                                                        onChange={branchSelected}
+                                                        onChange={branchSelectedChanged}
                                                         className='block w-full border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm'
                                                         name="branch" id="branch">
                                                         <option value="">إختر فرع القرطاسية - أو الفرع الرئيسي</option>
@@ -249,14 +243,13 @@ export default function Search({ auth, note, stationeries, cities, districts }) 
                                                 </div>
                                                 <button
                                                     onClick={() => createOrder(note.id, item.id, totalPrice, selectedPages[item.id], selectedOptions[item.id])}
-                                                    className={`px-2 py-1 bg-blue-500 text-white rounded disabled:bg-gray-400 ${selectedOptions[item.id] ? 'w-fit' : 'bg-gray-500 cursor-not-allowed w-fit'}`} disabled={!(selectedOptions[item.id])}> إرسال الطلب </button>
+                                                    className={`px-2 py-1 bg-blue-500 text-white rounded disabled:bg-gray-400 
+                                                    ${selectedOptions[item.id] ? 'w-fit' : 'bg-gray-500 cursor-not-allowed w-fit'}`}
+                                                    disabled={!(selectedOptions[item.id]) || totalPrice === 0}> إرسال الطلب </button>
                                             </div>
                                         </div>
                                     )
                                 })}
-
-
-
                             </div>
                             <Pagination class="mt-6" links={stationeries.links} />
                         </div>

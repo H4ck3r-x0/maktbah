@@ -17,7 +17,13 @@ class UserStationeryController extends Controller
      */
     public function index(Note $note)
     {
-        $query = Stationery::query()->with(['printingOptions', 'branches']);
+        $userCity = request()->user()->city;
+        $userDistrict = request()->user()->district;
+
+        $query = Stationery::query()
+            ->with(['printingOptions', 'branches'])
+            ->orderByRaw("city = ? DESC", $userCity)
+            ->orderByRaw("district = ? DESC", $userDistrict);
 
         if (request()->has('search')) {
             $search = request()->input('search');
