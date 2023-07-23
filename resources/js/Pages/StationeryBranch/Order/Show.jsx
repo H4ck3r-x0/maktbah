@@ -43,7 +43,7 @@ export default function Show({ auth, order }) {
                     <Link href="/">
                         <ApplicationLogo className=" w-20 h-20 fill-current text-gray-500" />
                     </Link>
-                    <Link href={route('order.stationery.index')} id='goBack' data-html2canvas-ignore>
+                    <Link href={route('stationery_branch.branch.stationery.orders')} id='goBack' data-html2canvas-ignore>
                         <PrimaryButton>
                             العودة
                         </PrimaryButton>
@@ -88,15 +88,10 @@ export default function Show({ auth, order }) {
                                 <tbody>
                                     <tr className="bg-white border">
                                         <th scope="row" className="px-3 py-4 text-gray-600 whitespace-nowrap ">
-                                            {order.stationery?.name || order.stationery_branch?.name}
-                                            {order.stationery?.city && order.stationery?.district &&
+                                            {order.stationery_branch.name}
+                                            {order.stationery_branch.city && order.stationery_branch.district &&
                                                 <h1 className='text-sm text-gray-400'>
-                                                    {order.stationery.city + ' - ' + order.stationery.district}
-                                                </h1>
-                                            }
-                                            {order.stationery_branch?.city && order.stationery_branch?.district &&
-                                                <h1 className='text-sm text-gray-400'>
-                                                    {order.stationery_branch?.city + ' - ' + order.stationery_branch?.district}
+                                                    {order.stationery_branch.city + ' - ' + order.stationery_branch.district}
                                                 </h1>
                                             }
                                         </th>

@@ -8,6 +8,7 @@ use App\Http\Middleware\IsBranch;
 use App\Http\Middleware\isLibrary;
 use App\Http\Middleware\isTeacher;
 use App\Http\Middleware\isStationery;
+use App\Http\Middleware\isStationeryBranch;
 use Illuminate\Foundation\Http\Kernel as HttpKernel;
 
 class Kernel extends HttpKernel
@@ -76,6 +77,7 @@ class Kernel extends HttpKernel
         'isBranch' => IsBranch::class,
         'isUser' => IsUser::class,
         'isTeacher' => isTeacher::class,
-        'isStationery' => isStationery::class
+        'isStationery' => isStationery::class,
+        'isStationeryBranch' => isStationeryBranch::class,
     ];
 }

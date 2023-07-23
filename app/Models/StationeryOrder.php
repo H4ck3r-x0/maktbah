@@ -58,6 +58,7 @@ class StationeryOrder extends Model
         'user_id',
         'note_id',
         'stationery_id',
+        'stationery_branch_id',
         'selected_pages',
         'options',
         'total_price',
@@ -88,5 +89,10 @@ class StationeryOrder extends Model
     public function stationery()
     {
         return $this->belongsTo(Stationery::class);
+    }
+
+    public function stationeryBranch()
+    {
+        return $this->belongsTo(StationeryBranche::class);
     }
 }

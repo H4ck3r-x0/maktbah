@@ -120,6 +120,7 @@ class User extends Authenticatable
             'branch' => 'فرع مكتبة',
             'teacher' => 'استاذ / استاذة',
             'stationery' => 'قرطاسية',
+            'stationery_branch' => 'فرع قرطاسية',
         ];
 
         return $roleNames[$this->role] ?? $this->role;
@@ -134,6 +135,7 @@ class User extends Authenticatable
             'branch' => '/branch/dashboard',
             'teacher' => '/teacher/dashboard',
             'stationery' => 'stationery/dashboard',
+            'stationery_branch' => 'stationery_branch/dashboard',
         ];
 
         return $redirectRoutes[$this->role] ?? '/dashboard';

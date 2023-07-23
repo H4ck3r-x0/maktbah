@@ -28,7 +28,6 @@ class StationeryBranchController extends Controller
      */
     public function create()
     {
-        // dashboard
         $user = User::with('stationery')->findOrFail(request()->user()->id);
 
         if ($user->stationery === null) {

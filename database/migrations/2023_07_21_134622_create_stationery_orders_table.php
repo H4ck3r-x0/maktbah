@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('user_id');
             $table->unsignedBigInteger('note_id');
-            $table->unsignedBigInteger('stationery_id');
+            $table->unsignedBigInteger('stationery_id')->nullable();
             $table->integer('selected_pages');
             $table->json('options');
             $table->decimal('total', 8, 2);

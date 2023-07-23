@@ -25,7 +25,7 @@ class TeacherFactory extends Factory
         ];
     }
 
-    public function forUser(User $user) // <-- function to use
+    public function forUser(User $user)
     {
         return $this->state(function (array $attributes) use ($user) {
             return [

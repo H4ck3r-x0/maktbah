@@ -3,9 +3,12 @@
 namespace Database\Factories;
 
 use App\Models\City;
+use App\Models\User;
 use App\Models\District;
-use Illuminate\Database\Eloquent\Factories\Factory;
+use App\Models\University;
 use Illuminate\Support\Str;
+use Database\Factories\User\UserProfileFactory;
+use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
  * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\User>
@@ -20,28 +23,35 @@ class UserFactory extends Factory
     public function definition(): array
     {
         $gender = fake()->randomElement(['male', 'female']);
+        $city = City::inRandomOrder()->first();
+        $district = District::inRandomOrder()->first();
 
         return [
             'name' => fake()->name($gender),
             'username' => fake()->unique()->userName(),
             'phone' => fake()->phoneNumber(),
             'gender' => $gender,
-            'city' => City::inRandomOrder()->first()->name,
-            'district' => District::inRandomOrder()->first()->name,
-            // 'email' => fake()->unique()->safeEmail(),
-            // 'email_verified_at' => now(),
+            'city' => $city->name,
+            'district' => $district->name,
             'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // password
             'remember_token' => Str::random(10),
         ];
     }
 
     /**
-     * Indicate that the model's email address should be unverified.
+     * Configure the UserFactory model factory.
+     *
+     * @return $this
      */
-    // public function unverified(): static
-    // {
-    //     return $this->state(fn (array $attributes) => [
-    //         'email_verified_at' => null,
-    //     ]);
-    // }
+    public function configure()
+    {
+        return $this->afterCreating(function (User $user) {
+            UserProfileFactory::new()->create(
+                [
+                    'University' => optional(University::inRandomOrder()->first())->name,
+                    'user_id' => $user->id
+                ]
+            );
+        });
+    }
 }

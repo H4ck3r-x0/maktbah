@@ -15,28 +15,19 @@ class UserStationeryOrderController extends Controller
      */
     public function index()
     {
-        $stationeryOrders = StationeryOrder::query()
+        $orders = StationeryOrder::query()
             ->where('user_id', request()->user()->id)
             ->with([
                 'stationery',
+                'stationeryBranch',
                 'user',
                 'note',
             ])
             ->latest()
             ->get();
 
-        $stationeryBranchOrders = StationeryBranchOrder::query()
-            ->where('user_id', request()->user()->id)
-            ->with([
-                'stationery_branch',
-                'user',
-                'note',
-            ])
-            ->latest()
-            ->get();
 
-        $orders = $stationeryOrders->concat($stationeryBranchOrders);
-        // dd($orders);
+
         return Inertia::render('User/StationeryOrder/Index', [
             'orders' => $orders,
         ]);
@@ -66,6 +57,7 @@ class UserStationeryOrderController extends Controller
         $order = StationeryOrder::query()
             ->with([
                 'stationery',
+                'stationeryBranch',
                 'user',
                 'note',
             ])

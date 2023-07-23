@@ -35,4 +35,9 @@ class StationeryBranche extends Model
     {
         return $this->belongsTo(Stationery::class);
     }
+
+    public function orders()
+    {
+        return $this->hasMany(StationeryOrder::class);
+    }
 }

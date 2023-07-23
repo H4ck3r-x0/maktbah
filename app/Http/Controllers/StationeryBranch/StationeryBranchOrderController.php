@@ -1,36 +1,36 @@
 <?php
 
-namespace App\Http\Controllers\Stationery;
+namespace App\Http\Controllers\StationeryBranch;
 
 use App\Models\Note;
 use Inertia\Inertia;
 use App\Models\Stationery;
 use Illuminate\Http\Request;
 use App\Models\StationeryOrder;
-use App\Models\StationeryBranche;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use App\Http\Controllers\Controller;
 
-class StationeryOrderController extends Controller
+class StationeryBranchOrderController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        $user = request()->user()->load('stationery');
+        $user = request()->user()->load('stationeryBranche');
+
         $orders = StationeryOrder::query()
-            ->where('stationery_id', $user->stationery->id)
+            ->where('stationery_branch_id', $user->stationeryBranche->id)
             ->with([
-                'stationery',
                 'user',
+                'stationeryBranch',
                 'note',
             ])
             ->latest()
             ->get();
 
-        return Inertia::render('Stationery/Order/Index', [
+        return Inertia::render('StationeryBranch/Order/Index', [
             'orders' => $orders,
         ]);
     }
@@ -87,14 +87,14 @@ class StationeryOrderController extends Controller
     {
         $order = StationeryOrder::query()
             ->with([
-                'stationery',
+                'stationeryBranch',
                 'user',
                 'note',
             ])
             ->findOrFail($id);
 
 
-        return Inertia::render('Stationery/Order/Show', [
+        return Inertia::render('StationeryBranch/Order/Show', [
             'order' => $order,
         ]);
     }

@@ -2,6 +2,8 @@
 
 namespace Database\Factories\User;
 
+use App\Models\User;
+use App\Models\University;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -17,7 +19,7 @@ class UserProfileFactory extends Factory
     public function definition(): array
     {
         return [
-            //
+            'user_id' => null,
         ];
     }
 }

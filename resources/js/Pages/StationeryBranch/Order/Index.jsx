@@ -7,17 +7,17 @@ import moment from 'moment/min/moment-with-locales';
 export default function Index({ auth, orders }) {
     const cancelOrder = (e, id) => {
         e.preventDefault();
-        router.post(route('stationery.main.orders.cancel', id));
+        router.post(route('stationery_branch.branch.stationery.orders.cancel', id));
     }
 
     const restoreOrder = (e, id) => {
         e.preventDefault();
-        router.post(route('stationery.main.orders.restore', id));
+        router.post(route('stationery_branch.branch.stationery.orders.restore', id));
     }
 
     const confirmOrder = (e, id) => {
         e.preventDefault();
-        router.post(route('stationery.main.orders.confirm', id));
+        router.post(route('stationery_branch.branch.stationery.orders.confirm', id));
     }
     return (
         <AuthenticatedLayout
@@ -64,7 +64,7 @@ export default function Index({ auth, orders }) {
                                                 {order.id}
                                             </th>
                                             <th scope="row" className="px-2 py-4  whitespace-nowrap ">
-                                                {order.stationery.name}
+                                                {order.stationery_branch.name}
                                             </th>
                                             <td className="px-2 py-4 whitespace-nowrap" style={{ color: `${order.current_status && order.model_status[order.current_status]['color']}` }}>
                                                 {order.model_status[order.current_status]['message']['ar']}
@@ -83,7 +83,7 @@ export default function Index({ auth, orders }) {
                                             </td>
 
                                             <td className="flex items-center gap-2 px-3 py-4 w-full">
-                                                <Link href={route('stationery.main.order.show', order.id)}>
+                                                <Link href={route('stationery_branch.branch.stationery.orders.show', order.id)}>
                                                     <PrimaryButton className='text-xs sm:text-sm'>
                                                         التفاصيل
                                                     </PrimaryButton>
