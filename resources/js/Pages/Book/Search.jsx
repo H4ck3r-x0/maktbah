@@ -65,11 +65,11 @@ export default function Search({ auth, books, cities, districts, topSilingBooks 
                             الكتب الأكثر طلبا
                         </h1>
                         <div className="bg-white overflow-hidden shadow-sm sm:rounded-lg">
-                            <div className="mx-auto grid grid-cols-1 sm:max-w-full sm:mx-0 sm:grid-cols-1 p-6 gap-2 flex-wrap text-gray-900">
+                            <div className="mx-auto grid grid-cols-1 sm:max-w-7xl  sm:grid-cols-1 p-6 gap-2 flex-wrap text-gray-900">
                                 {topSilingBooks.map((item) => {
                                     return (
                                         <div key={item.id} className='rounded-xl w-full shadow-lg border'>
-                                            <div className='flex w-full items-center justify-between bg-indigo-300 rounded-xl   '>
+                                            <div className='flex w-full items-center justify-between bg-indigo-300 rounded-xl px-4'>
                                                 <h1 className='p-2 w-full text-white text-xl whitespace-nowrap'><span className='font-semibold'>أسم الكتاب :</span> {item.book_name} </h1>
                                             </div>
                                         </div>

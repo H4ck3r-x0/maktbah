@@ -8,6 +8,7 @@ use App\Http\Controllers\Admin\Common\MajorController;
 use App\Http\Controllers\Admin\Common\UniversityController;
 use App\Http\Controllers\Admin\Library\LibraryController;
 use App\Http\Controllers\Admin\Order\OrderController;
+use App\Http\Controllers\Admin\Stationery\StationeryController;
 use App\Http\Controllers\Admin\User\UserController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
@@ -73,4 +74,8 @@ Route::middleware('auth')->group(function () {
     Route::get('orders', [OrderController::class, 'index'])->name('order.index');
     Route::get('/orders/{id}', [OrderController::class, 'show'])
         ->name('order.show');
+
+
+    //  Library Routes
+    Route::get('stationeries', [StationeryController::class, 'index'])->name('stationery.index');
 });
