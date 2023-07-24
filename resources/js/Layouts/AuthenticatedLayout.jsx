@@ -20,6 +20,7 @@ export default function Authenticated({ user, header, children }) {
             {user.role == 'teacher' && <AuthenticatedTeacherHeader user={user} />}
 
             {user.role == 'stationery' && <AuthenticatedStationeryHeader user={user} />}
+
             {user.role == 'stationery_branch' && <AuthenticatedStationeryBranchHeader user={user} />}
 
             {header && (

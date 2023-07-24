@@ -14,7 +14,7 @@ export default function Search({ auth, notes }) {
         search: filters.search,
     });
 
-    const searchBooks = () => {
+    const searchNotes = () => {
         get(route('search.notes.index',
             { search: data.search, page: currentPage }),
             {
@@ -25,7 +25,7 @@ export default function Search({ auth, notes }) {
     };
 
     const delayedSearch = useCallback(
-        debounce(searchBooks, 500),
+        debounce(searchNotes, 500),
 
         [data.search, currentPage]
     );
