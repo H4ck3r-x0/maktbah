@@ -8,6 +8,7 @@ use Inertia\Inertia;
 use App\Models\District;
 use App\Models\UserCart;
 use App\Models\BookLibrary;
+use App\Models\FailedSearch;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
@@ -33,6 +34,14 @@ class SearchBooksController extends Controller
                 $query->where('book_name', 'like', "%{$search}%")
                     ->orWhere('author_name', 'like', "%{$search}%");
             });
+
+            $bookExists = Book::where('book_name', 'like', "%{$search}%")->exists();
+            if (!$bookExists) {
+                FailedSearch::create([
+                    'query' => $search,
+                    'user_id' => request()->user() ? request()->user()->id : null,
+                ]);
+            }
         }
 
         if (request()->has('city')) {
@@ -56,6 +65,8 @@ class SearchBooksController extends Controller
         }
 
         $books = $query->paginate(5)->withQueryString();
+
+        // Store the empty book
 
         return Inertia::render('Book/Search', [
             'books' => $books,
