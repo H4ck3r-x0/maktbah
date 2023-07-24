@@ -60,7 +60,7 @@ export default function Register({ universies, majors }) {
                         <option value="stationery">قرطاسية</option>
                     </select>
 
-                    <InputError message={errors.name} className="mt-2" />
+                    <InputError message={errors.account_type} className="mt-2" />
                 </div>
 
                 {data.account_type === 'user' && (

@@ -163,6 +163,7 @@ return [
 
     'attributes' => [
         'number_of_pages' => 'عدد الصفحات',
+        'account_type' => 'نوع الحساب',
         'ad_image' => 'صورة الإعلان',
         'qty' => 'الكمية',
         'price' => 'السعر',
