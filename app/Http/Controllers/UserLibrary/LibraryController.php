@@ -30,10 +30,11 @@ class LibraryController extends Controller
         }
 
         $topSellingBooks = DB::table('order_details')
+            ->select('book_id', DB::raw('count(*) as total_sales'))
             ->join('orders', 'order_details.order_id', '=', 'orders.id')
+            ->join('book_library', 'book_library.id', '=', 'order_details.book_library_id')
             ->join('books', 'order_details.book_id', '=', 'books.id')
             ->join('statuses', 'orders.id', '=', 'statuses.model_id')
-            ->join('book_library', 'books.id', '=', 'book_library.book_id')
             ->select('order_details.book_id', DB::raw('count(*) as total'), DB::raw('SUM(order_details.total_price) as benefits'))
             ->where('statuses.name', 'confirmed')
             ->where('statuses.model_type', 'App\Models\Order')

@@ -9,6 +9,7 @@ use App\Models\Order;
 use App\Models\Library;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
+use App\Models\FailedSearch;
 
 class AdminDashboardController extends Controller
 {
@@ -39,7 +40,7 @@ class AdminDashboardController extends Controller
         }
 
         $books = $books->sortByDesc(function ($book) use ($totals) {
-            return $totals[$book->id]; // Sort by total_sold count in descending order
+            return $totals[$book->id];
         });
 
 
@@ -59,6 +60,7 @@ class AdminDashboardController extends Controller
                 'ordersCanceledByUser' => Order::currentStatus('canceled_by_user')->count(),
                 'confiremdOrders' => Order::currentStatus('confirmed')->count(),
                 'topSellingBooks' => $books->values(),
+                'failedSearchs' => FailedSearch::with('user:username,id')->get(),
             ]
         );
     }

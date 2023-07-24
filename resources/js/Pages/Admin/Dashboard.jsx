@@ -1,5 +1,6 @@
 import AdminAuthenticatedLayout from '@/Layouts/AdminAuthenticatedLayout';
 import { Head } from '@inertiajs/react';
+import moment from 'moment/min/moment-with-locales';
 
 export default function Dashboard({
     auth, booksCount,
@@ -14,6 +15,7 @@ export default function Dashboard({
     confiremdOrders,
     totalEarnings,
     topSellingBooks,
+    failedSearchs,
 }) {
 
     return (
@@ -28,7 +30,7 @@ export default function Dashboard({
                     <h1 className='text-xl mb-2 font-semibold text-gray-600'>
                         إحصائيات
                     </h1>
-                    <div className="bg-white overflow-hidden shadow-sm sm:rounded-lg">
+                    <div className="bg-white overflow-hidden border shadow-sm sm:rounded-lg">
                         <div className="mx-auto grid grid-cols-1 sm:max-w-full sm:mx-0 sm:grid-cols-3 p-6 gap-2 flex-wrap text-gray-900">
 
                             <div className='rounded-lg shadow-lg border'>
@@ -187,7 +189,7 @@ export default function Dashboard({
                     <h1 className='text-xl mb-2 font-semibold text-gray-600'>
                         الكتب أكثر طلبا
                     </h1>
-                    <div className="bg-white overflow-hidden shadow-sm sm:rounded-lg">
+                    <div className="bg-white border overflow-hidden shadow-sm sm:rounded-lg">
                         <div className="mx-auto grid grid-cols-1 sm:max-w-full sm:mx-0 sm:grid-cols-3 p-6 gap-2 flex-wrap text-gray-900">
                             {topSellingBooks.map((item) => {
                                 return (
@@ -212,6 +214,46 @@ export default function Dashboard({
                     </div>
                 </div>
             </div>
+            <div className='py-6 pb-60'>
+                <div className="max-w-7xl  mx-auto px-4 sm:px-6 lg:px-8">
+                    <h1 className='text-xl mb-2 font-semibold text-gray-600'>
+                        عمليات البحث عن الكتب الغير موجوده
+                    </h1>
+                    <div className='overflow-x-auto'>
+                        <table className="min-w-full  border divide-y divide-gray-200">
+                            <thead className="bg-gray-50">
+                                <tr className=''>
+                                    <th scope="col" className="px-6 py-3 text-right text-md font-medium text-gray-500 uppercase tracking-wider whitespace-nowrap">
+                                        عمليات البحث
+                                    </th>
+                                    <th scope="col" className="px-6 py-3 text-right text-md font-medium text-gray-500 uppercase tracking-wider whitespace-nowrap">
+                                        إسم الطالب / الطالبة
+                                    </th>
+                                    <th scope="col" className="px-6 py-3 text-right text-md font-medium text-gray-500 uppercase tracking-wider">
+                                        وقت العملية
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody className="bg-white divide-y divide-gray-200">
+                                {failedSearchs.map((search, index) => (
+                                    <tr key={index}>
+                                        <td className="px-6 py-4 whitespace-nowrap">
+                                            {search.query}
+                                        </td>
+                                        <td className="px-6 py-4 whitespace-nowrap">
+                                            {search.user.username}
+                                        </td>
+                                        <td className="w-80 px-6 py-4 whitespace-nowrap">
+                                            <span>{moment(search.created_at).locale('ar').format('MMMM Do YYYY h:mm:ss a')}</span>
+                                        </td>
+                                    </tr>
+                                ))}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
         </AdminAuthenticatedLayout>
     );
 }
