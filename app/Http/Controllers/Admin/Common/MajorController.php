@@ -34,7 +34,7 @@ class MajorController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'name' => 'required|string|max:255|unique:'.Major::class,
+            'name' => 'required|string|max:255|unique:' . Major::class,
             'levels' => 'required|numeric',
         ]);
 

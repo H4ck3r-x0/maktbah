@@ -1,6 +1,6 @@
-<?php
+l<?php
 
-return [
-    'previous' => 'السابق',
-    'next' => 'التالي',
-];
+    return [
+        'previous' => 'السابق',
+        'next' => 'التالي',
+    ];

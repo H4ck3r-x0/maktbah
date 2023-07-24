@@ -16,11 +16,11 @@ class BookController extends Controller
     {
         $books = Book::query()
             ->withCount(['countOrders'])
-            ->when(request()->search ?? false, function ($query, $search) {
+            ->when(request()->search, function ($query, $search) {
                 $query->where('book_name', 'like', "%{$search}%")
                     ->orWhere('author_name', 'like', "%{$search}%");
             })
-            ->when(request()->orderd ?? false, function ($query, $orderd) {
+            ->when(request()->orderd, function ($query, $orderd) {
                 $query->whereHas('countOrders', function () use ($orderd, $query) {
                     $orderd === 'highest' ?
                         $query->orderBy('count_orders_count', 'DESC')
