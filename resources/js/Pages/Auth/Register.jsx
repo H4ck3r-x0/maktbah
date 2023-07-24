@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import GuestLayout from '@/Layouts/GuestLayout';
 import InputError from '@/Components/InputError';
 import InputLabel from '@/Components/InputLabel';
@@ -6,14 +6,26 @@ import PrimaryButton from '@/Components/PrimaryButton';
 import TextInput from '@/Components/TextInput';
 import { Head, Link, useForm } from '@inertiajs/react';
 
-export default function Register() {
+export default function Register({ universies, majors }) {
+    const [filteredLevels, setFilteredLevels] = useState([]);
+
     const { data, setData, post, processing, errors, reset } = useForm({
         account_type: '',
-        // name: '',
         username: '',
         password: '',
         password_confirmation: '',
+        university: null,
+        major: null,
+        level: null,
+        gender: null,
     });
+
+    const handleMajorChange = (e) => {
+        const selectedMajor = e.target.value;
+        const levels = majors.find(major => major.name === selectedMajor)?.levels || [];
+        setData('major', selectedMajor);
+        setFilteredLevels(levels);
+    };
 
     useEffect(() => {
         return () => {
@@ -50,21 +62,78 @@ export default function Register() {
 
                     <InputError message={errors.name} className="mt-2" />
                 </div>
-                {/* <div>
-                    <InputLabel htmlFor="name" value="الأسم الكريم" />
 
-                    <TextInput
-                        id="name"
-                        name="name"
-                        value={data.name}
-                        className="mt-2 block w-full"
-                        autoComplete="name"
-                        onChange={(e) => setData('name', e.target.value)}
-                        required
-                    />
+                {data.account_type === 'user' && (
+                    <>
+                        <div className='mb-2 '>
+                            <InputLabel htmlFor="university" value="إسم الجامعة" />
+                            <select
+                                onChange={(e) => setData('university', e.target.value)}
+                                name="university"
+                                id="university"
+                                autoFocus
+                                required
+                                className='mt-2 block w-full border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm'>
+                                <option value="">أختر إسم الجامعة</option>
+                                {universies.map((university) => (
+                                    <option value={university.name} key={university.id}>{university.name}</option>
+                                ))}
+                            </select>
 
-                    <InputError message={errors.name} className="mt-2" />
-                </div> */}
+                            <InputError message={errors.university} className="mt-2" />
+                        </div>
+
+                        <div className='mb-2'>
+                            <InputLabel htmlFor="major" value="التخصص الجامعي" />
+                            <select
+                                onChange={(e) => handleMajorChange(e)}
+                                name="major"
+                                id="major"
+                                required
+                                className='mt-2 block w-full border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm'>
+                                <option value="">أختر التخصص الجامعي</option>
+                                {majors.map((major) => (
+                                    <option value={major.name} key={major.id}>{major.name}</option>
+                                ))}
+                            </select>
+
+                            <InputError message={errors.major} className="mt-2" />
+                        </div>
+
+                        <div className='mb-2'>
+                            <InputLabel htmlFor="level" value="المستوى الجامعي" />
+                            <select
+                                onChange={(e) => setData('level', e.target.value)}
+                                name="level"
+                                id="level"
+                                required
+                                className='mt-2 block w-full border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm'>
+                                <option value="">أختر المستوى الجامعي</option>
+                                {filteredLevels.map((level, index) => (
+                                    <option value={level} key={index}>{level}</option>
+                                ))}
+                            </select>
+
+                            <InputError message={errors.major} className="mt-2" />
+                        </div>
+
+                        <div className='mb-2'>
+                            <InputLabel htmlFor="gender" value="الجنس" />
+                            <select
+                                onChange={(e) => setData('gender', e.target.value)}
+                                name="gender"
+                                id="gender"
+                                required
+                                className='mt-2 block w-full border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm'>
+                                <option value="">أختر الجنس</option>
+                                <option value="male">ذكر</option>
+                                <option value="female">أنثى</option>
+                            </select>
+
+                            <InputError message={errors.gender} className="mt-2" />
+                        </div>
+                    </>
+                )}
 
                 <div className="mt-4">
                     <InputLabel htmlFor="username" value="أسم المستخدم" />

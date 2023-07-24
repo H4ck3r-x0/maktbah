@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Models\Major;
+use App\Models\University;
 use App\Models\User;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\RedirectResponse;
@@ -20,7 +22,12 @@ class RegisteredUserController extends Controller
      */
     public function create(): Response
     {
-        return Inertia::render('Auth/Register');
+        $universies = University::all();
+        $majors = Major::all();
+        return Inertia::render('Auth/Register', [
+            'universies' => $universies,
+            'majors' => $majors,
+        ]);
     }
 
     /**
@@ -32,16 +39,28 @@ class RegisteredUserController extends Controller
     {
         $request->validate([
             'account_type' => 'required|string|max:255',
-            // 'name' => 'required|string|max:255',
             'username' => 'required|string|alpha_dash|max:255|unique:' . User::class,
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
         ]);
 
-        $user = User::create([
-            // 'name' => $request->name,
+        $userData = [
             'username' => $request->username,
             'password' => Hash::make($request->password),
-        ]);
+        ];
+
+        if ($request->account_type === 'user') {
+            $userData['gender'] = $request->gender;
+            $userProfileData = [
+                'university' => $request->university,
+                'major' => $request->major,
+                'level' => $request->level,
+            ];
+
+            $user = User::create($userData);
+            $user->user_profile()->create($userProfileData);
+        } else {
+            $user = User::create($userData);
+        }
 
         if (!$request->has('account_type') && $request->account_type !== 'admin') {
             $user->assignRole('user');
