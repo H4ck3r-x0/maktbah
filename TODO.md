@@ -47,3 +47,5 @@
 طباعة وجهيين
 طباعة ملونة
 طباعة بشريط
+
+Fix upload images validation

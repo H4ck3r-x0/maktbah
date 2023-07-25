@@ -63,7 +63,7 @@ class BranchBookController extends Controller
         $request->validate([
             'qty' => 'required',
             'price' => 'required',
-            'ad_image' => 'nullable|mimes:jpg,png,jpeg|max:1024',
+            'ad_image' => 'nullable|mimes:jpg,png,jpeg|max:2048',
         ]);
 
         $user = $request->user()->load('branch');

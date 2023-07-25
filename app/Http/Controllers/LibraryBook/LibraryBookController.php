@@ -64,11 +64,10 @@ class LibraryBookController extends Controller
 
     public function store(Request $request)
     {
-        // dd($request->all());
         $request->validate([
             'qty' => 'required',
             'price' => 'required',
-            'ad_image' => 'nullable|mimes:jpg,png,jpeg|max:1024',
+            'ad_image' => 'nullable|mimes:jpg,png,jpeg|max:2048',
         ]);
 
         $user = $request->user()->load('library');
