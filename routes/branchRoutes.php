@@ -31,6 +31,9 @@ Route::middleware('auth')->group(function () {
     Route::delete('books/destroy/{id}', [BranchBookController::class, 'destroy'])
         ->name('book.destroy');
 
+    Route::delete('books/ad_image/delete/{id}', [BranchBookController::class, 'deleteBookAdImage'])
+    ->name('book.deleteBookAdImage');
+
     Route::post('books/restore/{id}', [BranchBookController::class, 'restore'])
         ->name('book.restore');
 

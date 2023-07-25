@@ -114,6 +114,7 @@ class BranchBookController extends Controller
         $request->validate([
             'qty' => 'required',
             'price' => 'required',
+            'ad_image' => 'nullable|mimes:jpg,png,jpeg|max:2048',
         ]);
 
         $branch = LibraryBranch::where('user_id', request()->user()->id)
@@ -177,6 +178,28 @@ class BranchBookController extends Controller
         }
 
         $user->branch->books()->updateExistingPivot($id, ['deleted_at' => now()]);
+    }
+
+    public function deleteBookAdImage(string $id)
+    {
+        $user = request()
+            ->user()
+            ->load('branch');
+        // Check if it has media
+        $bookMedia = $user->branch
+            ->books()
+            ->wherePivot('book_id', $id)
+            ->first();
+
+        if ($bookMedia !== null) {
+            $image = $bookMedia->pivot->getMedia('bookAdImage');
+
+            if (isset($image[0])) {
+                $image[0]->delete();
+            }
+        }
+
+        return redirect()->back();
     }
 
     public function restore(string $id)

@@ -19,8 +19,7 @@ class LibraryBookController extends Controller
     {
         $books = Book::query()
             ->when(request()->search ?? false, function ($query, $search) {
-                $query->where('book_name', 'like', "%{$search}%")
-                    ->orWhere('author_name', 'like', "%{$search}%");
+                $query->where('book_name', 'like', "%{$search}%")->orWhere('author_name', 'like', "%{$search}%");
             })
             ->orderBy('id', 'DESC')
             ->paginate(10)
@@ -39,18 +38,14 @@ class LibraryBookController extends Controller
         $addedBooks = [];
 
         foreach ($library->books as $book) {
-            array_push(
-                $addedBooks,
-                [
-                    'book_id' => $book->pivot->book_id,
-                    'qty' => $book->pivot->qty,
-                    'price' => $book->pivot->price,
-                    'offer' => $book->pivot->offer,
-                    'ad_image' => $book->pivot->getFirstMediaUrl('bookAdImage') ?
-                        $book->pivot->getFirstMediaUrl('bookAdImage') : null,
-                    'deleted_at' => $book->pivot->deleted_at,
-                ]
-            );
+            array_push($addedBooks, [
+                'book_id' => $book->pivot->book_id,
+                'qty' => $book->pivot->qty,
+                'price' => $book->pivot->price,
+                'offer' => $book->pivot->offer,
+                'ad_image' => $book->pivot->getFirstMediaUrl('bookAdImage') ? $book->pivot->getFirstMediaUrl('bookAdImage') : null,
+                'deleted_at' => $book->pivot->deleted_at,
+            ]);
         }
 
         return Inertia::render('LibraryBook/Create', [
@@ -60,7 +55,6 @@ class LibraryBookController extends Controller
             'currentPage' => request()->page,
         ]);
     }
-
 
     public function store(Request $request)
     {
@@ -72,23 +66,24 @@ class LibraryBookController extends Controller
 
         $user = $request->user()->load('library');
 
-        $user->library->books()->sync([
-            $request->book_id => [
-                'qty' => $request->qty,
-                'price' => $request->price,
-                'offer' => $request->offer,
+        $user->library->books()->sync(
+            [
+                $request->book_id => [
+                    'qty' => $request->qty,
+                    'price' => $request->price,
+                    'offer' => $request->offer,
+                ],
             ],
-        ], false);
-
+            false,
+        );
 
         if (gettype($request->ad_image) === 'object') {
-            $attachedBook = $user->library->books()
+            $attachedBook = $user->library
+                ->books()
                 ->wherePivot('book_id', $request->book_id)
-                ->first()
-                ->pivot;
+                ->first()->pivot;
 
-            $attachedBook->addMedia($request->ad_image)
-                ->toMediaCollection('bookAdImage');
+            $attachedBook->addMedia($request->ad_image)->toMediaCollection('bookAdImage');
         }
 
         return redirect()->back();
@@ -102,6 +97,7 @@ class LibraryBookController extends Controller
         $request->validate([
             'qty' => 'required',
             'price' => 'required',
+            'ad_image' => 'nullable|mimes:jpg,png,jpeg|max:2048',
         ]);
 
         $library = Library::where('user_id', request()->user()->id)
@@ -119,19 +115,17 @@ class LibraryBookController extends Controller
         $librariesBooks = BookLibrary::where('book_id', $request->book_id)->get();
 
         if ($request->hasFile('ad_image')) {
-            $bookMedia = $library->books()
+            $bookMedia = $library
+                ->books()
                 ->wherePivot('book_id', $id)
-                ->first()
-                ->pivot;
+                ->first()->pivot;
 
             $media = $bookMedia->getMedia('bookAdImage');
             if (isset($media[0])) {
-
                 $media[0]->delete();
             }
 
-            $bookMedia->addMedia($request->ad_image)
-                ->toMediaCollection('bookAdImage');
+            $bookMedia->addMedia($request->ad_image)->toMediaCollection('bookAdImage');
         }
         // Get all users carts
         $cart = UserCart::get();
@@ -153,9 +147,12 @@ class LibraryBookController extends Controller
      */
     public function destroy(string $id)
     {
-        $user = request()->user()->load('library');
+        $user = request()
+            ->user()
+            ->load('library');
         // Check if it has media
-        $bookMedia = $user->library->books()
+        $bookMedia = $user->library
+            ->books()
             ->wherePivot('book_id', $id)
             ->first();
 
@@ -167,9 +164,33 @@ class LibraryBookController extends Controller
         $user->library->books()->updateExistingPivot($id, ['deleted_at' => now()]);
     }
 
+    public function deleteBookAdImage(string $id)
+    {
+        $user = request()
+            ->user()
+            ->load('library');
+        // Check if it has media
+        $bookMedia = $user->library
+            ->books()
+            ->wherePivot('book_id', $id)
+            ->first();
+
+        if ($bookMedia !== null) {
+            $image = $bookMedia->pivot->getMedia('bookAdImage');
+
+            if (isset($image[0])) {
+                $image[0]->delete();
+            }
+        }
+
+        return redirect()->back();
+    }
+
     public function restore(string $id)
     {
-        $user = request()->user()->load('library');
+        $user = request()
+            ->user()
+            ->load('library');
 
         $user->library->books()->updateExistingPivot($id, ['deleted_at' => null]);
     }

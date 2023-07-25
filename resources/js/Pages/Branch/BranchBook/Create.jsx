@@ -67,11 +67,14 @@ export default function Create({ auth, books, addedBooks }) {
 
         router.post(
             route("branch.book.update", bookId),
-            { book_id, qty, price, offer },
+            { book_id, qty, price, offer, ad_image: adImage },
             {
                 preserveScroll: true,
                 onError: (error) => {
                     let message = "";
+                    if (error.ad_image) {
+                        message = error.ad_image;
+                    }
                     if (error.price) {
                         message = error.price;
                     }
@@ -134,6 +137,16 @@ export default function Create({ auth, books, addedBooks }) {
                 },
             }
         );
+    };
+
+    const deleteBookAdImage = (e, bookID) => {
+        e.preventDefault();
+        router.delete(route("branch.book.deleteBookAdImage", bookID), {
+            preserveScroll: true,
+            onSuccess: () => {
+
+            },
+        });
     };
 
     const removeBook = (e, bookID) => {
@@ -343,31 +356,28 @@ export default function Create({ auth, books, addedBooks }) {
                                                         }
                                                         placeholder="عرض إضافي"
                                                     />
-                                                    <div className="py-4 w-full">
-                                                        <label className="flex items-center justify-center w-full py-2 px-4 border border-gray-300 rounded-md shadow-sm transition duration-300 focus:border-indigo-500 focus:ring-indigo-500 hover:border-indigo-500 focus:outline-none hover:cursor-pointer">
+                                                    <div className="py-4 flex items-center justify-between gap-2 w-full">
+                                                        <label className="flex  items-center justify-center w-full  py-2 px-4 border border-gray-300 rounded-md shadow-sm transition duration-300 focus:border-indigo-500 focus:ring-indigo-500 hover:border-indigo-500 focus:outline-none hover:cursor-pointer">
                                                             <div className="flex flex-col items-center gap-1">
-                                                                <span className="mr-2">
-                                                                    أختر صورة
-                                                                    الأعلان
-                                                                </span>
+                                                                <span className="mr-2">أختر صورة الأعلان</span>
                                                                 <span className="text-xs text-gray-400 font-semibold mr-2">
-                                                                    حجم الصورة
-                                                                    يجب ان يكون
-                                                                    2 MB
+                                                                    حجم الصورة يجب ان يكون 2 MB
                                                                 </span>
                                                             </div>
                                                             <input
                                                                 name="adImage"
-                                                                onChange={(e) =>
-                                                                    adImageChanged(
-                                                                        e,
-                                                                        book.id
-                                                                    )
-                                                                }
+                                                                onChange={(e) => adImageChanged(e, book.id)}
                                                                 type="file"
                                                                 className="hidden"
                                                             />
                                                         </label>
+                                                        <div className=" whitespace-nowrap">
+                                                            {LibraryBooks.find(
+                                                                (value) => value.book_id === book.id
+                                                            )?.ad_image ? (
+                                                                <PrimaryButton className="py-5" onClick={(e) => deleteBookAdImage(e, book.id)}>حذف الاعلان</PrimaryButton>
+                                                            ) : null}
+                                                        </div>
                                                     </div>
                                                 </div>
                                                 <div className="flex pt-2">
@@ -377,75 +387,75 @@ export default function Create({ auth, books, addedBooks }) {
                                                                 value.book_id ==
                                                                 book.id
                                                         ) && (
-                                                            <PrimaryButton
-                                                                onClick={() =>
-                                                                    addNewBook(
-                                                                        book.id
-                                                                    )
-                                                                }
-                                                            >
-                                                                أضف
-                                                            </PrimaryButton>
-                                                        )}
+                                                                <PrimaryButton
+                                                                    onClick={() =>
+                                                                        addNewBook(
+                                                                            book.id
+                                                                        )
+                                                                    }
+                                                                >
+                                                                    أضف
+                                                                </PrimaryButton>
+                                                            )}
 
                                                         {addedBooks.some(
                                                             (value) =>
                                                                 value.book_id ==
                                                                 book.id
                                                         ) && (
-                                                            <SecondaryButton
-                                                                onClick={(e) =>
-                                                                    updateBook(
-                                                                        e,
-                                                                        book.id
-                                                                    )
-                                                                }
-                                                            >
-                                                                تحديث
-                                                            </SecondaryButton>
-                                                        )}
+                                                                <SecondaryButton
+                                                                    onClick={(e) =>
+                                                                        updateBook(
+                                                                            e,
+                                                                            book.id
+                                                                        )
+                                                                    }
+                                                                >
+                                                                    تحديث
+                                                                </SecondaryButton>
+                                                            )}
                                                     </div>
                                                     {LibraryBooks.some(
                                                         (value) =>
                                                             value.book_id ===
                                                             book.id
                                                     ) && (
-                                                        <div>
-                                                            {LibraryBooks.some(
-                                                                (value) =>
-                                                                    value.book_id ===
+                                                            <div>
+                                                                {LibraryBooks.some(
+                                                                    (value) =>
+                                                                        value.book_id ===
                                                                         book.id &&
-                                                                    value.deleted_at ===
+                                                                        value.deleted_at ===
                                                                         null
-                                                            ) ? (
-                                                                <DangerButton
-                                                                    onClick={(
-                                                                        e
-                                                                    ) =>
-                                                                        removeBook(
-                                                                            e,
-                                                                            book.id
-                                                                        )
-                                                                    }
-                                                                >
-                                                                    حذف
-                                                                </DangerButton>
-                                                            ) : (
-                                                                <DangerButton
-                                                                    onClick={(
-                                                                        e
-                                                                    ) =>
-                                                                        restoreBook(
-                                                                            e,
-                                                                            book.id
-                                                                        )
-                                                                    }
-                                                                >
-                                                                    إستعادة
-                                                                </DangerButton>
-                                                            )}
-                                                        </div>
-                                                    )}
+                                                                ) ? (
+                                                                    <DangerButton
+                                                                        onClick={(
+                                                                            e
+                                                                        ) =>
+                                                                            removeBook(
+                                                                                e,
+                                                                                book.id
+                                                                            )
+                                                                        }
+                                                                    >
+                                                                        حذف
+                                                                    </DangerButton>
+                                                                ) : (
+                                                                    <DangerButton
+                                                                        onClick={(
+                                                                            e
+                                                                        ) =>
+                                                                            restoreBook(
+                                                                                e,
+                                                                                book.id
+                                                                            )
+                                                                        }
+                                                                    >
+                                                                        إستعادة
+                                                                    </DangerButton>
+                                                                )}
+                                                            </div>
+                                                        )}
                                                 </div>
                                             </div>
                                         </div>
