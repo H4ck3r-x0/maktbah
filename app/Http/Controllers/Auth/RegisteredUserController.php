@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Models\City;
+use App\Models\District;
 use App\Models\Major;
 use App\Models\University;
 use App\Models\User;
@@ -24,9 +26,12 @@ class RegisteredUserController extends Controller
     {
         $universies = University::all();
         $majors = Major::all();
+
         return Inertia::render('Auth/Register', [
             'universies' => $universies,
             'majors' => $majors,
+            'cities' => City::all(),
+            'districts' => District::all(),
         ]);
     }
 
@@ -50,6 +55,9 @@ class RegisteredUserController extends Controller
 
         if ($request->account_type === 'user') {
             $userData['gender'] = $request->gender;
+            $userData['city'] = $request->city;
+            $userData['district'] = $request->district;
+
             $userProfileData = [
                 'university' => $request->university,
                 'major' => $request->major,

@@ -18,9 +18,9 @@ export default function Create({ auth, cities, districts }) {
         phone: '',
         CR: '',
         city: '',
-        selectedCityId: selectedCityId || '',
         district: '',
-        google_maps: ''
+        google_maps: '',
+        selectedCityId: selectedCityId || '',
     });
 
     const cityChanged = (e) => {
