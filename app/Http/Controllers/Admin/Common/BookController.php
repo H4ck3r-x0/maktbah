@@ -52,7 +52,7 @@ class BookController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'book_name' => 'required|string|max:255',
+            'book_name' => 'required|string|max:255|unique:' . Book::class,
             'author_name' => 'required|string|max:255',
             'edition_number' => 'required|string|max:255',
             'volume_number' => 'required|string|max:255',
