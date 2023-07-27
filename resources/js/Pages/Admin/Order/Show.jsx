@@ -34,7 +34,7 @@ export default function Show({ auth, order }) {
                     <Link href="/">
                         <ApplicationLogo className=" w-20 h-20 fill-current text-gray-500" />
                     </Link>
-                    <Link href={'/admin/orders'} id='goBack' data-html2canvas-ignore>
+                    <Link href={route('admin.order.index')} id='goBack' data-html2canvas-ignore>
                         <PrimaryButton>
                             العودة
                         </PrimaryButton>

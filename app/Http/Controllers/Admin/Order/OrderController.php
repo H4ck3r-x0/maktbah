@@ -61,7 +61,7 @@ class OrderController extends Controller
 
         $this->authorize('view', $order);
 
-        return Inertia::render('User/Order/Show', [
+        return Inertia::render('Admin/Order/Show', [
             'order' => $order,
         ]);
     }
