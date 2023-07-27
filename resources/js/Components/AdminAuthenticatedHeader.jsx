@@ -19,9 +19,6 @@ export default function AdminAuthenticatedHeader({ user }) {
                         </div>
 
                         <div className="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
-                            <NavLink href={route('admin.dashboard')} active={route().current('admin.dashboard')}>
-                                الرئيسية
-                            </NavLink>
                             <div className='inline-flex ml-4 items-center px-1 pt-1 border-b-2 text-md font-medium leading-5 transition duration-150 ease-in-out focus:outline-none'>
                                 <Dropdown>
                                     <Dropdown.Trigger>
@@ -182,6 +179,9 @@ export default function AdminAuthenticatedHeader({ user }) {
                                     </Dropdown.Content>
                                 </Dropdown>
                             </div>
+                            <NavLink href={route('admin.note.index')} active={route().current('admin.note.index')}>
+                                المذكرات
+                            </NavLink>
                             <div className='inline-flex ml-4 items-center px-1 pt-1 border-b-2 text-md font-medium leading-5 transition duration-150 ease-in-out focus:outline-none'>
                                 <Dropdown>
                                     <Dropdown.Trigger>
@@ -304,6 +304,9 @@ export default function AdminAuthenticatedHeader({ user }) {
                     </ResponsiveNavLink>
                     <ResponsiveNavLink href={route('admin.book.create')} active={route().current('admin.book.create')}>
                         إضافة كتب
+                    </ResponsiveNavLink>
+                    <ResponsiveNavLink href={route('admin.note.index')} active={route().current('admin.note.index')}>
+                        المذكرات
                     </ResponsiveNavLink>
                     <ResponsiveNavLink href={route('admin.major.create')} active={route().current('admin.major.create')}>
                         إضافة تخصصات

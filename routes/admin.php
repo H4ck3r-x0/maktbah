@@ -7,6 +7,7 @@ use App\Http\Controllers\Admin\Common\DistrictController;
 use App\Http\Controllers\Admin\Common\MajorController;
 use App\Http\Controllers\Admin\Common\UniversityController;
 use App\Http\Controllers\Admin\Library\LibraryController;
+use App\Http\Controllers\Admin\Note\NoteController;
 use App\Http\Controllers\Admin\Order\OrderController;
 use App\Http\Controllers\Admin\Stationery\StationeryController;
 use App\Http\Controllers\Admin\User\UserController;
@@ -78,4 +79,7 @@ Route::middleware('auth')->group(function () {
 
     //  Library Routes
     Route::get('stationeries', [StationeryController::class, 'index'])->name('stationery.index');
+
+    //  Notes Routes
+    Route::get('notes', [NoteController::class, 'index'])->name('note.index');
 });
