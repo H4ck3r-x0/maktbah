@@ -10,7 +10,10 @@ export default function Show({ auth, order }) {
 
     const printInvoice = () => {
         const divToPrint = document.getElementById('divToPrint');
-        html2canvas(divToPrint)
+        html2canvas(divToPrint, {
+            logging: false,
+            scale: 2
+        })
             .then((canvas) => {
                 const convertToImage = canvas.toDataURL('image/png');
                 const PDF = new jsPDF();
@@ -27,10 +30,15 @@ export default function Show({ auth, order }) {
             header={<h2 className="font-semibold text-xl text-gray-800 leading-tight">تفاصيل الطلب #{order.id}</h2>}
         >
             <Head title={`تفاصل الطلب #${order.id}`} />
-            <div className=" py-6" id="divToPrint">
-                <div className='px-6 pb-10'>
+            <div className="max-h-screen max-w-max mx-auto py-6" id="divToPrint">
+                <div className='flex  items-center justify-between px-6 pb-10'>
                     <Link href="/">
                         <ApplicationLogo className=" w-20 h-20 fill-current text-gray-500" />
+                    </Link>
+                    <Link href={route('user.order.index')} id='goBack' data-html2canvas-ignore>
+                        <PrimaryButton>
+                            العودة
+                        </PrimaryButton>
                     </Link>
                 </div>
                 <div className="sm:px-6 lg:px-8">

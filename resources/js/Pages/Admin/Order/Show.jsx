@@ -9,7 +9,10 @@ import html2canvas from 'html2canvas';
 export default function Show({ auth, order }) {
     const printInvoice = () => {
         const divToPrint = document.getElementById('divToPrint');
-        html2canvas(divToPrint)
+        html2canvas(divToPrint, {
+            logging: false,
+            scale: 2
+        })
             .then((canvas) => {
                 const convertToImage = canvas.toDataURL('image/png');
                 const PDF = new jsPDF();
@@ -26,10 +29,15 @@ export default function Show({ auth, order }) {
             header={<h2 className="font-semibold text-xl text-gray-800 leading-tight">تفاصيل الطلب #{order.id}</h2>}
         >
             <Head title={`تفاصل الطلب #${order.id}`} />
-            <div className=" py-6" id="divToPrint">
-                <div className='px-6 pb-10'>
+            <div className="max-h-screen max-w-max mx-auto py-6" id="divToPrint">
+                <div className='flex  items-center justify-between px-6 pb-10'>
                     <Link href="/">
                         <ApplicationLogo className=" w-20 h-20 fill-current text-gray-500" />
+                    </Link>
+                    <Link href={route('admin.order.index')} id='goBack' data-html2canvas-ignore>
+                        <PrimaryButton>
+                            العودة
+                        </PrimaryButton>
                     </Link>
                 </div>
                 <div className="sm:px-6 lg:px-8">
@@ -115,15 +123,15 @@ export default function Show({ auth, order }) {
                             </table>
                         </div>
 
-                        <div className='w-full flex items-center justify-between pt-10'>
+                        <div className='w-full flex flex-col items-center justify-between pt-10'>
                             <div>
-                                <p className='text-lg text-gray-700'>هذي الفاتورة تقوم بعرضعها على اصحاب المكتبات التي قمت بالطلب منها .</p>
-                            </div>
-                            <div>
-                                <h1 className='flex flex-col gap-3 text-lg font-semibold text-gray-700'>
+                                <h1 className='flex flex-col items-center gap-3 text-lg font-semibold text-gray-700'>
                                     <span>إجمالي قيمة المشتريات</span>
                                     <span>{order.total_payment} ريال</span>
                                 </h1>
+                            </div>
+                            <div className='mt-3'>
+                                <p className='text-lg text-gray-700'>هذي الفاتورة تقوم بعرضعها على اصحاب المكتبات التي قمت بالطلب منها .</p>
                             </div>
                         </div>
                     </div>
