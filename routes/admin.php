@@ -76,7 +76,6 @@ Route::middleware('auth')->group(function () {
     Route::get('/orders/{id}', [OrderController::class, 'show'])
         ->name('order.show');
 
-
     //  Library Routes
     Route::get('stationeries', [StationeryController::class, 'index'])->name('stationery.index');
 
