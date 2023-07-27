@@ -148,7 +148,7 @@ export default function Index({ auth, orders }) {
                                                                 تأكيد الطلب
                                                             </SecondaryButton>
                                                         }
-                                                        {order.current_status !== 'canceled_by_user' || order.current_status !== 'confiremd' &&
+                                                        {order.current_status !== 'canceled_by_user' && order.current_status !== 'confirmed' &&
                                                             <DangerButton className='text-xs sm:text-sm whitespace-nowrap' onClick={(e) => cancelOrder(e, order.id)}>
                                                                 إلغاء الطلب
                                                             </DangerButton>
