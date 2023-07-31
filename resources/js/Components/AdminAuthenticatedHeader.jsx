@@ -213,6 +213,7 @@ export default function AdminAuthenticatedHeader({ user }) {
                                         <Dropdown.Link href={route('admin.district.create')}>اضافة أحياء</Dropdown.Link>
                                         <Dropdown.Link href={route('admin.university.create')}>اضافة جامعات</Dropdown.Link>
                                         <Dropdown.Link href={route('admin.major.create')}>اضافة تخصصات</Dropdown.Link>
+                                        <Dropdown.Link href={route('admin.ads.create')}>اضافة اعلان</Dropdown.Link>
                                     </Dropdown.Content>
                                 </Dropdown>
                             </div>
@@ -313,6 +314,9 @@ export default function AdminAuthenticatedHeader({ user }) {
                     </ResponsiveNavLink>
                     <ResponsiveNavLink href={route('admin.university.create')} active={route().current('admin.university.create')}>
                         إضافة جامعات
+                    </ResponsiveNavLink>
+                    <ResponsiveNavLink href={route('admin.ads.create')} active={route().current('admin.ads.create')}>
+                        إضافة اعلان
                     </ResponsiveNavLink>
                 </div>
 

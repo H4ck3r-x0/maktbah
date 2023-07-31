@@ -6,7 +6,7 @@ import Pagination from '@/Pages/Components/Pagination';
 import BookCard from './Components/BookCard';
 import BookCardBranch from './Components/BookCardBranch';
 
-export default function Search({ auth, books, cities, districts, topSilingBooks }) {
+export default function Search({ auth, books, cities, districts, topSilingBooks, adminAdImage }) {
     const filters = usePage().props.filters;
     const currentPage = usePage().props.currentPage;
     const [selectedCityId, setSelectedCityId] = useState('');
@@ -59,33 +59,18 @@ export default function Search({ auth, books, cities, districts, topSilingBooks 
             <Head title="البحث عن الكتب" />
 
             <div className="py-2">
-                <div className='py-6'>
-                    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                        <h1 className='text-xl mb-2 font-semibold text-gray-600'>
-                            الكتب الأكثر طلبا
-                        </h1>
-                        <div className="bg-white overflow-hidden shadow-sm sm:rounded-lg">
-                            <div className="mx-auto grid grid-cols-1 sm:max-w-7xl  sm:grid-cols-1 p-6 gap-2 flex-wrap text-gray-900">
-                                {topSilingBooks.map((item) => {
-                                    return (
-                                        <div key={item.id} className='rounded-xl w-full shadow-lg border'>
-                                            <div className='flex w-full items-center justify-between bg-indigo-300 rounded-xl px-4'>
-                                                <h1 className='p-2 w-full text-white text-xl whitespace-nowrap'><span className='font-semibold'>أسم الكتاب :</span> {item.book_name} </h1>
-                                            </div>
-                                        </div>
-                                    )
-                                })}
-                            </div>
-                        </div>
+                {adminAdImage &&
+                    <div className='container mx-auto py-4'>
+                        <img src={adminAdImage} className="w-full h-72 shadow-lg rounded-lg" alt="" />
                     </div>
-                </div>
-                <div className="max-w-7xl mx-auto sm:px-6 lg:px-8">
-                    <div className='w-full sm:inline-flex ml-4 items-center gap-3 px-6 '>
+                }
+                <div className="max-w-7xl mx-auto  sm:px-6 lg:px-8">
+                    <div className='w-full mx-auto sm:inline-flex ml-4 justify-center items-center gap-3 px-6 '>
                         <input
                             value={data.search || ''}
                             onChange={(e) => setData('search', e.target.value)}
                             type="text"
-                            className='w-full sm:max-w-xl  border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm'
+                            className='w-full md:max-w-xl  border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm'
                             placeholder='إبحث بإسم الكتاب او المؤلف ...'
                         />
 
@@ -131,10 +116,25 @@ export default function Search({ auth, books, cities, districts, topSilingBooks 
                         <div className="p-6 text-gray-900">
                             <div className='container mx-auto grid grid-cols-1 sm:grid-cols-1  gap-4'>
                                 {!books.data.length &&
-                                    <div>
-                                        <h1 className='text-center sm:text-right text-lg sm:text-xl text-gray-900'>
-                                            لا يوجد تطابق لبحثك، حاول مره اخرى!
-                                        </h1>
+                                    <div className='py-6'>
+                                        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                                            <h1 className='text-xl mb-2 font-semibold text-gray-600'>
+                                                الكتب الأكثر طلبا
+                                            </h1>
+                                            <div className="bg-white overflow-hidden shadow-sm sm:rounded-lg">
+                                                <div className="mx-auto grid grid-cols-1 sm:max-w-7xl  sm:grid-cols-1 p-6 gap-2 flex-wrap text-gray-900">
+                                                    {topSilingBooks.map((item) => {
+                                                        return (
+                                                            <div key={item.id} className='rounded-xl w-full shadow-lg border'>
+                                                                <div className='flex w-full items-center justify-between bg-indigo-300 rounded-xl px-4'>
+                                                                    <h1 className='p-2 w-full text-white text-xl whitespace-nowrap'><span className='font-semibold'>أسم الكتاب :</span> {item.book_name} </h1>
+                                                                </div>
+                                                            </div>
+                                                        )
+                                                    })}
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
                                 }
                                 {books.data.map(item => {

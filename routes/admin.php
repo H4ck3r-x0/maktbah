@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Admin\AdminDashboardController;
+use App\Http\Controllers\Admin\Ads\AdController;
 use App\Http\Controllers\Admin\Common\BookController;
 use App\Http\Controllers\Admin\Common\CityController;
 use App\Http\Controllers\Admin\Common\DistrictController;
@@ -62,6 +63,12 @@ Route::middleware('auth')->group(function () {
     Route::get('universities/create', [UniversityController::class, 'create'])->name('university.create');
     Route::post('universities/store', [UniversityController::class, 'store'])->name('university.store');
     Route::get('universities/edit/{id}', [UniversityController::class, 'edit'])->name('university.edit');
+
+    // Settings Ads
+    Route::get('ads/create', [AdController::class, 'index'])->name('ads.create');
+    Route::post('ads/store', [AdController::class, 'store'])->name('ads.store');
+    Route::delete('ads/destroy', [AdController::class, 'destroy'])->name('ads.destroy');
+
 
 
     // Books

@@ -162,6 +162,7 @@ return [
 
 
     'attributes' => [
+        'adImage' => 'صورة الإعلان',
         'book_name' => 'اسم الكتاب',
         'number_of_pages' => 'عدد الصفحات',
         'account_type' => 'نوع الحساب',

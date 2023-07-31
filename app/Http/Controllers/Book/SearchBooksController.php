@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Book;
 use App\Models\Book;
 use App\Models\City;
 use Inertia\Inertia;
+use App\Models\AdminAds;
 use App\Models\District;
 use App\Models\UserCart;
 use App\Models\BookLibrary;
@@ -66,7 +67,8 @@ class SearchBooksController extends Controller
 
         $books = $query->paginate(5)->withQueryString();
 
-        // Store the empty book
+        $adminAd = AdminAds::first();
+        $adminAdImage = $adminAd ? $adminAd->getAdminAdImageAttribute() : null;
 
         return Inertia::render('Book/Search', [
             'books' => $books,
@@ -74,6 +76,7 @@ class SearchBooksController extends Controller
             'currentPage' => request()->page,
             'cities' => City::all(),
             'districts' => District::all(),
+            'adminAdImage' => $adminAdImage,
             'filters' => request()->only(['search', 'city', 'district', 'page']),
         ]);
     }
