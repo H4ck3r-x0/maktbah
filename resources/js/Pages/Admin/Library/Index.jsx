@@ -158,9 +158,7 @@ export default function Index({ auth, libraries, cities, districts }) {
                                 <table className={`w-full text-sm text-right text-gray-500 border`}>
                                     <thead className="text-sm text-gray-700 uppercase bg-gray-100 rounded-md border">
                                         <tr>
-                                            <th scope="col" className="px-2 py-3">
-                                                #
-                                            </th>
+
                                             <th scope="col" className="px-2 py-3 tracking-wider">
                                                 أسم المكتبة
                                             </th>
@@ -188,17 +186,18 @@ export default function Index({ auth, libraries, cities, districts }) {
                                     <tbody>
                                         {libraries.data.map(library => (
                                             <tr className="bg-white border-b hover:bg-gray-100 hover:transition-all" key={library.id}>
-                                                <th scope="row" className="px-2 py-4 font-medium text-gray-900 ">
-                                                    {library.id}
-                                                </th>
-                                                <td className="px-2 py-4">
-                                                    {library.name}
+
+                                                <td className="flex flex-col items-center px-2 py-4">
+                                                    <span>{library.name}</span>
+                                                    {library.branches_sum_id &&
+                                                        <span className='text-xs  font-semibold mt-1 text-gray-500'> عدد الفروع {library.branches_sum_id}</span>
+                                                    }
                                                 </td>
 
                                                 <td className="px-2 py-4 w-fit">
-                                                    {library.orders_sum_total_payment ?
+                                                    {library.total_payment ?
                                                         <span className='text-green-500 text-sm  font-semibold'>
-                                                            {library.orders_sum_total_payment} ريال
+                                                            {library.total_payment} ريال
                                                         </span> :
                                                         'لايوجد'}
                                                 </td>

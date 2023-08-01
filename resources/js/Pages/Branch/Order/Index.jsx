@@ -131,7 +131,7 @@ export default function Index({ auth, orders }) {
                                                 {order.total} ريال
                                             </td>
                                             <td className="flex items-center gap-2 px-3 py-4 w-full">
-                                                <Link href={route('branch.order.show', order.id)}>
+                                                <Link href={route('library.order.show', order.id)}>
                                                     <PrimaryButton className='text-xs sm:text-sm'>
                                                         التفاصيل
                                                     </PrimaryButton>
@@ -147,12 +147,11 @@ export default function Index({ auth, orders }) {
                                                                 تأكيد الطلب
                                                             </SecondaryButton>
                                                         }
-                                                        {order.current_status !== 'canceled_by_user' || order.current_status !== 'confiremd' &&
+                                                        {order.current_status !== 'canceled_by_user' && order.current_status !== 'confirmed' &&
                                                             <DangerButton className='text-xs sm:text-sm whitespace-nowrap' onClick={(e) => cancelOrder(e, order.id)}>
                                                                 إلغاء الطلب
                                                             </DangerButton>
                                                         }
-
                                                     </div>
                                                 }
                                             </td>

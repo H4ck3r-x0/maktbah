@@ -112,6 +112,7 @@ export default function AdminAuthenticatedHeader({ user }) {
 
                                     <Dropdown.Content>
                                         <Dropdown.Link href={route('admin.library.index')}>المكتبات</Dropdown.Link>
+                                        <Dropdown.Link href={route('admin.branch.index')}>الفروع</Dropdown.Link>
                                     </Dropdown.Content>
                                 </Dropdown>
                             </div>

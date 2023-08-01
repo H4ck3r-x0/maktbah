@@ -16,7 +16,7 @@ export default function Create({ auth, printingOptions }) {
         colored_printing: '',
         colored_printing_per_page: '',
         ribbon_print: '',
-        ribbon_print_per_page: '',
+        ribbon_print_per_page: 0,
     });
 
     const submit = (e) => {
@@ -145,18 +145,19 @@ export default function Create({ auth, printingOptions }) {
                                             type="number"
                                             name="ribbon_print"
                                             className="mt-2 block w-sm"
+                                            placeholder="مثال: 1 "
                                             value={data.ribbon_print || ''}
                                             onChange={(e) => setData({ ...data, ribbon_print: e.target.value })}
                                         />
-                                        <span className='text-sm text-gray-600 font-semibold mt-1'>لكل</span>
+                                        {/* <span className='text-sm text-gray-600 font-semibold mt-1'>لكل</span> */}
                                         <TextInput
                                             id="ribbon_print_per_page"
-                                            type="number"
+                                            type="hidden"
                                             name="ribbon_print_per_page"
                                             className="mt-2 block w-sm"
                                             placeholder="عدد الصفحات"
-                                            value={data.ribbon_print_per_page || ''}
-                                            onChange={(e) => setData({ ...data, ribbon_print_per_page: e.target.value })}
+                                            value={0}
+                                            onChange={(e) => setData({ ...data, ribbon_print_per_page: 0 })}
                                         />
                                     </div>
 

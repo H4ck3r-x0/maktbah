@@ -48,14 +48,12 @@ class LibraryBranchController extends Controller
     public function store()
     {
         request()->validate([
-            'libraryOwnerName' => 'required|string|max:255|unique:users,name,' . User::class,
             'username' => 'required|string|alpha_dash|max:255|unique:' . User::class,
             'phone' => 'required|string|max:255|unique:' . LibraryBranch::class,
             'password' => ['required', Rules\Password::defaults()],
         ]);
 
         $user = User::create([
-            'name' => request()->libraryOwnerName,
             'username' => request()->username,
             'password' => Hash::make(request()->password),
         ]);
@@ -63,7 +61,7 @@ class LibraryBranchController extends Controller
         $mainLibrary = request()->user()->load('library');
 
         $user->LibraryBranch()->create([
-            'name' => request()->name,
+            'name' => $mainLibrary->library->name,
             'phone' => request()->phone,
             'city' => request()->city,
             'district' => request()->district,
@@ -104,16 +102,12 @@ class LibraryBranchController extends Controller
     public function update(Request $request, string $id)
     {
         request()->validate([
-            'libraryOwnerName' => ['required', 'string', 'max:255'],
-            'name' => ['required', 'string', 'max:255', Rule::unique(LibraryBranch::class)->ignore($id)],
             'phone' => ['required', 'string', 'max:255', Rule::unique(LibraryBranch::class)->ignore($id)],
             'username' => ['required', 'string', 'alpha_dash', 'max:255', Rule::unique(User::class)->ignore($request->user_id)],
             'password' => ['nullable', Rules\Password::defaults()],
         ]);
 
         $branch = LibraryBranch::with('user')->findOrFail($id);
-        $branch->user->name = $request->libraryOwnerName;
-        $branch->name = $request->name;
         $branch->phone = $request->phone;
         $branch->city = $request->city;
         $branch->district = $request->district;

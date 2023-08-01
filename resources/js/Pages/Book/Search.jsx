@@ -60,17 +60,17 @@ export default function Search({ auth, books, cities, districts, topSilingBooks,
 
             <div className="py-2">
                 {adminAdImage &&
-                    <div className='container mx-auto py-4'>
+                    <div className='container mx-auto px-4 sm:px-0 py-4'>
                         <img src={adminAdImage} className="w-full h-72 shadow-lg rounded-lg" alt="" />
                     </div>
                 }
-                <div className="max-w-7xl mx-auto  sm:px-6 lg:px-8">
+                <div className="max-w-7xl mx-auto sm:px-6 lg:px-8">
                     <div className='w-full mx-auto sm:inline-flex ml-4 justify-center items-center gap-3 px-6 '>
                         <input
                             value={data.search || ''}
                             onChange={(e) => setData('search', e.target.value)}
                             type="text"
-                            className='w-full md:max-w-xl  border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm'
+                            className='w-full sm:max-w-xl md:max-w-sm border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm'
                             placeholder='إبحث بإسم الكتاب او المؤلف ...'
                         />
 

@@ -28,7 +28,7 @@ class PrintingOption extends Model
             'single_face_printing' => 'طباعة وجه واحد',
             'double_sided_printing' => 'طباعة وجهيين',
             'colored_printing' => 'طباعة ملونة',
-            'ribbon_print' => 'طباعة بشريط',
+            'ribbon_print' => 'طباعة بشريط (سلك)',
         ];
 
         return $optionNames[$option] ?? $option;

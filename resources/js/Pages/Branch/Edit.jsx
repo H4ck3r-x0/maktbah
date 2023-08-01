@@ -12,7 +12,6 @@ export default function Edit({ auth, branch, cities, districts }) {
     const [selectedCityId, setSelectedCityId] = useState('');
 
     const { data, setData, patch, errors, processing, recentlySuccessful } = useForm({
-        name: branch.name,
         phone: branch.phone,
         city: branch.city,
         district: branch.district,
@@ -150,20 +149,6 @@ export default function Edit({ auth, branch, cities, districts }) {
                                     <InputError className="mt-2" message={errors.password} />
                                 </div> */}
 
-                                <div>
-                                    <InputLabel htmlFor="name" value="اسم المكتبة" />
-
-                                    <TextInput
-                                        id="name"
-                                        className="mt-2 block w-full"
-                                        value={data.name}
-                                        onChange={(e) => setData('name', e.target.value)}
-                                        required
-                                        autoComplete="name"
-                                    />
-
-                                    <InputError className="mt-2" message={errors.name} />
-                                </div>
 
                                 <div>
                                     <InputLabel htmlFor="phone" value=" رقم التواصل" />

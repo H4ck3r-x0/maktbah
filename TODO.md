@@ -48,4 +48,5 @@
 طباعة ملونة
 طباعة بشريط
 
-Fix upload images validation
+المعلم يحدث الجامعه
+

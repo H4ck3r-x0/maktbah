@@ -11,10 +11,8 @@ export default function Edit({ auth, branch, cities, districts }) {
     const [selectedCityId, setSelectedCityId] = useState('');
 
     const { data, setData, patch, errors, processing, recentlySuccessful } = useForm({
-        libraryOwnerName: branch.user.username,
         username: branch.user.username,
         password: '',
-        name: branch.name,
         phone: branch.phone,
         city: branch.city,
         district: branch.district,
@@ -92,36 +90,8 @@ export default function Edit({ auth, branch, cities, districts }) {
 
                                 </div>
 
-                                <div>
-                                    <InputLabel htmlFor="googleMaps" value="عنوان قوقل مابز" />
 
-                                    <TextInput
-                                        id="googleMaps"
-                                        className="mt-2 block w-full"
-                                        value={data.google_maps}
-                                        onChange={(e) => setData('google_maps', e.target.value)}
-                                        required
-                                        autoComplete="googleMaps"
-                                    />
 
-                                    <InputError className="mt-2" message={errors.google_maps} />
-                                </div>
-
-                                <div>
-                                    <InputLabel htmlFor="libraryOwnerName" value="أسم صاحب المكتبة" />
-
-                                    <TextInput
-                                        id="libraryOwnerName"
-                                        className="mt-2 block w-full"
-                                        value={data.libraryOwnerName}
-                                        onChange={(e) => setData('libraryOwnerName', e.target.value)}
-                                        required
-                                        isFocused
-                                        autoComplete="libraryOwnerName"
-                                    />
-
-                                    <InputError className="mt-2" message={errors.libraryOwnerName} />
-                                </div>
 
                                 <div>
                                     <InputLabel htmlFor="username" value="أسم المستخدم" />
@@ -152,20 +122,7 @@ export default function Edit({ auth, branch, cities, districts }) {
                                     <InputError className="mt-2" message={errors.password} />
                                 </div>
 
-                                <div>
-                                    <InputLabel htmlFor="name" value="اسم المكتبة" />
 
-                                    <TextInput
-                                        id="name"
-                                        className="mt-2 block w-full"
-                                        value={data.name}
-                                        onChange={(e) => setData('name', e.target.value)}
-                                        required
-                                        autoComplete="name"
-                                    />
-
-                                    <InputError className="mt-2" message={errors.name} />
-                                </div>
 
                                 <div>
                                     <InputLabel htmlFor="phone" value=" رقم التواصل" />
@@ -182,6 +139,20 @@ export default function Edit({ auth, branch, cities, districts }) {
                                     <InputError className="mt-2" message={errors.phone} />
                                 </div>
 
+                                <div>
+                                    <InputLabel htmlFor="googleMaps" value="عنوان قوقل مابز" />
+
+                                    <TextInput
+                                        id="googleMaps"
+                                        className="mt-2 block w-full"
+                                        value={data.google_maps}
+                                        onChange={(e) => setData('google_maps', e.target.value)}
+                                        required
+                                        autoComplete="googleMaps"
+                                    />
+
+                                    <InputError className="mt-2" message={errors.google_maps} />
+                                </div>
 
                                 <div className="flex items-center gap-4">
                                     <PrimaryButton disabled={processing}>تحديث</PrimaryButton>

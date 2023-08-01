@@ -2,16 +2,17 @@
 
 namespace App\Http\Controllers\Admin\Library;
 
-use App\Http\Controllers\Controller;
 use App\Models\City;
-use App\Models\District;
-use App\Models\Library;
 use App\Models\User;
+use Inertia\Inertia;
+use App\Models\Library;
+use App\Models\District;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rule;
 use Illuminate\Validation\Rules;
-use Inertia\Inertia;
+use Illuminate\Support\Facades\DB;
+use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Hash;
 
 class LibraryController extends Controller
 {
@@ -22,7 +23,13 @@ class LibraryController extends Controller
     {
         $query = Library::query()
             ->with(['user', 'orders'])
-            ->withSum('orders', 'total_payment')
+            ->withSum('branches', 'id')
+            ->withCount(['orders as total_payment' => function ($query) {
+                $query->select(DB::raw('sum(total_payment)'))
+                    ->whereHas('statuses', function ($query) {
+                        $query->where('name', 'confirmed');
+                    });
+            }])
             ->when(request()->search, function ($query, $search) {
                 $query->where('name', 'like', "%{$search}%")
                     ->orWhereHas('user', function ($query) use ($search) {

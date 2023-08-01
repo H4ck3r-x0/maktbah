@@ -42,7 +42,7 @@ export default function Search({ auth, note, stationeries, cities, districts }) 
         const options = selectedOptions[stationeryId] || [];
 
         const totalPrice = options.reduce((total, option) => {
-            const optionPrice = option.price * Math.ceil(pages / option.per_page);
+            const optionPrice = option.per_page ? option.price * Math.ceil(pages / option.per_page) : option.price * pages;
             return total + optionPrice;
         }, 0);
 
@@ -220,8 +220,11 @@ export default function Search({ auth, note, stationeries, cities, districts }) 
                                                 {item.printing_options.map((option) => (
                                                     <div key={option.id} className='flex flex-col md:flex-row md:items-center gap-3 text-lg md:text-xl text-gray-800'>
                                                         <div className='w-full md:w-96 flex items-center gap-3 '>
-                                                            <span className='font-semibold text-gray-700'>{
-                                                                option.display_name} - ( {option.per_page}  صفحات )
+                                                            <span className='font-semibold text-gray-700'>
+                                                                {option.display_name}  {option.per_page > 0 && <span className='inline-block bg-green-300 text-green-900 px-2 py-1 text-xs font-bold rounded-full'>
+                                                                    {option.per_page > 0 ? `${option.per_page} صفحات  ` : ''}
+                                                                </span>
+                                                                }
                                                             </span>
                                                             <span>{option.price} ريال</span>
                                                         </div>
@@ -243,8 +246,8 @@ export default function Search({ auth, note, stationeries, cities, districts }) 
                                                 </div>
                                                 <button
                                                     onClick={() => createOrder(note.id, item.id, totalPrice, selectedPages[item.id], selectedOptions[item.id])}
-                                                    className={`px-2 py-1 bg-blue-500 text-white rounded disabled:bg-gray-400 
-                                                    ${selectedOptions[item.id] ? 'w-fit' : 'bg-gray-500 cursor-not-allowed w-fit'}`}
+                                                    className={`px-2 py-1 bg-blue-500 text-white rounded disabled:bg-gray-400
+                                                                ${selectedOptions[item.id] ? 'w-fit' : 'bg-gray-500 cursor-not-allowed w-fit'}`}
                                                     disabled={!(selectedOptions[item.id]) || totalPrice === 0}> إرسال الطلب </button>
                                             </div>
                                         </div>

@@ -46,14 +46,12 @@ class StationeryBranchController extends Controller
     public function store(Request $request)
     {
         request()->validate([
-            'libraryOwnerName' => 'required|string|max:255|unique:users,name,' . User::class,
             'username' => 'required|string|alpha_dash|max:255|unique:' . User::class,
             'phone' => 'required|string|max:255|unique:' . StationeryBranche::class,
             'password' => ['required', Rules\Password::defaults()],
         ]);
 
         $user = User::create([
-            'name' => request()->libraryOwnerName,
             'username' => request()->username,
             'password' => Hash::make(request()->password),
         ]);
@@ -61,7 +59,7 @@ class StationeryBranchController extends Controller
         $mainStationery = request()->user()->load('stationery');
 
         $user->stationeryBranche()->create([
-            'name' => request()->name,
+            'name' => $mainStationery->stationery->name,
             'phone' => request()->phone,
             'city' => request()->city,
             'district' => request()->district,

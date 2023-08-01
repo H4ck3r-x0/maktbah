@@ -43,6 +43,6 @@ class LibraryBranch extends Model
 
     public function orders()
     {
-        return $this->hasMany(Order::class);
+        return $this->hasMany(Order::class, 'branch_id');
     }
 }

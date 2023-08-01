@@ -72,12 +72,10 @@ class BranchController extends Controller
     public function update(Request $request, string $id)
     {
         request()->validate([
-            'name' => ['required', 'string', 'max:255', Rule::unique(LibraryBranch::class)->ignore($id)],
             'phone' => ['required', 'string', 'max:255', Rule::unique(LibraryBranch::class)->ignore($id)],
         ]);
 
         $branch = LibraryBranch::with('user')->findOrFail($id);
-        $branch->name = $request->name;
         $branch->phone = $request->phone;
         $branch->city = $request->city;
         $branch->district = $request->district;

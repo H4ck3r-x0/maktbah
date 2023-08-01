@@ -68,6 +68,7 @@ class StationeryController extends Controller
 
     public function storeOptions(Request $request)
     {
+        // dd($request->all());
         $validatedData = $request->validate([
             'single_face_printing' => 'required|string',
             'single_face_printing_per_page' => 'required|integer',
@@ -78,6 +79,7 @@ class StationeryController extends Controller
             'ribbon_print' => 'required|string',
             'ribbon_print_per_page' => 'required|integer',
         ]);
+
         request()->user()->load('stationery');
         $stationery = $request->user()->stationery;
 

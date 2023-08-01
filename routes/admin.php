@@ -7,6 +7,7 @@ use App\Http\Controllers\Admin\Common\CityController;
 use App\Http\Controllers\Admin\Common\DistrictController;
 use App\Http\Controllers\Admin\Common\MajorController;
 use App\Http\Controllers\Admin\Common\UniversityController;
+use App\Http\Controllers\Admin\Library\BranchController;
 use App\Http\Controllers\Admin\Library\LibraryController;
 use App\Http\Controllers\Admin\Note\NoteController;
 use App\Http\Controllers\Admin\Order\OrderController;
@@ -30,6 +31,10 @@ Route::middleware('auth')->group(function () {
     Route::delete('libraries/destroy/{id}', [LibraryController::class, 'destroy'])->name('library.destroy');
     Route::get('/libraries/edit/{id}', [LibraryController::class, 'edit'])->name('library.edit');
     Route::patch('/libraries/update/{id}', [LibraryController::class, 'update'])->name('library.update');
+
+    // Branches Routes
+    Route::get('branches', [BranchController::class, 'index'])->name('branch.index');
+
 
     //  User Routes
     Route::get('users', [UserController::class, 'index'])->name('user.index');
@@ -83,7 +88,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/orders/{id}', [OrderController::class, 'show'])
         ->name('order.show');
 
-    //  Library Routes
+    //  Stationeries Routes
     Route::get('stationeries', [StationeryController::class, 'index'])->name('stationery.index');
 
     //  Notes Routes
