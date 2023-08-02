@@ -60,8 +60,8 @@ export default function Search({ auth, books, cities, districts, topSilingBooks,
 
             <div className="py-2">
                 {adminAdImage &&
-                    <div className='container mx-auto px-4 sm:px-0 py-4'>
-                        <img src={adminAdImage} className="w-full h-72 shadow-lg rounded-lg" alt="" />
+                    <div className='flex items-center justify-center px-4  py-4'>
+                        <img src={adminAdImage} className="w-[1000px] h-[250px] shadow-lg rounded-lg" alt="" />
                     </div>
                 }
                 <div className="max-w-7xl mx-auto sm:px-6 lg:px-8">

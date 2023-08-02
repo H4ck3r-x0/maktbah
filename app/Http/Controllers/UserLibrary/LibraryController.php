@@ -56,7 +56,7 @@ class LibraryController extends Controller
         }
 
         $books = $books->sortByDesc(function ($book) use ($totals) {
-            return $totals[$book->id]; // Sort by total_sold count in descending order
+            return $totals[$book->id];
         });
 
 

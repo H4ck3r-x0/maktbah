@@ -8,6 +8,7 @@ use App\Models\District;
 use App\Models\Stationery;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Validation\Rule;
 
 class StationeryController extends Controller
 {
@@ -17,7 +18,7 @@ class StationeryController extends Controller
     public function index()
     {
         return Inertia::render('Stationery/Dashboard', [
-            'stationery' => Stationery::where('user_id', request()->user()->id)->first(),
+            'stationery' => Stationery::with('branches')->where('user_id', request()->user()->id)->first(),
             'cities' => City::all(),
             'districts' => District::all(),
         ]);
@@ -68,7 +69,6 @@ class StationeryController extends Controller
 
     public function storeOptions(Request $request)
     {
-        // dd($request->all());
         $validatedData = $request->validate([
             'single_face_printing' => 'required|string',
             'single_face_printing_per_page' => 'required|integer',
@@ -124,7 +124,14 @@ class StationeryController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        $stationery = Stationery::with('user')->findOrFail($id);
+        // $this->authorize('view', $library);
+
+        return Inertia::render('Stationery/Edit', [
+            'stationery' => $stationery,
+            'cities' => City::all(),
+            'districts' => District::all(),
+        ]);
     }
 
     /**
@@ -132,7 +139,21 @@ class StationeryController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        request()->validate([
+            'name' => ['required', 'string', 'max:255', Rule::unique(Stationery::class)->ignore($id)],
+            'phone' => ['required', 'string', 'max:255', Rule::unique(Stationery::class)->ignore($id)],
+        ]);
+
+        $stationery = Stationery::with('user')->findOrFail($id);
+        $stationery->name = $request->name;
+        $stationery->phone = $request->phone;
+        $stationery->city = $request->city;
+        $stationery->district = $request->district;
+        $stationery->google_maps = $request->google_maps;
+
+        $stationery->save();
+
+        return redirect()->back();
     }
 
     /**

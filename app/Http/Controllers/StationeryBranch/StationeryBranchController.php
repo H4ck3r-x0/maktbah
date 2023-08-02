@@ -2,10 +2,7 @@
 
 namespace App\Http\Controllers\StationeryBranch;
 
-use Inertia\Inertia;
 use Illuminate\Http\Request;
-use App\Models\StationeryOrder;
-use App\Models\StationeryBranche;
 use App\Http\Controllers\Controller;
 
 class StationeryBranchController extends Controller

@@ -85,7 +85,14 @@ class StationeryBranchController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        $stationery = StationeryBranche::with('user')->findOrFail($id);
+        // $this->authorize('view', $library);
+
+        return Inertia::render('StationeryBranch/Edit', [
+            'stationery' => $stationery,
+            'cities' => City::all(),
+            'districts' => District::all(),
+        ]);
     }
 
     /**
@@ -93,7 +100,19 @@ class StationeryBranchController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        request()->validate([
+            'phone' => ['required', 'string', 'max:255', Rule::unique(StationeryBranche::class)->ignore($id)],
+        ]);
+
+        $stationery = StationeryBranche::with('user')->findOrFail($id);
+        $stationery->phone = $request->phone;
+        $stationery->city = $request->city;
+        $stationery->district = $request->district;
+        $stationery->google_maps = $request->google_maps;
+
+        $stationery->save();
+
+        return redirect()->back();
     }
 
     /**

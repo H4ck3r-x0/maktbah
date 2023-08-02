@@ -36,7 +36,7 @@ class AdController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'adImage' => 'required|mimes:jpg,png,jpeg|max:2048',
+            'adImage' => 'required|mimes:jpg,png,jpeg|max:2048|dimensions:max_width=1000,max_height=250',
         ]);
 
         // Remove previous ad from AdminAds model and media table

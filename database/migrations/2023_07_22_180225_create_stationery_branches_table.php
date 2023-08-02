@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('stationery_branches', function (Blueprint $table) {
             $table->id();
-            $table->string('name')->unique()->nullable();
+            $table->string('name')->nullable();
             $table->string('phone')->unique()->nullable();
             $table->string('district')->nullable();
             $table->string('city')->nullable();

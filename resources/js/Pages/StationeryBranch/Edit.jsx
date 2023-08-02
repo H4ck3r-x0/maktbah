@@ -7,25 +7,20 @@ import { Transition } from '@headlessui/react';
 import { useState } from 'react';
 import Authenticated from '@/Layouts/AuthenticatedLayout';
 
-export default function Edit({ auth, branch, cities, districts }) {
+export default function Edit({ auth, stationery, cities, districts }) {
     const [selectedCityId, setSelectedCityId] = useState('');
 
     const { data, setData, patch, errors, processing, recentlySuccessful } = useForm({
-        libraryOwnerName: branch.user.username,
-        username: branch.user.username,
-        password: '',
-        name: branch.name,
-        phone: branch.phone,
-        city: branch.city,
-        district: branch.district,
-        google_maps: branch.google_maps,
-        user_id: branch.user.id
+        phone: stationery.phone,
+        city: stationery.city,
+        district: stationery.district,
+        google_maps: stationery.google_maps
     });
 
     const submit = (e) => {
         e.preventDefault();
 
-        patch(route('library.update.branch', branch.id));
+        patch(route('stationery.main.branch.update', stationery.id));
     };
 
     const cityChanged = (e) => {
@@ -40,15 +35,15 @@ export default function Edit({ auth, branch, cities, districts }) {
             user={auth.user}
             header={
                 <div className='flex items-center justify-between'>
-                    <h2 className="font-semibold text-xl text-gray-800 leading-tight">تعديل الفرع</h2>
+                    <h2 className="font-semibold text-xl text-gray-800 leading-tight">تعديل القرطاسية</h2>
 
-                    <Link href={route('library.dashboard')}>
+                    <Link href={route('stationery.dashboard')}>
                         <PrimaryButton>العودة</PrimaryButton>
                     </Link>
                 </div>
             }
         >
-            <Head title="تعديل الفرع" />
+            <Head title="تعديل المكتبة" />
 
 
             <div className="py-8">
@@ -107,65 +102,6 @@ export default function Edit({ auth, branch, cities, districts }) {
                                     <InputError className="mt-2" message={errors.google_maps} />
                                 </div>
 
-                                <div>
-                                    <InputLabel htmlFor="libraryOwnerName" value="أسم صاحب المكتبة" />
-
-                                    <TextInput
-                                        id="libraryOwnerName"
-                                        className="mt-2 block w-full"
-                                        value={data.libraryOwnerName}
-                                        onChange={(e) => setData('libraryOwnerName', e.target.value)}
-                                        required
-                                        isFocused
-                                        autoComplete="libraryOwnerName"
-                                    />
-
-                                    <InputError className="mt-2" message={errors.libraryOwnerName} />
-                                </div>
-
-                                <div>
-                                    <InputLabel htmlFor="username" value="أسم المستخدم" />
-
-                                    <TextInput
-                                        id="username"
-                                        type="text"
-                                        className="mt-2 block w-full"
-                                        value={data.username}
-                                        onChange={(e) => setData('username', e.target.value)}
-                                        required
-                                    />
-
-                                    <InputError className="mt-2" message={errors.username} />
-                                </div>
-
-                                <div>
-                                    <InputLabel htmlFor="password" value="كلمة المرور" />
-
-                                    <TextInput
-                                        id="password"
-                                        type="password"
-                                        className="mt-2 block w-full"
-                                        value={data.password}
-                                        onChange={(e) => setData('password', e.target.value)}
-                                    />
-
-                                    <InputError className="mt-2" message={errors.password} />
-                                </div>
-
-                                <div>
-                                    <InputLabel htmlFor="name" value="اسم المكتبة" />
-
-                                    <TextInput
-                                        id="name"
-                                        className="mt-2 block w-full"
-                                        value={data.name}
-                                        onChange={(e) => setData('name', e.target.value)}
-                                        required
-                                        autoComplete="name"
-                                    />
-
-                                    <InputError className="mt-2" message={errors.name} />
-                                </div>
 
                                 <div>
                                     <InputLabel htmlFor="phone" value=" رقم التواصل" />

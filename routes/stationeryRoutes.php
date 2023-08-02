@@ -11,6 +11,8 @@ Route::middleware('auth')->group(function () {
 
     // Stationery Info
     Route::post('info/store', [StationeryController::class, 'store'])->name('info.store');
+    Route::get('main/edit/{id}', [StationeryController::class, 'edit'])->name('main.edit');
+    Route::patch('main/update/{id}', [StationeryController::class, 'update'])->name('main.update');
 
     // Stationery Options
     Route::get('options/create', [StationeryController::class, 'create'])->name('options.create');
@@ -35,4 +37,6 @@ Route::middleware('auth')->group(function () {
     // Branches
     Route::get('main/branch/create', [StationeryBranchController::class, 'create'])->name('main.branch.create');
     Route::post('main/branch/store', [StationeryBranchController::class, 'store'])->name('main.branch.store');
+    Route::get('main/branch/edit/{id}', [StationeryBranchController::class, 'edit'])->name('main.branch.edit');
+    Route::patch('main/update/{id}', [StationeryBranchController::class, 'update'])->name('main.branch.update');
 });

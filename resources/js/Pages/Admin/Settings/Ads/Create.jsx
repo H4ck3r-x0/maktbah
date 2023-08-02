@@ -86,7 +86,7 @@ export default function Create({ auth, adminAdImage }) {
                 <div className="max-w-7xl mx-auto sm:px-6 lg:px-8">
                     <div className="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                         <div className="p-6 text-gray-900">
-                            <div>
+                            <div className='flex items-center justify-center'>
                                 {data.adPreview && (
                                     <img src={data.adPreview} alt="الصورة غير متوفره" />
                                 )}
@@ -107,7 +107,10 @@ export default function Create({ auth, adminAdImage }) {
                                     />
                                 </label>
 
-                                <div className="flex items-center gap-8">
+                                <div className="flex flex-col items-center justify-center gap-3">
+                                    <span className="text-lg text-gray-500 font-semibold">
+                                        ابعاد الصورة العرض  1000px الطول 250px
+                                    </span>
                                     <PrimaryButton disabled={processing || data.adPreview === null}>رفع الاعلان</PrimaryButton>
                                     {adminAdImage &&
                                         <DangerButton onClick={removeAd} disabled={processing}>حذف الاعلان</DangerButton>
