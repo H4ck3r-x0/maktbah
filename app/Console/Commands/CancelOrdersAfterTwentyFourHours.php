@@ -26,7 +26,7 @@ class CancelOrdersAfterTwentyFourHours extends Command
      */
     public function handle()
     {
-        $orders = Order::where('status', 'sent_to_library')
+        $orders = Order::currentStatus('sent_to_library')
             ->where('updated_at', '<=', now()->subDay())
             ->get();
 

@@ -12,7 +12,7 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule): void
     {
-        $schedule->command('command:CancelOrdersAfterTwentyFourHours')->everySecond();
+        $schedule->command('app:cancel-orders-after-twenty-four-hours')->daily();
     }
 
     /**
