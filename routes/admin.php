@@ -1,20 +1,21 @@
 <?php
 
-use App\Http\Controllers\Admin\AdminDashboardController;
+use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\Admin\Ads\AdController;
+use App\Http\Controllers\Admin\Note\NoteController;
+use App\Http\Controllers\Admin\User\UserController;
 use App\Http\Controllers\Admin\Common\BookController;
 use App\Http\Controllers\Admin\Common\CityController;
-use App\Http\Controllers\Admin\Common\DistrictController;
-use App\Http\Controllers\Admin\Common\MajorController;
-use App\Http\Controllers\Admin\Common\UniversityController;
-use App\Http\Controllers\Admin\Library\BranchController;
-use App\Http\Controllers\Admin\Library\LibraryController;
-use App\Http\Controllers\Admin\Note\NoteController;
 use App\Http\Controllers\Admin\Order\OrderController;
+use App\Http\Controllers\Admin\Common\MajorController;
+use App\Http\Controllers\Admin\AdminDashboardController;
+use App\Http\Controllers\Admin\Library\BranchController;
+use App\Http\Controllers\Admin\Common\DistrictController;
+use App\Http\Controllers\Admin\Library\LibraryController;
+use App\Http\Controllers\Admin\Common\UniversityController;
 use App\Http\Controllers\Admin\Stationery\StationeryController;
-use App\Http\Controllers\Admin\User\UserController;
-use App\Http\Controllers\ProfileController;
-use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Admin\Stationery\StationeryBranchController;
 
 Route::middleware('auth')->group(function () {
     // Admin Setting and Profile routes
@@ -90,6 +91,9 @@ Route::middleware('auth')->group(function () {
 
     //  Stationeries Routes
     Route::get('stationeries', [StationeryController::class, 'index'])->name('stationery.index');
+
+    //  Stationeries Branch Routes
+    Route::get('stationeries/branches', [StationeryBranchController::class, 'index'])->name('stationery.branch.index');
 
     //  Notes Routes
     Route::get('notes', [NoteController::class, 'index'])->name('note.index');

@@ -36,7 +36,7 @@ export default function Index({ auth, stationeries, cities, districts }) {
     }
 
     const searchstationeries = () => {
-        get(route('admin.stationery.index',
+        get(route('admin.stationery.branch.index',
             { search: data.search, city: data.city, orders: data.orders, page: currentPage }),
             {
                 preserveScroll: true,
@@ -72,12 +72,12 @@ export default function Index({ auth, stationeries, cities, districts }) {
             user={auth.user}
             header={
                 <div className='flex items-center justify-between'>
-                    <h2 className="font-semibold text-xl text-gray-800 leading-tight">جميع القرطاسيات</h2>
+                    <h2 className="font-semibold text-xl text-gray-800 leading-tight">فروع القرطاسيات</h2>
 
                 </div>
             }
         >
-            <Head title="جميع القرطاسيات" />
+            <Head title="فروع القرطاسيات" />
 
 
             <div className="">

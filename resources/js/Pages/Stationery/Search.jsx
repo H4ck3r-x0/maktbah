@@ -108,7 +108,7 @@ export default function Search({ auth, note, stationeries, cities, districts }) 
                             onChange={(e) => setData('search', e.target.value)}
                             type="text"
                             className='w-full sm:max-w-xl  border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm'
-                            placeholder='إبحث بإسم الكتاب او المؤلف ...'
+                            placeholder='أبحث بإسم القرطاسية'
                         />
 
                         <div className='mb-2'>

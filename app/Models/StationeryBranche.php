@@ -38,6 +38,6 @@ class StationeryBranche extends Model
 
     public function orders()
     {
-        return $this->hasMany(StationeryOrder::class);
+        return $this->hasMany(StationeryOrder::class, 'stationery_branch_id');
     }
 }

@@ -176,7 +176,8 @@ export default function AdminAuthenticatedHeader({ user }) {
                                     </Dropdown.Trigger>
 
                                     <Dropdown.Content>
-                                        <Dropdown.Link href={route('admin.stationery.index')}>جميع القرطاسيات</Dropdown.Link>
+                                        <Dropdown.Link href={route('admin.stationery.index')}> القرطاسيات</Dropdown.Link>
+                                        <Dropdown.Link href={route('admin.stationery.branch.index')}>الفروع</Dropdown.Link>
                                     </Dropdown.Content>
                                 </Dropdown>
                             </div>

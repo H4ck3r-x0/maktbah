@@ -5,21 +5,21 @@ namespace App\Http\Controllers\Admin\Stationery;
 use App\Models\City;
 use Inertia\Inertia;
 use App\Models\District;
-use App\Models\Stationery;
 use Illuminate\Http\Request;
+use App\Models\StationeryBranche;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 
-class StationeryController extends Controller
+class StationeryBranchController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        $query = Stationery::query()
-            ->with(['user', 'stationeryOrders'])
-            ->withCount(['stationeryOrders as total_payment' => function ($query) {
+        $query = StationeryBranche::query()
+            ->with(['user', 'orders'])
+            ->withCount(['orders as total_payment' => function ($query) {
                 $query->select(DB::raw('sum(total_payment)'))
                     ->whereHas('statuses', function ($query) {
                         $query->where('name', 'confirmed');
@@ -48,7 +48,7 @@ class StationeryController extends Controller
             ->paginate(15)
             ->withQueryString();
 
-        return Inertia::render('Admin/Stationery/Index', [
+        return Inertia::render('Admin/StationeryBranch/Index', [
             'stationeries' => $query,
             'cities' => City::all(),
             'districts' => District::all(),
