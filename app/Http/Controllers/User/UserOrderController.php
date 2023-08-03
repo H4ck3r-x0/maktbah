@@ -19,17 +19,39 @@ class UserOrderController extends Controller
      */
     public function index()
     {
-        $orders = Order::query()
-            ->where('user_id', request()->user()->id)
+        $userId = request()->user()->id;
+
+        $query = Order::query()
+            ->where('user_id', $userId)
             ->with([
                 'details.book.library',
                 'details.book.branch',
-            ])
+            ]);
+
+        if (request()->has('search')) {
+            $search = request()->input('search');
+            $query->when($search, function ($query, $search) {
+                $query->where('id', 'like', "%{$search}%")
+                    ->orWhereHas('details.book.library', fn ($subQuery) =>
+                    $subQuery->where('name', 'like', "%{$search}%"))
+                    ->orWhereHas('details.book.branch', fn ($subQuery) =>
+                    $subQuery->where('name', 'like', "%{$search}%"));
+            });
+        }
+
+        if (request()->has('status')) {
+            $status = request()->input('status');
+            $query->when($status, fn ($query, $status) => $query->currentStatus($status));
+        }
+
+        $orders = $query
             ->latest()
             ->get();
 
         return Inertia::render('User/Order/Index', [
             'orders' => $orders,
+            'STATUS' => Order::STATUS,
+            'filters' => request()->only(['search', 'status']),
         ]);
     }
 

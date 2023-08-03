@@ -6,7 +6,6 @@ use Inertia\Inertia;
 use Illuminate\Http\Request;
 use App\Models\StationeryOrder;
 use App\Http\Controllers\Controller;
-use App\Models\StationeryBranchOrder;
 
 class UserStationeryOrderController extends Controller
 {
@@ -15,21 +14,42 @@ class UserStationeryOrderController extends Controller
      */
     public function index()
     {
-        $orders = StationeryOrder::query()
-            ->where('user_id', request()->user()->id)
+        $userId = request()->user()->id;
+
+        $query = StationeryOrder::query()
+            ->where('user_id', $userId)
             ->with([
                 'stationery',
                 'stationeryBranch',
                 'user',
                 'note',
-            ])
+            ]);
+
+
+        if (request()->has('search')) {
+            $search = request()->input('search');
+            $query->when($search, function ($query, $search) {
+                $query->where('id', 'like', "%{$search}%")
+                    ->orWhereHas('stationery', fn ($subQuery) =>
+                    $subQuery->where('name', 'like', "%{$search}%"))
+                    ->orWhereHas('stationeryBranch', fn ($subQuery) =>
+                    $subQuery->where('name', 'like', "%{$search}%"));
+            });
+        }
+
+        if (request()->has('status')) {
+            $status = request()->input('status');
+            $query->when($status, fn ($query, $status) => $query->currentStatus($status));
+        }
+
+        $orders = $query
             ->latest()
             ->get();
 
-
-
         return Inertia::render('User/StationeryOrder/Index', [
             'orders' => $orders,
+            'STATUS' => StationeryOrder::STATUS,
+            'filters' => request()->only(['search', 'status']),
         ]);
     }
 

@@ -2,10 +2,44 @@ import DangerButton from '@/Components/DangerButton';
 import PrimaryButton from '@/Components/PrimaryButton';
 import SecondaryButton from '@/Components/SecondaryButton';
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
-import { Head, Link, router } from '@inertiajs/react';
+import { Head, Link, router, useForm, usePage } from '@inertiajs/react';
 import moment from 'moment/min/moment-with-locales';
-export default function Index({ auth, orders }) {
+import { useCallback, useEffect, useState } from 'react';
+import debounce from "lodash/debounce";
 
+export default function Index({ auth, orders, STATUS }) {
+    const filters = usePage().props.filters;
+    const { data, setData, get, reset } = useForm({
+        search: filters.search,
+        status: filters.status,
+    });
+
+    const searchOrders = () => {
+        get(route('user.order.index',
+            { search: data.search, status: data.status }),
+            {
+                preserveScroll: true,
+                preserveState: true,
+                replace: true
+            });
+    };
+
+    const delayedSearch = useCallback(
+        debounce(searchOrders, 500),
+
+        [data.search, data.status]
+    );
+
+    useEffect(() => {
+        delayedSearch();
+
+        return delayedSearch.cancel;
+    }, [data.search, data.status, delayedSearch])
+
+
+    const statusChanged = (e) => {
+        setData('status', e.target.value);
+    }
 
     const cancelOrder = (e, id) => {
         e.preventDefault();
@@ -16,7 +50,6 @@ export default function Index({ auth, orders }) {
         e.preventDefault();
         router.post(route('user.order.restore', id));
     }
-
     return (
         <AuthenticatedLayout
             user={auth.user}
@@ -24,7 +57,32 @@ export default function Index({ auth, orders }) {
         >
             <Head title="الطلبات" />
             <div className="py-6">
-                <div className='w-full  items-center gap-3 px-2'>
+                <div className='w-full items-center gap-3 px-2'>
+                    <div className='w-full flex flex-col sm:flex-row ml-4  gap-3 pb-4 '>
+                        <input
+                            value={data.search || ''}
+                            onChange={(e) => setData('search', e.target.value)}
+                            type="text"
+                            className='w-full sm:max-w-xl md:max-w-sm border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm'
+                            placeholder='إبحث برقم الطلب ، اسم المكتبة'
+                        />
+
+                        <select
+                            onChange={statusChanged}
+                            className='block  border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm'
+                        >
+                            <option value="">إختر حالة الطلب</option>
+                            {Object.keys(STATUS).map((key, index) => {
+                                return (
+                                    <option key={index} value={key}>{STATUS[key].message.ar}</option>
+                                )
+                            })}
+                        </select>
+
+                        <PrimaryButton onClick={() => reset()}>
+                            إعادة تعيين
+                        </PrimaryButton>
+                    </div>
                     <div className="relative overflow-x-auto">
                         <table className="w-full text-xs sm:text-lg text-right text-gray-500 shadow border">
                             <thead className="text-xs sm:text-lg text-gray-700  border ">

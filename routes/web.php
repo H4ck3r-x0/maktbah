@@ -1,7 +1,6 @@
 <?php
 
 use Inertia\Inertia;
-use App\Models\Order;
 use App\Http\Middleware\IsUser;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProfileController;
@@ -37,11 +36,6 @@ Route::get('/dashboard', [DashboardController::class, 'index'])
     ->name('dashboard');
 
 Route::middleware('auth')->group(function () {
-
-    Route::get('/download/{order}', function (Order $order) {
-        return view('in');
-    })->name('download');
-
 
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
