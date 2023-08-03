@@ -131,6 +131,7 @@ export default function Show({ auth, order }) {
                 <PrimaryButton onClick={printInvoice}>
                     تحميل الفاتورة
                 </PrimaryButton>
+
             </div>
         </PrintableLayout>
     )

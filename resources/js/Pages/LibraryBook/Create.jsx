@@ -66,6 +66,7 @@ export default function Create({ auth, books, addedBooks }) {
         onError: (error) => {
           let message = "";
           if (error.ad_image) {
+            setAdImage(null);
             message = error.ad_image;
           }
           if (error.price) {
@@ -116,6 +117,7 @@ export default function Create({ auth, books, addedBooks }) {
         onError: (error) => {
           let message = "";
           if (error.ad_image) {
+            setAdImage(null);
             message = error.ad_image;
           }
           if (error.price) {

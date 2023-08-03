@@ -12,13 +12,13 @@
 @font-face {
     font-family: 'AvenirArabic';
     font-weight: 600;
-    src: url(/public/fonts/AvenirArabic-Heavy.woff2);
+    src: url("/public/fonts/AvenirArabic-Heavy.woff2");
     font-display: swap
 }
 
 @font-face {
     font-family: 'AvenirArabic';
     font-weight: 700;
-    src: url(/public/fonts/AvenirArabic-Heavy.woff2);
+    src: url("/public/fonts/AvenirArabic-Heavy.woff2");
     font-display: swap
 }

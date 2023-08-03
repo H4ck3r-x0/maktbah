@@ -7,7 +7,6 @@ import { jsPDF } from "jspdf";
 import html2canvas from 'html2canvas';
 
 export default function Show({ auth, order }) {
-
     const printInvoice = () => {
         const divToPrint = document.getElementById('divToPrint');
         html2canvas(divToPrint, {
@@ -126,7 +125,7 @@ export default function Show({ auth, order }) {
                             </table>
                         </div>
 
-                        <div className='w-full flex items-center justify-between pt-10'>
+                        <div className='w-full  flex  flex-col items-center justify-center gap-2 pt-10'>
                             <div>
                                 <p className='text-lg text-gray-700'>هذي الفاتورة تقوم بعرضعها على اصحاب المكتبات التي قمت بالطلب منها .</p>
                             </div>
