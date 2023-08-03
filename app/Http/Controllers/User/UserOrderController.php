@@ -30,14 +30,23 @@ class UserOrderController extends Controller
 
         if (request()->has('search')) {
             $search = request()->input('search');
-            $query->when($search, function ($query, $search) {
+            $query->where(function ($query) use ($search) {
                 $query->where('id', 'like', "%{$search}%")
-                    ->orWhereHas('details.book.library', fn ($subQuery) =>
-                    $subQuery->where('name', 'like', "%{$search}%"))
-                    ->orWhereHas('details.book.branch', fn ($subQuery) =>
-                    $subQuery->where('name', 'like', "%{$search}%"));
+                    ->orWhereHas('library', function ($subQuery) use ($search) {
+                        $subQuery->where('name', 'like', "%{$search}%")
+                            ->whereHas('orders', function ($orderQuery) use ($search) {
+                                $orderQuery->where('user_id', request()->user()->id);
+                            });
+                    })
+                    ->orWhereHas('branch', function ($subQuery) use ($search) {
+                        $subQuery->where('name', 'like', "%{$search}%")
+                            ->whereHas('orders', function ($orderQuery) use ($search) {
+                                $orderQuery->where('user_id', request()->user()->id);
+                            });
+                    });
             });
         }
+
 
         if (request()->has('status')) {
             $status = request()->input('status');

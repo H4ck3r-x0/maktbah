@@ -28,12 +28,20 @@ class UserStationeryOrderController extends Controller
 
         if (request()->has('search')) {
             $search = request()->input('search');
-            $query->when($search, function ($query, $search) {
+            $query->where(function ($query) use ($search) {
                 $query->where('id', 'like', "%{$search}%")
-                    ->orWhereHas('stationery', fn ($subQuery) =>
-                    $subQuery->where('name', 'like', "%{$search}%"))
-                    ->orWhereHas('stationeryBranch', fn ($subQuery) =>
-                    $subQuery->where('name', 'like', "%{$search}%"));
+                    ->orWhereHas('stationery', function ($subQuery) use ($search) {
+                        $subQuery->where('name', 'like', "%{$search}%")
+                            ->whereHas('stationeryOrders', function ($orderQuery) use ($search) {
+                                $orderQuery->where('user_id', request()->user()->id);
+                            });
+                    })
+                    ->orWhereHas('stationeryBranch', function ($subQuery) use ($search) {
+                        $subQuery->where('name', 'like', "%{$search}%")
+                            ->whereHas('orders', function ($orderQuery) use ($search) {
+                                $orderQuery->where('user_id', request()->user()->id);
+                            });
+                    });
             });
         }
 
