@@ -21,48 +21,60 @@ class SearchBooksController extends Controller
      */
     public function index()
     {
+        $user = request()->user();
+        $userUniversity = $user->user_profile->university;
+
         $query = BookLibrary::query()
             ->with([
                 'library:id,name,city,district,user_id',
-                'branch:id,name,city,district,user_id',
+                'branch:id,name,city,district,university,user_id',
                 'book:id,book_name,author_name,edition_number,volume_number',
             ])
             ->where('qty', '>', 0);
 
         if (request()->has('search')) {
             $search = request()->input('search');
-            $query->whereHas('book', function ($query) use ($search) {
-                $query->where('book_name', 'like', "%{$search}%")
-                    ->orWhere('author_name', 'like', "%{$search}%");
-            });
+            $query->whereHas('branch', function ($query) use ($userUniversity) {
+                $query->where('university', $userUniversity);
+            })
+                ->whereHas('book', function ($query) use ($search) {
+                    $query->where(function ($query) use ($search) {
+                        $query->where('book_name', 'like', "%{$search}%")
+                            ->orWhere('author_name', 'like', "%{$search}%");
+                    });
+                });
 
             $bookExists = Book::where('book_name', 'like', "%{$search}%")->exists();
             if (!$bookExists) {
                 FailedSearch::create([
                     'query' => $search,
-                    'user_id' => request()->user() ? request()->user()->id : null,
+                    'user_id' => $user ? $user->id : null,
                 ]);
             }
         }
 
         if (request()->has('city')) {
             $city = request()->input('city');
-            $query->whereHas('library', function ($query) use ($city) {
-                $query->where('city', 'like', "%{$city}%");
-            })
-                ->orWhereHas('branch', function ($query) use ($city) {
+            $query->where(function ($query) use ($city) {
+                $query->whereHas('library', function ($query) use ($city) {
                     $query->where('city', 'like', "%{$city}%");
-                });
+                })
+                    ->orWhereHas('branch', function ($query) use ($city) {
+                        $query->where('city', 'like', "%{$city}%");
+                    });
+            });
         }
 
         if (request()->has('district')) {
             $district = request()->input('district');
-            $query->whereHas('library', function ($query) use ($district) {
-                $query->where('district', 'like', "%{$district}%");
-            })
-                ->orWhereHas('branch', function ($query) use ($district) {
+            $query->where(function ($query) use ($district) {
+                $query->whereHas('library', function ($query) use ($district) {
                     $query->where('district', 'like', "%{$district}%");
-                });
+                })
+                    ->orWhereHas('branch', function ($query) use ($district) {
+                        $query->where('district', 'like', "%{$district}%");
+                    });
+            });
         }
 
         $books = $query->paginate(5)->withQueryString();

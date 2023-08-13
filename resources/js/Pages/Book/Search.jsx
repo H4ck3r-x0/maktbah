@@ -5,13 +5,14 @@ import debounce from "lodash/debounce";
 import Pagination from '@/Pages/Components/Pagination';
 import BookCard from './Components/BookCard';
 import BookCardBranch from './Components/BookCardBranch';
+import PrimaryButton from '@/Components/PrimaryButton';
 
 export default function Search({ auth, books, cities, districts, topSilingBooks, adminAdImage }) {
     const filters = usePage().props.filters;
     const currentPage = usePage().props.currentPage;
     const [selectedCityId, setSelectedCityId] = useState('');
 
-    const { data, setData, get } = useForm({
+    const { data, setData, get, reset } = useForm({
         search: filters.search,
         city: filters.city,
         district: filters.district,
@@ -68,12 +69,16 @@ export default function Search({ auth, books, cities, districts, topSilingBooks,
                     <div className='w-full mx-auto sm:inline-flex ml-4 justify-center items-center gap-3 px-6 '>
                         <input
                             value={data.search || ''}
-                            onChange={(e) => setData('search', e.target.value)}
+                            onChange={(e) => {
+                                setData('search', e.target.value);
+                                if (e.target.value === '') {
+                                    reset()
+                                }
+                            }}
                             type="text"
                             className='w-full sm:max-w-xl md:max-w-sm border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm'
                             placeholder='إبحث بإسم الكتاب او المؤلف ...'
                         />
-
                         <div className='mb-2'>
                             <select
                                 onChange={cityChanged}
@@ -137,13 +142,18 @@ export default function Search({ auth, books, cities, districts, topSilingBooks,
                                         </div>
                                     </div>
                                 }
-                                {books.data.map(item => {
-                                    return (
-                                        item.library !== null ?
-                                            <BookCard book={item} key={item.id} /> :
-                                            <BookCardBranch book={item} key={item.id} />
-                                    )
-                                })}
+                                {
+                                    books.data.map(item => {
+                                        return (
+                                            <div key={item.id}>
+                                                {item.library !== null ?
+                                                    <BookCard book={item} /> :
+                                                    <BookCardBranch book={item} userUnivirsty={auth.user?.user_profile?.university} />
+                                                }
+                                            </div>
+                                        )
+                                    })
+                                }
                             </div>
                             <Pagination class="mt-6" links={books.links} />
                         </div>

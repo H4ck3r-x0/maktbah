@@ -2,16 +2,17 @@
 
 namespace App\Http\Controllers\UserLibrary;
 
-use App\Http\Controllers\Controller;
 use App\Models\City;
-use App\Models\District;
-use App\Models\LibraryBranch;
 use App\Models\User;
+use Inertia\Inertia;
+use App\Models\District;
+use App\Models\University;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Hash;
+use App\Models\LibraryBranch;
 use Illuminate\Validation\Rule;
 use Illuminate\Validation\Rules;
-use Inertia\Inertia;
+use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Hash;
 
 class LibraryBranchController extends Controller
 {
@@ -39,6 +40,7 @@ class LibraryBranchController extends Controller
         return Inertia::render('LibraryBranch/Create', [
             'cities' => City::all(),
             'districts' => District::all(),
+            'univisities' => University::all(),
         ]);
     }
 
@@ -67,6 +69,7 @@ class LibraryBranchController extends Controller
             'district' => request()->district,
             'google_maps' => request()->google_maps,
             'library_id' => $mainLibrary->library->id,
+            'university' => request()->university,
         ]);
 
         $user->assignRole('branch');

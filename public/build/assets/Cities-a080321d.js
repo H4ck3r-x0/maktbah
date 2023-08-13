@@ -1,1 +1,0 @@
-import{j as d,a as o}from"./app-7355fa36.js";function l({className:r,cities:a,onChange:n,...s}){return d("select",{...s,onChange:n,className:"w-full mt-2 border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm "+r,children:[o("option",{value:"",children:"أختر المدينة"}),a.map(e=>o("option",{value:e.name,children:e.name},e.id))]})}export{l as default};

@@ -6,7 +6,7 @@ import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import './custom-toast.css';
 
-export default function BookCardBranch({ book }) {
+export default function BookCardBranch({ book, userUnivirsty }) {
     const user_cart = usePage().props.user_cart;
     const [loading, setLoading] = useState(false);
 
@@ -53,12 +53,15 @@ export default function BookCardBranch({ book }) {
             }
         });
     }
+    const isUserUnivirsty = userUnivirsty === book.branch?.university;
+
     return (
         <div className="flex bg-white shadow-md rounded-lg overflow-hidden">
             <ToastContainer />
             <div className="w-full p-5">
                 <h1 className="text-xl text-gray-900 font-bold sm:text-2xl ">
                     أسم الكتاب: {book.book.book_name}
+
                 </h1>
                 <div className="flex flex-col sm:flex-row flex-wrap gap-2 py-6">
                     <span className="text-xl sm:text-2xl text-gray-600 font-semibold">الكاتب:</span>
@@ -81,6 +84,15 @@ export default function BookCardBranch({ book }) {
                     <span className="bg-gray-100 text-gray-800 text-xl sm:text-2xl px-2.5 py-0.5 rounded">{book.branch?.city}</span>
                     <span className="text-xl sm:text-2xl text-gray-600 font-semibold">الحي:</span>
                     <span className="bg-gray-100 text-gray-800 text-xl sm:text-2xl px-2.5 py-0.5 rounded">{book.branch?.district}</span>
+                    {isUserUnivirsty && (
+                        <div className="flex items-center gap-2">
+                            <span className="text-xl sm:text-2xl text-gray-600 font-semibold">الجامعة:</span>
+                            <span className="bg-gray-100 text-gray-800 text-xl sm:text-2xl px-2.5 py-0.5 rounded">{book.branch?.university}</span>
+                            <span className='inline-block bg-green-200 text-green-800 px-2 py-1 text-xs font-bold rounded-full'>في جامعتك</span>
+                        </div>
+                    )}
+
+
                 </div>
                 <div className="flex items-center justify-between mt-6">
                     <h1 className="text-blue-500 font-bold text-2xl">{book.price} ريال</h1>
@@ -108,8 +120,4 @@ export default function BookCardBranch({ book }) {
             </div>
         </div>
     )
-
-
-
-
 }

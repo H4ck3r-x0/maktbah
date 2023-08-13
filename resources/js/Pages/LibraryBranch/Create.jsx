@@ -7,7 +7,7 @@ import { Transition } from '@headlessui/react';
 import { useState } from 'react';
 import Authenticated from '@/Layouts/AuthenticatedLayout';
 
-export default function Create({ auth, cities, districts }) {
+export default function Create({ auth, cities, districts, univisities }) {
     const [selectedCityId, setSelectedCityId] = useState('');
 
     const { data, setData, post, errors, processing, recentlySuccessful } = useForm({
@@ -17,7 +17,8 @@ export default function Create({ auth, cities, districts }) {
         city: '',
         selectedCityId: selectedCityId ? selectedCityId : '',
         district: '',
-        google_maps: ''
+        google_maps: '',
+        university: ''
     });
 
     const cityChanged = (e) => {
@@ -86,6 +87,21 @@ export default function Create({ auth, cities, districts }) {
                                         }
                                     </select>
                                     <InputError className="mt-2" message={errors.district_id} />
+
+                                </div>
+
+                                <div>
+                                    <InputLabel htmlFor="univisity" value="إختر الجامعة اذا كان الفرع متوفر في الجامعة" />
+
+                                    <select
+                                        onChange={(e) => setData('university', e.target.value)}
+                                        className={`w-full mt-2 border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm `}>
+                                        <option value="">أختر  الجامعة</option>
+                                        {
+                                            univisities.map(university => <option value={university.name} key={university.id}>{university.name}</option>)
+                                        }
+                                    </select>
+                                    <InputError className="mt-2" message={errors.university} />
 
                                 </div>
 

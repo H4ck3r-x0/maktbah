@@ -116,6 +116,12 @@ export default function Create({ auth, books, addedBooks }) {
             { book_id: bookID, qty, price, offer, ad_image: adImage },
             {
                 preserveScroll: true,
+                onSuccess: () => {
+                    setAdImage(null);
+                    setPrice('');
+                    setOffer('');
+                    setQty('');
+                },
                 onError: (error) => {
                     let message = "";
                     if (error.ad_image) {
@@ -242,7 +248,7 @@ export default function Create({ auth, books, addedBooks }) {
                         <span>إضافة كتاب جديد</span>
                     </h2>
 
-                    <Link href={route("library.dashboard")}>
+                    <Link href={route("branch.dashboard")}>
                         <PrimaryButton>العودة</PrimaryButton>
                     </Link>
                 </div>

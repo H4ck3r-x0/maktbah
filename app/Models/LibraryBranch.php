@@ -22,12 +22,15 @@ class LibraryBranch extends Model
         'city',
         'user_id',
         'library_id',
+        'university'
     ];
 
     public function user()
     {
         return $this->belongsTo(User::class);
     }
+
+
 
     public function library()
     {
@@ -38,7 +41,7 @@ class LibraryBranch extends Model
     {
         return $this->belongsToMany(Book::class, 'book_library', 'library_branch_id', 'book_id')
             ->using(BookLibrary::class)
-            ->withPivot('id', 'qty', 'price', 'offer', 'deleted_at');
+            ->withPivot('id', 'qty', 'price', 'offer', 'book_id', 'deleted_at');
     }
 
     public function orders()

@@ -62,6 +62,7 @@ export default function BookCard({ book }) {
             }
         });
     }
+
     return (
         <div className="flex bg-white shadow-md rounded-lg overflow-hidden">
             <Toaster />
@@ -91,6 +92,7 @@ export default function BookCard({ book }) {
                     <span className="text-xl sm:text-2xl text-gray-600 font-semibold">الحي:</span>
                     <span className="bg-gray-100 text-gray-800 text-xl sm:text-2xl px-2.5 py-0.5 rounded">{book.library?.district}</span>
                 </div>
+
                 <div className="flex items-center justify-between mt-6">
                     <h1 className="text-blue-500 font-bold text-2xl">{book.price} ريال</h1>
                     <div className="flex items-center gap-2">
