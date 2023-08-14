@@ -6,6 +6,7 @@ import { Link, useForm, Head } from '@inertiajs/react';
 import { Transition } from '@headlessui/react';
 import { useState } from 'react';
 import Authenticated from '@/Layouts/AuthenticatedLayout';
+import { useEffect } from 'react';
 
 export default function Edit({ auth, branch, cities, districts, univisities }) {
     const [selectedCityId, setSelectedCityId] = useState('');
@@ -20,6 +21,10 @@ export default function Edit({ auth, branch, cities, districts, univisities }) {
         user_id: branch.user.id,
         university: branch.university
     });
+
+    useEffect(() => {
+        setSelectedCityId(cities.find(city => city.name === data.city)?.id || '');
+    }, [])
 
     const submit = (e) => {
         e.preventDefault();
@@ -58,6 +63,7 @@ export default function Edit({ auth, branch, cities, districts, univisities }) {
                                 <div>
                                     <InputLabel htmlFor="city" value="المدينة" />
                                     <select
+                                        value={cities.find(city => city.name === data.city)?.id || ''}
                                         onChange={cityChanged}
                                         className={`w-full mt-2 border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm `}>
                                         <option value="">أختر المدينة</option>
@@ -72,9 +78,10 @@ export default function Edit({ auth, branch, cities, districts, univisities }) {
                                 </div>
 
                                 <div>
-                                    <InputLabel htmlFor="city" value="الحي" />
+                                    <InputLabel htmlFor="district" value="الحي" />
 
                                     <select
+                                        value={districts.find(district => district.name === data.district)?.name || ''}
                                         onChange={(e) => setData('district', e.target.value)}
                                         className={`w-full mt-2 border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm `}>
                                         <option value="">أختر الحي</option>
