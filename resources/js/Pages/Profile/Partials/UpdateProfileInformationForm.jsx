@@ -5,16 +5,20 @@ import TextInput from '@/Components/TextInput';
 import { useForm, usePage } from '@inertiajs/react';
 import { Transition } from '@headlessui/react';
 import { useState } from 'react';
+import { useEffect } from 'react';
 
 export default function UpdateProfileInformation({ className = '', cities, districts }) {
     const user = usePage().props.auth.user;
     const [selectedCityId, setSelectedCityId] = useState('');
     const { data, setData, patch, errors, processing, recentlySuccessful } = useForm({
-        // name: user.name,
-        gender: user.gender ? user.gender : '',
+        gender: user.gender,
         city: user.city,
         district: user.district,
     });
+
+    useEffect(() => {
+        setSelectedCityId(cities.find(city => city.name === data.city)?.id || '');
+    }, [])
 
     const submit = (e) => {
         e.preventDefault();
@@ -45,7 +49,7 @@ export default function UpdateProfileInformation({ className = '', cities, distr
                 <div className='mb-2'>
                     <InputLabel htmlFor="gender" value="الجنس" />
                     <select
-                        value={data.gender}
+                        value={data.gender || ''}
                         onChange={(e) => setData('gender', e.target.value)}
                         name="gender"
                         id="gender"
@@ -62,6 +66,7 @@ export default function UpdateProfileInformation({ className = '', cities, distr
                 <div>
                     <InputLabel htmlFor="city" value="المدينة" />
                     <select
+                        value={cities.find(city => city.name === data.city)?.id || ''}
                         onChange={cityChanged}
                         className={`w-full mt-2 border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm `}>
                         <option value="">أختر المدينة</option>
@@ -79,6 +84,7 @@ export default function UpdateProfileInformation({ className = '', cities, distr
                     <InputLabel htmlFor="city" value="الحي" />
 
                     <select
+                        value={districts.find(district => district.name === data.district)?.name || ''}
                         onChange={(e) => setData('district', e.target.value)}
                         className={`w-full mt-2 border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm `}>
                         <option value="">أختر الحي</option>
