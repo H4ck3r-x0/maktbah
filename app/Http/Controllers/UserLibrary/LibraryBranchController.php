@@ -96,6 +96,7 @@ class LibraryBranchController extends Controller
             'branch' => $branch,
             'cities' => City::all(),
             'districts' => District::all(),
+            'univisities' => University::all(),
         ]);
     }
 
@@ -114,6 +115,7 @@ class LibraryBranchController extends Controller
         $branch->phone = $request->phone;
         $branch->city = $request->city;
         $branch->district = $request->district;
+        $branch->university = $request->university;
         $branch->google_maps = $request->google_maps;
         $branch->user->username = $request->username;
 

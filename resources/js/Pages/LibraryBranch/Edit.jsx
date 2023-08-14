@@ -7,7 +7,7 @@ import { Transition } from '@headlessui/react';
 import { useState } from 'react';
 import Authenticated from '@/Layouts/AuthenticatedLayout';
 
-export default function Edit({ auth, branch, cities, districts }) {
+export default function Edit({ auth, branch, cities, districts, univisities }) {
     const [selectedCityId, setSelectedCityId] = useState('');
 
     const { data, setData, patch, errors, processing, recentlySuccessful } = useForm({
@@ -17,7 +17,8 @@ export default function Edit({ auth, branch, cities, districts }) {
         city: branch.city,
         district: branch.district,
         google_maps: branch.google_maps,
-        user_id: branch.user.id
+        user_id: branch.user.id,
+        university: branch.university
     });
 
     const submit = (e) => {
@@ -90,7 +91,21 @@ export default function Edit({ auth, branch, cities, districts }) {
 
                                 </div>
 
+                                <div>
+                                    <InputLabel htmlFor="univisity" value="إختر الجامعة اذا كان الفرع متوفر في الجامعة" />
 
+                                    <select
+                                        value={data.university || ''}
+                                        onChange={(e) => setData('university', e.target.value)}
+                                        className={`w-full mt-2 border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm `}>
+                                        <option value="">أختر  الجامعة</option>
+                                        {
+                                            univisities.map(university => <option value={university.name} key={university.id}>{university.name}</option>)
+                                        }
+                                    </select>
+                                    <InputError className="mt-2" message={errors.university} />
+
+                                </div>
 
 
                                 <div>
