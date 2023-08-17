@@ -101,7 +101,9 @@ class StationeryBranchController extends Controller
     public function update(Request $request, string $id)
     {
         request()->validate([
+            'username' => ['required', 'string', 'alpha_dash', 'max:255', Rule::unique(User::class)->ignore($id)],
             'phone' => ['required', 'string', 'max:255', Rule::unique(StationeryBranche::class)->ignore($id)],
+            'password' => ['nullable', Rules\Password::defaults()],
         ]);
 
         $stationery = StationeryBranche::with('user')->findOrFail($id);
@@ -109,7 +111,13 @@ class StationeryBranchController extends Controller
         $stationery->city = $request->city;
         $stationery->district = $request->district;
         $stationery->google_maps = $request->google_maps;
+        $stationery->user->username = $request->username;
 
+        if ($request->password) {
+            $stationery->user->password = Hash::make(request()->password);
+        }
+
+        $stationery->user->save();
         $stationery->save();
 
         return redirect()->back();

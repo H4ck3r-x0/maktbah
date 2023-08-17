@@ -11,6 +11,8 @@ export default function Edit({ auth, stationery, cities, districts }) {
     const [selectedCityId, setSelectedCityId] = useState('');
 
     const { data, setData, patch, errors, processing, recentlySuccessful } = useForm({
+        username: stationery.user.username,
+        password: '',
         phone: stationery.phone,
         city: stationery.city,
         district: stationery.district,
@@ -85,6 +87,35 @@ export default function Edit({ auth, stationery, cities, districts }) {
                                     </select>
                                     <InputError className="mt-2" message={errors.district_id} />
 
+                                </div>
+
+                                <div>
+                                    <InputLabel htmlFor="username" value="أسم المستخدم" />
+
+                                    <TextInput
+                                        id="username"
+                                        type="text"
+                                        className="mt-2 block w-full"
+                                        value={data.username}
+                                        onChange={(e) => setData('username', e.target.value)}
+                                        required
+                                    />
+
+                                    <InputError className="mt-2" message={errors.username} />
+                                </div>
+
+                                <div>
+                                    <InputLabel htmlFor="password" value="كلمة المرور" />
+
+                                    <TextInput
+                                        id="password"
+                                        type="password"
+                                        className="mt-2 block w-full"
+                                        value={data.password}
+                                        onChange={(e) => setData('password', e.target.value)}
+                                    />
+
+                                    <InputError className="mt-2" message={errors.password} />
                                 </div>
 
                                 <div>
